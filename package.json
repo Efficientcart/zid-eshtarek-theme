@@ -1,0 +1,24 @@
+{
+  "name": "default-theme-vitrin",
+  "version": "1.0.0",
+  "description": "New default theme for Vitrin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zidsa/default-theme-vitrin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zidsa/default-theme-vitrin/issues"
+  },
+  "homepage": "https://github.com/zidsa/default-theme-vitrin#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.13",
+    "tailwindcss": "^4.1.13"
+  }
+}
