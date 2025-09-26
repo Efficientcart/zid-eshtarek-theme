@@ -4,7 +4,10 @@
   "description": "New default theme for Vitrin",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx @tailwindcss/cli -i assets/tailwindcss.css -o assets/styles.css --watch",
+    "build": "npx @tailwindcss/cli -i assets/tailwindcss.css -o assets/styles.css --minify",
+    "format": "prettier --write \"**/*.{css,js,json,jinja,html}\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +22,9 @@
   "homepage": "https://github.com/zidsa/default-theme-vitrin#readme",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.13",
+    "prettier": "^3.6.2",
+    "prettier-plugin-jinja-template": "^2.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4.1.13"
   }
 }
