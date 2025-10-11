@@ -13,7 +13,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "Summer night mode"
+      "default": ""
     },
     {
       "id": "gallery",
@@ -41,19 +41,59 @@
           "type": "text",
           "label": {
             "ar": "النص البديل للصورة",
-            "en": "image alt text"
+            "en": "Image alt text"
           }
         },
         {
-          "id": "url",
-          "type": "url",
+          "id": "image_title",
+          "type": "text",
           "label": {
-            "ar": "الرابط",
-            "en": "Link"
+            "ar": "عنوان الصورة",
+            "en": "Image title"
           },
           "info": {
-            "ar": "اترك فارغًا إذا لم تكن بحاجة إلى رابط",
-            "en": "Leave empty if no link needed"
+            "ar": "اختياري - يظهر في وسط الصورة",
+            "en": "Optional - displays centered on image"
+          }
+        },
+        {
+          "id": "primary_button_text",
+          "type": "text",
+          "label": {
+            "ar": "نص الزر الأساسي",
+            "en": "Primary button text"
+          },
+          "info": {
+            "ar": "اختياري - زر بخلفية ملونة",
+            "en": "Optional - filled button"
+          }
+        },
+        {
+          "id": "primary_button_url",
+          "type": "url",
+          "label": {
+            "ar": "رابط الزر الأساسي",
+            "en": "Primary button URL"
+          }
+        },
+        {
+          "id": "secondary_button_text",
+          "type": "text",
+          "label": {
+            "ar": "نص الزر الثانوي",
+            "en": "Secondary button text"
+          },
+          "info": {
+            "ar": "اختياري - زر بحدود فقط",
+            "en": "Optional - outline button"
+          }
+        },
+        {
+          "id": "secondary_button_url",
+          "type": "url",
+          "label": {
+            "ar": "رابط الزر الثانوي",
+            "en": "Secondary button URL"
           }
         }
       ]
