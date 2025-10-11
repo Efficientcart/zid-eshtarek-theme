@@ -1,0 +1,60 @@
+{
+  "section_id": "uuid",
+  "template": "sections/categories-2.jinja",
+  "name": {
+    "ar": "التصنيفات",
+    "en": "Categories"
+  },
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      },
+      "default": "Discover our signature collections"
+    },
+    {
+      "id": "categories",
+      "type": "list",
+      "label": {
+        "ar": "التصنيفات",
+        "en": "Categories"
+      },
+      "max_items": 12,
+      "info": {
+        "ar": "أضف التصنيفات (حتى 12 تصنيف)",
+        "en": "Add categories (up to 12 categories)"
+      },
+      "settings": [
+        {
+          "id": "category",
+          "type": "category",
+          "label": {
+            "ar": "اختر التصنيف",
+            "en": "Select category"
+          }
+        }
+      ]
+    },
+    {
+      "id": "more_text",
+      "type": "text",
+      "label": {
+        "ar": "نص زر جميع التصنيفات",
+        "en": "View all button text"
+      },
+      "default": "View all"
+    },
+    {
+      "id": "display_more",
+      "type": "checkbox",
+      "label": {
+        "ar": "عرض زر جميع التصنيفات",
+        "en": "Display view all button"
+      },
+      "default": false
+    }
+  ]
+}
