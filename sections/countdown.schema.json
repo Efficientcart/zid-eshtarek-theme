@@ -17,7 +17,7 @@
         "ar": "اتركه فارغًا لإخفاء الشارة",
         "en": "Leave empty to hide badge"
       },
-      "default": "Limited Time Only"
+      "default": ""
     },
     {
       "id": "title",
@@ -26,7 +26,7 @@
         "ar": "العنوان",
         "en": "Title"
       },
-      "default": "Super Sale Up To 40% Off"
+      "default": ""
     },
     {
       "id": "description",
@@ -35,11 +35,11 @@
         "ar": "الوصف",
         "en": "Description"
       },
-      "default": "Shop our collection at reduced price during super sale. Hurry up!"
+      "default": ""
     },
     {
       "id": "end_date",
-      "type": "text",
+      "type": "datetime-local",
       "label": {
         "ar": "تاريخ الانتهاء",
         "en": "End Date"
@@ -48,7 +48,7 @@
         "ar": "بصيغة YYYY-MM-DD HH:MM (مثال: 2025-12-31 23:59)",
         "en": "Format: YYYY-MM-DD HH:MM (example: 2025-12-31 23:59)"
       },
-      "default": "2025-12-31 23:59"
+      "default": ""
     },
     {
       "id": "button_text",
@@ -57,7 +57,7 @@
         "ar": "نص الزر",
         "en": "Button Text"
       },
-      "default": "Shop Now"
+      "default": ""
     },
     {
       "id": "button_url",
@@ -91,7 +91,7 @@
       "max": 100,
       "step": 5,
       "unit": "%",
-      "default": 50
+      "default": 5
     }
   ]
 }
