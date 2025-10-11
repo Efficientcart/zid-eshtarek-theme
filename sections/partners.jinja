@@ -11,103 +11,102 @@
       </h2>
     {% endif %}
     {% if settings.store_partners %}
-      <div class="relative overflow-hidden">
+      <div class="embla relative overflow-hidden">
         <div class="fade-left pointer-events-none absolute top-0 z-10 h-full w-20 ltr:left-0 rtl:right-0"></div>
         <div class="fade-right pointer-events-none absolute top-0 z-10 h-full w-20 ltr:right-0 rtl:left-0"></div>
-        <div class="scroll-animation flex items-center gap-16">
-          {% for partner in settings.store_partners %}
-            <div class="flex h-20 w-[138px] shrink-0 items-center justify-center">
-              {% if partner.url %}
-                <a
-                  href="{{ partner.url }}"
-                  class="flex h-full w-full items-center justify-center"
-                >
-                  <img
-                    src="{{ partner.image }}"
-                    alt="{{ partner.name }}"
-                    class="h-10 w-auto object-contain"
-                    loading="lazy"
-                  />
-                </a>
-              {% else %}
-                <img
-                  src="{{ partner.image }}"
-                  alt="{{ partner.name }}"
-                  class="h-10 w-auto object-contain"
-                  loading="lazy"
-                />
-              {% endif %}
-            </div>
-          {% endfor %}
-          {% for partner in settings.store_partners %}
-            <div class="flex h-20 w-[138px] shrink-0 items-center justify-center">
-              {% if partner.url %}
-                <a
-                  href="{{ partner.url }}"
-                  class="flex h-full w-full items-center justify-center"
-                >
-                  <img
-                    src="{{ partner.image }}"
-                    alt="{{ partner.name }}"
-                    class="h-10 w-auto object-contain"
-                    loading="lazy"
-                  />
-                </a>
-              {% else %}
-                <img
-                  src="{{ partner.image }}"
-                  alt="{{ partner.name }}"
-                  class="h-10 w-auto object-contain"
-                  loading="lazy"
-                />
-              {% endif %}
-            </div>
-          {% endfor %}
+        <div class="embla__viewport overflow-hidden">
+          <div class="embla__container">
+            {% for partner in settings.store_partners %}
+              <div class="embla__slide">
+                <div class="flex h-20 w-[138px] shrink-0 items-center justify-center">
+                  {% if partner.url %}
+                    <a
+                      href="{{ partner.url }}"
+                      class="flex h-full w-full items-center justify-center"
+                    >
+                      <img
+                        src="{{ partner.image }}"
+                        alt="{{ partner.name }}"
+                        class="h-10 w-auto object-contain"
+                        loading="lazy"
+                      />
+                    </a>
+                  {% else %}
+                    <img
+                      src="{{ partner.image }}"
+                      alt="{{ partner.name }}"
+                      class="h-10 w-auto object-contain"
+                      loading="lazy"
+                    />
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
     {% endif %}
   </div>
-  {# prettier-ignore-start #}
-    <style>
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
+  <style>
+    .fade-left {
+      background: linear-gradient(to right, #ffffff 0%, transparent 100%);
+    }
 
-        [dir="rtl"]
+    .fade-right {
+      background: linear-gradient(to left, #ffffff 0%, transparent 100%);
+    }
 
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(50%);
-            }
-        }
+    [dir="rtl"] .fade-left {
+      background: linear-gradient(to left, #ffffff 0%, transparent 100%);
+    }
 
-        .scroll-animation {
-            animation: scroll 30s linear infinite;
-        }
+    [dir="rtl"] .fade-right {
+      background: linear-gradient(to right, #ffffff 0%, transparent 100%);
+    }
+    [section-id="{{ sectionId }}"] .embla {
+      --slide-spacing: 4rem; /* gap-16 = 4rem */
+    }
 
-        .fade-left {
-            background: linear-gradient(to right, #ffffff 0%, transparent 100%);
-        }
+    [section-id="{{ sectionId }}"] .embla__container {
+      display: flex;
+      touch-action: pan-y pinch-zoom;
+    }
 
-        .fade-right {
-            background: linear-gradient(to left, #ffffff 0%, transparent 100%);
-        }
-
-        [dir="rtl"] .fade-left {
-            background: linear-gradient(to left, #ffffff 0%, transparent 100%);
-        }
-
-        [dir="rtl"] .fade-right {
-            background: linear-gradient(to right, #ffffff 0%, transparent 100%);
-        }
-    </style>
-    {# prettier-ignore-end #}
+    [section-id="{{ sectionId }}"] .embla__slide {
+      transform: translate3d(0, 0, 0);
+      flex: 0 0 auto;
+      min-width: 0;
+      padding-left: var(--slide-spacing);
+    }
+  </style>
 </section>
+
+<script>
+  (function () {
+    const section = document.querySelector('[section-id="{{ sectionId }}"]');
+    if (!section) return;
+
+    const emblaRoot = section.querySelector(".embla");
+    const viewport = emblaRoot.querySelector(".embla__viewport");
+    const container = emblaRoot.querySelector(".embla__container");
+
+    if (!container || container.children.length === 0) return;
+
+    const autoScroll = EmblaCarouselAutoScroll({
+      speed: 0.5,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+      stopOnFocusIn: false
+    });
+
+    const embla = EmblaCarousel(
+      viewport,
+      {
+        direction: document.dir === "rtl" ? "rtl" : "ltr",
+        loop: true,
+        dragFree: true
+      },
+      [autoScroll]
+    );
+  })();
+</script>
