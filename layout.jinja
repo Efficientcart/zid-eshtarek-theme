@@ -88,6 +88,10 @@
     <main id="main">{% block content %}{% endblock %}</main>
 
     {% include 'footer.jinja' %}
+    <script
+      src="{{ 'locale-switcher.js' | asset_url }}"
+      defer
+    ></script>
     {% vitrin_body %}
   </body>
 </html>

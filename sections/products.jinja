@@ -252,7 +252,12 @@
       align: "start",
       slidesToScroll: 1,
       skipSnaps: false,
-      containScroll: "trimSnaps"
+      containScroll: "trimSnaps",
+      breakpoints: {
+        "(min-width: 1024px)": {
+          slidesToScroll: 2
+        }
+      }
     });
 
     if (prevBtn) prevBtn.onclick = () => embla.scrollPrev();
