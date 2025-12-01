@@ -1,307 +1,351 @@
 # Input
 
-A text input field with floating label, optional icons, and multiple states.
+A form input field with optional start/end icons and multiple states.
 
 ## Overview
 
-The Input component provides a form input with a floating label that animates when the field is focused or filled. It supports optional left and right icons, helper text, error states, and all standard input types.
+The Input component provides a form input with optional start and end icons, helper text, error states, and all standard input types. Use the separate Label component above the input for accessible form fields.
 
 ## Usage
 
 ```jinja
-{% with name='email', label='Email Address' %}
+{% with name="email", placeholder=_("Enter email") %}
   {% include 'components/ui/input.jinja' %}
 {% endwith %}
 ```
 
 ## Examples
 
-### Default
+### Basic
 
-Basic text input with floating label.
+Simple text input.
 
 ```jinja
-{% with name='username', label='Username' %}
+{% with name="username", placeholder=_("Username") %}
   {% include 'components/ui/input.jinja' %}
 {% endwith %}
 ```
 
-### With Value
+### With Label
 
-Input with a pre-filled value (label stays floated).
+Combine with the Label component for accessible forms.
 
 ```jinja
-{% with name='email', label='Email', value='user@example.com' %}
-  {% include 'components/ui/input.jinja' %}
-{% endwith %}
+<div class="grid w-full items-center gap-2">
+  {% with for="email", content=_("Email"), required=true %}
+    {% include 'components/ui/label.jinja' %}
+  {% endwith %}
+  {% with id="email", name="email", type="email", required=true, placeholder=_("Enter your email") %}
+    {% include 'components/ui/input.jinja' %}
+  {% endwith %}
+</div>
 ```
 
-### With Left Icon
+### With Start Icon
 
-Add an icon to the left of the input.
+Add an icon at the start of the input.
 
 ```jinja
 {% set icon_user %}
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
     <circle cx="12" cy="7" r="4"/>
   </svg>
 {% endset %}
 
-{% with name='username', label='Username', icon_left=icon_user %}
-  {% include 'components/ui/input.jinja' %}
-{% endwith %}
+<div class="grid w-full items-center gap-2">
+  {% with for="username", content=_("Username") %}
+    {% include 'components/ui/label.jinja' %}
+  {% endwith %}
+  {% with id="username", name="username", icon_start=icon_user, placeholder=_("Enter username") %}
+    {% include 'components/ui/input.jinja' %}
+  {% endwith %}
+</div>
 ```
 
-### With Right Icon
+### With End Icon
 
-Add an icon to the right of the input.
+Add an icon at the end of the input.
 
 ```jinja
 {% set icon_search %}
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <circle cx="11" cy="11" r="8"/>
     <path d="m21 21-4.35-4.35"/>
   </svg>
 {% endset %}
 
-{% with name='search', label='Search', icon_right=icon_search %}
+{% with name="search", icon_end=icon_search, placeholder=_("Search...") %}
   {% include 'components/ui/input.jinja' %}
 {% endwith %}
 ```
 
 ### With Both Icons
 
-Combine left and right icons.
+Combine start and end icons.
 
 ```jinja
 {% set icon_mail %}
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <rect width="20" height="16" x="2" y="4" rx="2"/>
     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
   </svg>
 {% endset %}
 
 {% set icon_check %}
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
     <polyline points="20 6 9 17 4 12"/>
   </svg>
 {% endset %}
 
-{% with name='email', label='Email', icon_left=icon_mail, icon_right=icon_check, value='verified@example.com' %}
+{% with name="email", icon_start=icon_mail, icon_end=icon_check, value="verified@example.com" %}
   {% include 'components/ui/input.jinja' %}
 {% endwith %}
 ```
 
-### Search Field
+### With Caption
 
-Search input with icon and placeholder behavior.
+Add helper text below the input.
 
 ```jinja
-{% set icon_search %}
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <circle cx="11" cy="11" r="8"/>
-    <path d="m21 21-4.35-4.35"/>
-  </svg>
-{% endset %}
+<div class="grid w-full items-center gap-2">
+  {% with for="phone", content=_("Phone Number") %}
+    {% include 'components/ui/label.jinja' %}
+  {% endwith %}
+  {% with id="phone", name="phone", type="tel", caption=_("We'll only use this for delivery coordination") %}
+    {% include 'components/ui/input.jinja' %}
+  {% endwith %}
+</div>
+```
 
-{% with
-  name='search',
-  label='Search products',
-  type='search',
-  icon_left=icon_search
-%}
-  {% include 'components/ui/input.jinja' %}
-{% endwith %}
+### Error State
+
+Input with error styling and message.
+
+```jinja
+<div class="grid w-full items-center gap-2">
+  {% with for="email", content=_("Email"), required=true %}
+    {% include 'components/ui/label.jinja' %}
+  {% endwith %}
+  {% with id="email", name="email", type="email", error=true, error_message=_("Please enter a valid email address") %}
+    {% include 'components/ui/input.jinja' %}
+  {% endwith %}
+</div>
+```
+
+### Disabled State
+
+Disabled input with styling.
+
+```jinja
+<div class="grid w-full items-center gap-2">
+  {% with for="readonly", content=_("Read Only"), disabled=true %}
+    {% include 'components/ui/label.jinja' %}
+  {% endwith %}
+  {% with id="readonly", name="readonly", disabled=true, value="Cannot be edited" %}
+    {% include 'components/ui/input.jinja' %}
+  {% endwith %}
+</div>
 ```
 
 ## Real-World Examples
 
-### Contact Form
-
-```jinja
-<form method="post" action="/contact">
-  {% set icon_user %}...{% endset %}
-  {% set icon_mail %}...{% endset %}
-  {% set icon_phone %}...{% endset %}
-
-  <div class="grid gap-4">
-    {% with
-      name='name',
-      label='Full Name',
-      icon_left=icon_user,
-      required=true
-    %}
-      {% include 'components/ui/input.jinja' %}
-    {% endwith %}
-
-    {% with
-      name='email',
-      label='Email Address',
-      type='email',
-      icon_left=icon_mail,
-      autocomplete='email',
-      required=true
-    %}
-      {% include 'components/ui/input.jinja' %}
-    {% endwith %}
-
-    {% with
-      name='phone',
-      label='Phone Number',
-      type='tel',
-      icon_left=icon_phone,
-      autocomplete='tel'
-    %}
-      {% include 'components/ui/input.jinja' %}
-    {% endwith %}
-
-    {% with content='Send Message', variant='filled', size='lg', type='submit' %}
-      {% include 'components/ui/button.jinja' %}
-    {% endwith %}
-  </div>
-</form>
-```
-
 ### Login Form
 
 ```jinja
-<form method="post" action="/login">
-  <div class="flex flex-col gap-4">
+<form method="post" action="/login" class="space-y-4">
+  <div class="grid w-full items-center gap-2">
+    {% with for="email", content=_("Email"), required=true %}
+      {% include 'components/ui/label.jinja' %}
+    {% endwith %}
     {% with
-      name='email',
-      label='Email',
-      type='email',
-      autocomplete='email',
+      id="email",
+      name="email",
+      type="email",
+      autocomplete="email",
       required=true,
       error=login_error,
-      error_message='Invalid email or password'
+      error_message=_("Invalid email or password")
     %}
       {% include 'components/ui/input.jinja' %}
     {% endwith %}
+  </div>
 
+  <div class="grid w-full items-center gap-2">
+    {% with for="password", content=_("Password"), required=true %}
+      {% include 'components/ui/label.jinja' %}
+    {% endwith %}
     {% with
-      name='password',
-      label='Password',
-      type='password',
-      autocomplete='current-password',
+      id="password",
+      name="password",
+      type="password",
+      autocomplete="current-password",
       required=true
     %}
       {% include 'components/ui/input.jinja' %}
     {% endwith %}
+  </div>
 
-    {% with content='Sign In', variant='filled', size='lg', type='submit', wrapper_class='w-full' %}
-      {% include 'components/ui/button.jinja' %}
+  {% with content=_("Sign In"), variant="filled", size="lg", type="submit" %}
+    {% include 'components/ui/button.jinja' %}
+  {% endwith %}
+</form>
+```
+
+### Contact Form
+
+```jinja
+{% set icon_user %}...{% endset %}
+{% set icon_mail %}...{% endset %}
+{% set icon_phone %}...{% endset %}
+
+<form method="post" action="/contact" class="space-y-4">
+  <div class="grid w-full items-center gap-2">
+    {% with for="name", content=_("Full Name"), required=true %}
+      {% include 'components/ui/label.jinja' %}
+    {% endwith %}
+    {% with id="name", name="name", icon_start=icon_user, required=true %}
+      {% include 'components/ui/input.jinja' %}
     {% endwith %}
   </div>
+
+  <div class="grid w-full items-center gap-2">
+    {% with for="email", content=_("Email Address"), required=true %}
+      {% include 'components/ui/label.jinja' %}
+    {% endwith %}
+    {% with id="email", name="email", type="email", icon_start=icon_mail, autocomplete="email", required=true %}
+      {% include 'components/ui/input.jinja' %}
+    {% endwith %}
+  </div>
+
+  <div class="grid w-full items-center gap-2">
+    {% with for="phone", content=_("Phone Number") %}
+      {% include 'components/ui/label.jinja' %}
+    {% endwith %}
+    {% with id="phone", name="phone", type="tel", icon_start=icon_phone, autocomplete="tel" %}
+      {% include 'components/ui/input.jinja' %}
+    {% endwith %}
+  </div>
+
+  {% with content=_("Send Message"), variant="filled", size="lg", type="submit" %}
+    {% include 'components/ui/button.jinja' %}
+  {% endwith %}
 </form>
 ```
 
 ### Shipping Address Form
 
 ```jinja
-<form method="post" action="/checkout/shipping">
-  <div class="grid gap-4">
-    <div class="grid gap-4 md:grid-cols-2">
-      {% with name='first_name', label='First Name', required=true %}
-        {% include 'components/ui/input.jinja' %}
+<form method="post" action="/checkout/shipping" class="space-y-4">
+  <div class="grid gap-4 md:grid-cols-2">
+    <div class="grid w-full items-center gap-2">
+      {% with for="first_name", content=_("First Name"), required=true %}
+        {% include 'components/ui/label.jinja' %}
       {% endwith %}
-
-      {% with name='last_name', label='Last Name', required=true %}
-        {% include 'components/ui/input.jinja' %}
-      {% endwith %}
-    </div>
-
-    {% with name='address', label='Street Address', required=true %}
-      {% include 'components/ui/input.jinja' %}
-    {% endwith %}
-
-    <div class="grid gap-4 md:grid-cols-3">
-      {% with name='city', label='City', required=true %}
-        {% include 'components/ui/input.jinja' %}
-      {% endwith %}
-
-      {% with name='state', label='State / Province', required=true %}
-        {% include 'components/ui/input.jinja' %}
-      {% endwith %}
-
-      {% with name='postal_code', label='Postal Code', required=true %}
+      {% with id="first_name", name="first_name", required=true %}
         {% include 'components/ui/input.jinja' %}
       {% endwith %}
     </div>
 
-    {% with
-      name='phone',
-      label='Phone Number',
-      type='tel',
-      caption='For delivery coordination',
-      required=true
-    %}
+    <div class="grid w-full items-center gap-2">
+      {% with for="last_name", content=_("Last Name"), required=true %}
+        {% include 'components/ui/label.jinja' %}
+      {% endwith %}
+      {% with id="last_name", name="last_name", required=true %}
+        {% include 'components/ui/input.jinja' %}
+      {% endwith %}
+    </div>
+  </div>
+
+  <div class="grid w-full items-center gap-2">
+    {% with for="address", content=_("Street Address"), required=true %}
+      {% include 'components/ui/label.jinja' %}
+    {% endwith %}
+    {% with id="address", name="address", required=true %}
       {% include 'components/ui/input.jinja' %}
     {% endwith %}
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-3">
+    <div class="grid w-full items-center gap-2">
+      {% with for="city", content=_("City"), required=true %}
+        {% include 'components/ui/label.jinja' %}
+      {% endwith %}
+      {% with id="city", name="city", required=true %}
+        {% include 'components/ui/input.jinja' %}
+      {% endwith %}
+    </div>
+
+    <div class="grid w-full items-center gap-2">
+      {% with for="state", content=_("State / Province"), required=true %}
+        {% include 'components/ui/label.jinja' %}
+      {% endwith %}
+      {% with id="state", name="state", required=true %}
+        {% include 'components/ui/input.jinja' %}
+      {% endwith %}
+    </div>
+
+    <div class="grid w-full items-center gap-2">
+      {% with for="postal_code", content=_("Postal Code"), required=true %}
+        {% include 'components/ui/label.jinja' %}
+      {% endwith %}
+      {% with id="postal_code", name="postal_code", required=true %}
+        {% include 'components/ui/input.jinja' %}
+      {% endwith %}
+    </div>
   </div>
 </form>
 ```
 
-### Newsletter Signup
+## States
 
-```jinja
-{% set icon_mail %}...{% endset %}
+The input component supports these visual states:
 
-<form method="post" action="/newsletter/subscribe" class="flex gap-2">
-  {% with
-    name='email',
-    label='Email Address',
-    type='email',
-    icon_left=icon_mail,
-    wrapper_class='flex-1'
-  %}
-    {% include 'components/ui/input.jinja' %}
-  {% endwith %}
-
-  {% with content='Subscribe', variant='filled' %}
-    {% include 'components/ui/button.jinja' %}
-  {% endwith %}
-</form>
-```
+| State    | Border                    | Background    | Description                     |
+|----------|---------------------------|---------------|---------------------------------|
+| Default  | 1px `#545352`             | transparent   | Normal state                    |
+| Hover    | 2px `#545352`             | transparent   | Mouse over                      |
+| Focus    | 2px `--primary`           | transparent   | Keyboard/click focus            |
+| Error    | 2px `--destructive`       | transparent   | Validation error                |
+| Disabled | 1px `#DADADA`             | `#F2F2F2`     | Cannot interact                 |
 
 ## API Reference
 
 ### Parameters
 
-| Parameter       | Type      | Default | Description                                           |
-|----------------|-----------|---------|-------------------------------------------------------|
-| `name`         | `string`  | Required| Form field name                                       |
-| `label`        | `string`  | Required| Floating label text                                   |
-| `type`         | `string`  | `"text"`| Input type (text, email, password, tel, search, etc.) |
-| `value`        | `string`  | -       | Initial/current value                                 |
-| `id`           | `string`  | Auto    | Input ID (auto-generated if not provided)             |
-| `required`     | `boolean` | `false` | Mark as required (shows red asterisk)                 |
-| `disabled`     | `boolean` | `false` | Disable the input                                     |
-| `readonly`     | `boolean` | `false` | Make input read-only                                  |
-| `autocomplete` | `string`  | -       | HTML autocomplete attribute                           |
-| `minlength`    | `number`  | -       | Minimum length validation                             |
-| `maxlength`    | `number`  | -       | Maximum length validation                             |
-| `pattern`      | `string`  | -       | Regex pattern validation                              |
-| `icon_left`    | `string`  | -       | HTML/SVG for left icon                                |
-| `icon_right`   | `string`  | -       | HTML/SVG for right icon                               |
-| `caption`      | `string`  | -       | Helper text below input                               |
-| `error_message`| `string`  | -       | Error message (replaces caption)      |
-| `wrapper_class`| `string`  | -       | Additional CSS classes for wrapper                    |
-| `input_class`  | `string`  | -       | Additional CSS classes for input element              |
-| `attrs`        | `string`  | -       | Raw HTML attributes for input                         |
+| Parameter      | Type      | Default  | Description                                           |
+|----------------|-----------|----------|-------------------------------------------------------|
+| `type`         | `string`  | `"text"` | Input type (text, email, password, tel, search, etc.) |
+| `name`         | `string`  | -        | Form field name                                       |
+| `id`           | `string`  | Auto     | Input ID (auto-generated if not provided)             |
+| `value`        | `string`  | -        | Initial/current value                                 |
+| `placeholder`  | `string`  | -        | Placeholder text                                      |
+| `required`     | `boolean` | `false`  | Mark as required                                      |
+| `disabled`     | `boolean` | `false`  | Disable the input                                     |
+| `readonly`     | `boolean` | `false`  | Make input read-only                                  |
+| `autocomplete` | `string`  | -        | HTML autocomplete attribute                           |
+| `inputmode`    | `string`  | -        | Input mode for mobile keyboards                       |
+| `minlength`    | `number`  | -        | Minimum length validation                             |
+| `maxlength`    | `number`  | -        | Maximum length validation                             |
+| `pattern`      | `string`  | -        | Regex pattern validation                              |
+| `icon_start`   | `string`  | -        | HTML/SVG for start icon (24x24)                       |
+| `icon_end`     | `string`  | -        | HTML/SVG for end icon (24x24)                         |
+| `caption`      | `string`  | -        | Helper text below input                               |
+| `error`        | `boolean` | `false`  | Enable error state                                    |
+| `error_message`| `string`  | -        | Error message (replaces caption when error)           |
+| `wrapper_class`| `string`  | -        | Additional CSS classes for wrapper                    |
+| `input_class`  | `string`  | -        | Additional CSS classes for input element              |
+| `attrs`        | `string`  | -        | Raw HTML attributes for input                         |
 
 ## Accessibility
 
 - Uses semantic `<input>` with proper `type` attribute
-- Label is properly associated via `for` attribute
-- Required fields are marked with `required` attribute and visual asterisk
+- Use Label component separately with matching `for`/`id` attributes
+- Required fields use `required` attribute for validation
+- Error states use `aria-invalid="true"`
 - Disabled state prevents interaction
-- Error states use color and text to convey meaning
-- Supports all standard HTML5 input validation attributes
-- Icons use `aria-hidden` implicitly (decorative)
 - Focus states are clearly visible
-- Fully RTL-aware with logical properties
+- Icons are 24x24 and decorative (no aria labels needed)
 
 ## Source Code
 

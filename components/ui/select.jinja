@@ -1,76 +1,111 @@
-{# Native Select Component with Floating Label #}
+{#
+  Select Component
+
+  A native select dropdown with optional icons.
+
+  Parameters:
+    - name: (string) Select name attribute
+    - id: (string) Select ID. Auto-generated if not provided
+    - value: (string) Selected value
+    - placeholder: (string) Placeholder option text
+    - options: (array) Array of {value, label, disabled?, selected?} objects
+    - required: (boolean) Makes the select required
+    - disabled: (boolean) Disables the select
+    - multiple: (boolean) Allow multiple selections
+    - autocomplete: (string) Autocomplete attribute
+    - caption: (string) Helper text below select
+    - error: (boolean) Error state
+    - error_message: (string) Error message (replaces caption when error)
+    - wrapper_class: (string) Additional classes for wrapper div
+    - select_class: (string) Additional classes for select element
+    - attrs: (string) Additional HTML attributes for select
+
+  Usage:
+    {% set options = [
+      {'value': 'sm', 'label': 'Small'},
+      {'value': 'md', 'label': 'Medium'},
+      {'value': 'lg', 'label': 'Large'}
+    ] %}
+
+    <div class="grid w-full items-center gap-2">
+      {% with for="size", content=_("Size"), required=true %}
+        {% include 'components/ui/label.jinja' %}
+      {% endwith %}
+      {% with id="size", name="size", options=options, placeholder=_("Select size") %}
+        {% include 'components/ui/select.jinja' %}
+      {% endwith %}
+    </div>
+#}
+
 {% set select_id = id|default(name ~ '-' ~ range(1000, 9999)|random) %}
 
 <div class="{{ wrapper_class|default('') }}">
-  <!-- Select Container -->
+  {# Select Container #}
   <div
-    class="peer focus-within:border-primary has-[select:user-invalid]:border-destructive relative flex h-12 items-center gap-3 rounded border border-[#545352] px-3 transition-all focus-within:border-2 hover:border-2 has-[select:disabled]:border-[#DADADA] has-[select:disabled]:bg-[#F2F2F2] has-[select:user-invalid]:border-2"
+    class="{{- ' border-destructive border-2' if error else ' border-[#545352]' }} {{- ' hover:border-2' if not disabled and not error }} {{- ' focus-within:border-primary focus-within:border-2' if not error }} {{- ' bg-[#F2F2F2] border-[#DADADA]' if disabled else '' }} relative flex h-12 items-center gap-2 rounded border px-3 transition-[border-color,border-width]"
+    {% if disabled %}data-disabled="true"{% endif %}
+    {% if error %}data-error="true"{% endif %}
   >
-    <!-- Select Area with Floating Label -->
-    <div class="relative flex-1">
-      <select
-        id="{{ select_id }}"
-        name="{{ name }}"
-        {% if required %}required{% endif %}
-        {% if disabled %}disabled{% endif %}
-        {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
-        {% if multiple %}multiple{% endif %}
-        class="peer text-primary {{ select_class|default('') }} w-full appearance-none bg-transparent pt-4 pb-0 text-base leading-[1.5] outline-none disabled:cursor-not-allowed disabled:text-[#B5B5B5]"
-        {{ attrs|default('')|safe }}
-      >
-        <!-- Placeholder option for floating label behavior -->
+    {# Select #}
+    <select
+      id="{{ select_id }}"
+      {% if name %}name="{{ name }}"{% endif %}
+      {% if required %}required{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+      {% if multiple %}multiple{% endif %}
+      {% if error %}aria-invalid="true"{% endif %}
+      class="text-primary {{ select_class|default('') }} h-full w-full flex-1 appearance-none bg-transparent text-[16px] leading-[1.5] outline-none disabled:cursor-not-allowed disabled:text-[#B5B5B5]"
+      {{ attrs|default('')|safe }}
+    >
+      {# Placeholder option #}
+      {% if placeholder %}
         <option
           value=""
           disabled
           {% if not value %}selected{% endif %}
-          hidden
-        ></option>
+        >
+          {{ placeholder }}
+        </option>
+      {% endif %}
 
-        <!-- Options -->
-        {% if options is defined and options is iterable and options is not string %}
-          {% for option in options %}
-            <option
-              value="{{ option.value }}"
-              {% if value == option.value or (option.selected|default(false)) %}selected{% endif %}
-              {% if option.disabled|default(false) %}disabled{% endif %}
-            >
-              {{ option.label }}
-            </option>
-          {% endfor %}
-        {% endif %}
-      </select>
+      {# Options #}
+      {% if options is defined and options is iterable and options is not string %}
+        {% for option in options %}
+          <option
+            value="{{ option.value }}"
+            {% if value == option.value or (option.selected|default(false)) %}selected{% endif %}
+            {% if option.disabled|default(false) %}disabled{% endif %}
+          >
+            {{ option.label }}
+          </option>
+        {% endfor %}
+      {% endif %}
+    </select>
 
-      <label
-        for="{{ select_id }}"
-        class="peer-user-invalid:text-destructive pointer-events-none absolute start-0 top-1/2 -translate-y-1/2 text-base text-[#858484] transition-all peer-focus:top-0 peer-focus:translate-y-0 peer-focus:text-xs peer-disabled:text-[#B5B5B5] peer-has-[option:checked:not([value=''])]:top-0 peer-has-[option:checked:not([value=''])]:translate-y-0 peer-has-[option:checked:not([value=''])]:text-xs"
-      >
-        {{ label }}{% if required %}<span class="text-destructive">*</span>{% endif %}
-      </label>
-    </div>
-
-    <!-- Dropdown Icon -->
-    <div class="pointer-events-none shrink-0 text-[#858484]">
+    {# Dropdown Icon #}
+    <div class="{{ 'text-[#B5B5B5]' if disabled else 'text-[#858484]' }} pointer-events-none shrink-0">
       <svg
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
         fill="none"
       >
         <path
-          d="M5 7.5L10 12.5L15 7.5"
+          d="M6 9L12 15L18 9"
           stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-        />
+        ></path>
       </svg>
     </div>
   </div>
 
-  <!-- Caption / Error Message -->
+  {# Caption / Error Message #}
   {% if caption or error_message %}
-    <p class="peer-has-[select:user-invalid]:text-destructive mt-1.5 text-xs leading-[1.5] text-[#858484]">
-      {{ error_message or caption }}
+    <p class="{{ 'text-destructive' if error else 'text-[#858484]' }} mt-2 text-[12px] leading-[1.5]">
+      {{ error_message if error and error_message else caption }}
     </p>
   {% endif %}
 </div>

@@ -9,39 +9,33 @@
           <dt class="text-secondary text-[16px] leading-[24px]">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
-          <dd class="text-primary text-[16px] leading-[24px]">
-            {{ item.value[session.lang] }}
-          </dd>
+          <dd class="text-primary text-[16px] leading-[24px]">{{ item.value[session.lang] }}</dd>
         </div>
       {% endif %}
 
-    {# NUMBER Type #}
+      {# NUMBER Type #}
     {% elif item.data_type == 'number' %}
       {% if item.value is not none %}
         <div class="flex flex-wrap items-center gap-2">
           <dt class="text-secondary text-[16px] leading-[24px]">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
-          <dd class="text-primary text-[16px] leading-[24px]">
-            {{ item.value }}
-          </dd>
+          <dd class="text-primary text-[16px] leading-[24px]">{{ item.value }}</dd>
         </div>
       {% endif %}
 
-    {# RICH TEXT Type #}
+      {# RICH TEXT Type #}
     {% elif item.data_type == 'rich_text' %}
       {% if item.value and item.value[session.lang] %}
         <div class="flex flex-col gap-1">
           <dt class="text-secondary text-[16px] leading-[24px]">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
-          <dd class="text-primary prose prose-sm max-w-none">
-            {{ item.value[session.lang]|safe }}
-          </dd>
+          <dd class="text-primary prose prose-sm max-w-none">{{ item.value[session.lang]|safe }}</dd>
         </div>
       {% endif %}
 
-    {# IMAGE Type #}
+      {# IMAGE Type #}
     {% elif item.data_type == 'image' %}
       {% if item.value and item.value.small %}
         <div class="flex flex-col gap-1">
@@ -59,7 +53,7 @@
         </div>
       {% endif %}
 
-    {# FILE Type #}
+      {# FILE Type #}
     {% elif item.data_type == 'file' %}
       {% if item.value and item.value.url %}
         <div class="flex flex-col gap-1">
@@ -125,7 +119,7 @@
         </div>
       {% endif %}
 
-    {# TABLE Type #}
+      {# TABLE Type #}
     {% elif item.data_type == 'table' %}
       {% if item.value %}
         <div class="flex flex-col gap-1">
@@ -137,7 +131,9 @@
               <thead>
                 <tr class="bg-foreground rounded-lg">
                   {% for header in item.value.headers %}
-                    <th class="text-primary px-6 py-5 text-start text-[14px] font-semibold first:rounded-e-lg last:rounded-s-lg">
+                    <th
+                      class="text-primary px-6 py-5 text-start text-[14px] font-semibold first:rounded-e-lg last:rounded-s-lg"
+                    >
                       {{ header.name[session.lang] if header.name[session.lang] else header.name.ar }}
                     </th>
                   {% endfor %}
@@ -174,7 +170,9 @@
                             </svg>
                             <div class="flex min-w-0 flex-1 flex-col">
                               {% if cell.value.name %}
-                                <span class="text-primary max-w-[60px] truncate text-[12px] font-medium">{{ cell.value.name }}</span>
+                                <span class="text-primary max-w-[60px] truncate text-[12px] font-medium"
+                                  >{{ cell.value.name }}</span
+                                >
                               {% endif %}
                               {% if cell.value.formated_size %}
                                 <span class="text-secondary text-[10px]">{{ cell.value.formated_size }}</span>
@@ -224,19 +222,17 @@
         </div>
       {% endif %}
 
-    {# JSON Type - skip rendering #}
+      {# JSON Type - skip rendering #}
     {% elif item.data_type == 'json' %}
 
-    {# Fallback for unknown types #}
+      {# Fallback for unknown types #}
     {% else %}
       {% if item.value %}
         <div class="flex flex-wrap items-center gap-2">
           <dt class="text-secondary text-[16px] leading-[24px]">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
-          <dd class="text-primary text-[16px] leading-[24px]">
-            {{ item.value }}
-          </dd>
+          <dd class="text-primary text-[16px] leading-[24px]">{{ item.value }}</dd>
         </div>
       {% endif %}
     {% endif %}

@@ -13,7 +13,11 @@
   {% elif option.type == 'color' %}
     {% set color_label %}
       <span class="flex size-8 shrink-0 items-center justify-center rounded p-0.5">
-        <span class="block size-full rounded" style="background-color: {{ option.type_value }};" title="{{ option.value }}"></span>
+        <span
+          class="block size-full rounded"
+          style="background-color: {{ option.type_value }};"
+          title="{{ option.value }}"
+        ></span>
       </span>
       <span class="text-[16px] leading-[24px]">{{ option.value }}</span>
     {% endset %}
@@ -30,7 +34,11 @@
   {% elif option.type == 'icon' and option.type_value.thumbnail %}
     {% set icon_label %}
       <span class="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded p-0.5">
-        <img src="{{ option.type_value.thumbnail }}" alt="{{ option.value }}" class="size-full rounded object-cover" />
+        <img
+          src="{{ option.type_value.thumbnail }}"
+          alt="{{ option.value }}"
+          class="size-full rounded object-cover"
+        />
       </span>
       <span class="text-[16px] leading-[24px]">{{ option.value }}</span>
     {% endset %}
@@ -109,7 +117,7 @@
         >
           <div class="flex min-h-0 flex-1 flex-col overflow-y-auto px-4 py-4 sm:px-8 sm:py-8">
             {#header#}
-              <div class="flex items-start justify-between">
+            <div class="flex items-start justify-between">
               <h2
                 id="drawer-title"
                 class="text-primary text-[24px] leading-[33.6px] uppercase [font-variant:all-small-caps]"
@@ -117,8 +125,19 @@
                 {{ _("Filters") }}
               </h2>
               {% set close_icon %}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" class="size-6">
-                  <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  aria-hidden="true"
+                  class="size-6"
+                >
+                  <path
+                    d="M6 18 18 6M6 6l12 12"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
                 </svg>
               {% endset %}
               {%
@@ -133,7 +152,7 @@
             </div>
 
             {# Filters List #}
-            <div class="mt-6 divide-y divide-border border-t border-border">
+            <div class="divide-border border-border mt-6 divide-y border-t">
               {# Sorting - Only visible on mobile #}
               {% set current_sort_by = session.query_params.get('sort_by') or 'popularity_order' %}
               {% set current_order = session.query_params.get('order') or 'asc' %}
@@ -153,20 +172,19 @@
                 />
                 <div class="space-y-3">
                   {% for option in sort_options %}
-                   {%
-                        with
-                        label=option.label,
-                        id='sort-' ~ loop.index,
-                        name='sort_option',
-                        value=option.value,
-                        checked=(current_sort_value == option.value),
-                        attrs='onchange="window.productFilter.setSortParams(this, \'' ~ option.sort_by ~ '\', \'' ~ option.order ~ '\')"'
-                      %}
-                        {% include 'components/ui/radio.jinja' %}
-                      {% endwith %}
+                    {%
+                      with
+                      label=option.label,
+                      id='sort-' ~ loop.index,
+                      name='sort_option',
+                      value=option.value,
+                      checked=(current_sort_value == option.value),
+                      attrs='onchange="window.productFilter.setSortParams(this, \'' ~ option.sort_by ~ '\', \'' ~ option.order ~ '\')"'
+                    %}
+                      {% include 'components/ui/radio.jinja' %}
+                    {% endwith %}
                   {% endfor %}
                 </div>
-
               {% endset %}
 
               <div class="py-4 md:hidden">
@@ -226,6 +244,7 @@
                     {% set visible_options = attribute.data[:4] %}
                     {% set hidden_options = attribute.data[4:] %}
 
+
                     {% set attr_content %}
                       <div class="space-y-3">
                         {% for option in visible_options %}
@@ -233,7 +252,11 @@
                         {% endfor %}
                       </div>
                       {% if hidden_options|length > 0 %}
-                        <el-disclosure id="{{ attribute.slug }}-more" hidden class="peer mt-3 space-y-3 transition duration-200 data-closed:opacity-0">
+                        <el-disclosure
+                          id="{{ attribute.slug }}-more"
+                          hidden
+                          class="peer mt-3 space-y-3 transition duration-200 data-closed:opacity-0"
+                        >
                           {% for option in hidden_options %}
                             {{ render_attr_option(option, attribute.slug, loop.index + 4, selected_attr_values) }}
                           {% endfor %}
@@ -244,8 +267,8 @@
                           commandfor="{{ attribute.slug }}-more"
                           class="group text-secondary mt-3 text-[14px] leading-[21px] underline"
                         >
-                          <span class="group-aria-[expanded=false]:inline hidden">{{ _("View more") }}</span>
-                          <span class="group-aria-[expanded=true]:inline hidden">{{ _("View less") }}</span>
+                          <span class="hidden group-aria-[expanded=false]:inline">{{ _("View more") }}</span>
+                          <span class="hidden group-aria-[expanded=true]:inline">{{ _("View less") }}</span>
                         </button>
                       {% endif %}
                     {% endset %}
@@ -294,7 +317,7 @@
           </div>
 
           {# Footer Actions #}
-          <div class="flex shrink-0 justify-end gap-3 border-t border-border px-4 py-4 sm:px-8 sm:py-6">
+          <div class="border-border flex shrink-0 justify-end gap-3 border-t px-4 py-4 sm:px-8 sm:py-6">
             {%
               with
               content=_("Clear all"),

@@ -49,12 +49,12 @@
     <el-options
       popover
       anchor="bottom center"
-      class="origin-top-center min-w-[180px] rounded-none border border-border bg-white py-2 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+      class="origin-top-center border-border min-w-[180px] rounded-none border bg-white py-2 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
     >
       {% for option in sort_options %}
         <el-option
           value="{{ option.value }}"
-          class="text-primary block w-full cursor-pointer px-4 py-2 text-[16px] leading-[24px] transition-colors hover:bg-foreground aria-selected:bg-foreground"
+          class="text-primary hover:bg-foreground aria-selected:bg-foreground block w-full cursor-pointer px-4 py-2 text-[16px] leading-[24px] transition-colors"
         >
           {{ option.label }}
         </el-option>

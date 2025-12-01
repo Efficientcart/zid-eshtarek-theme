@@ -28,7 +28,7 @@
     id="availability-popover"
     anchor="bottom center"
     popover
-    class="origin-top-center min-w-[200px] rounded-none border border-border bg-white p-4 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+    class="origin-top-center border-border min-w-[200px] rounded-none border bg-white p-4 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
   >
     <div class="space-y-1">
       {% set availability_values = session.query_params.getlist('availability') if session and session.query_params else [] %}
@@ -74,7 +74,7 @@
     id="price-popover"
     anchor="bottom center"
     popover
-    class="origin-top-center max-w-[260px] rounded-none border border-border bg-white p-4 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+    class="origin-top-center border-border max-w-[260px] rounded-none border bg-white p-4 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
   >
     <form
       id="price-filter-form-simple"

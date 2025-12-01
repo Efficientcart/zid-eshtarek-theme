@@ -47,7 +47,9 @@
       <div class="flex shrink-0 flex-col gap-4">
         {% if product.rating %}
           <div class="flex flex-col gap-1">
-            <p class="text-primary text-[16px] leading-normal [font-variant:all-small-caps]">{{ _("Overall rating") }}</p>
+            <p class="text-primary text-[16px] leading-normal [font-variant:all-small-caps]">
+              {{ _("Overall rating") }}
+            </p>
             <div class="flex h-8 items-center gap-1.5">
               <p class="text-primary text-[24px] leading-[1.4] [font-variant:all-small-caps]">
                 {{ product.rating.average|round(1) }}
@@ -88,7 +90,9 @@
       {# Right: Rating Snapshot #}
       {% if product.rating %}
         <div class="flex min-w-0 flex-1 flex-col gap-2">
-          <p class="text-primary text-[16px] leading-normal [font-variant:all-small-caps]">{{ _("Rating snapshot") }}</p>
+          <p class="text-primary text-[16px] leading-normal [font-variant:all-small-caps]">
+            {{ _("Rating snapshot") }}
+          </p>
 
           {% set total_reviews = product.rating.total_count or 1 %}
 

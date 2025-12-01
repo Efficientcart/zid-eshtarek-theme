@@ -16,7 +16,8 @@
       {% endif %}
       alt="{{ product.name }}"
       class="h-full w-full object-cover object-center"
-      {% if loop and loop.index0 > 3 %}loading="lazy"{% endif %}
+      {% set img_index = index if index is defined else (loop.index0 if loop is defined else 0) %}
+      {% if img_index > 3 %}loading="lazy"{% endif %}
     />
     <div class="absolute top-4 flex flex-col gap-2 ltr:left-4 rtl:right-4">
       {# Merchant custom badge #}
@@ -98,7 +99,7 @@
     {# Description - Only visible in list view #}
     {% if product.short_description or product.description %}
       <p
-        class="text-secondary hidden text-[14px] leading-[21px] group-data-[grid=list]/grid:[display:-webkit-box] group-data-[grid=list]/grid:line-clamp-1 md:group-data-[grid=list]/grid:line-clamp-3"
+        class="text-secondary hidden text-[14px] leading-[21px] group-data-[grid=list]/grid:line-clamp-1 group-data-[grid=list]/grid:[display:-webkit-box] md:group-data-[grid=list]/grid:line-clamp-3"
       >
         {{ product.short_description|striptags|truncate(200) or product.description|striptags|truncate(200) }}
       </p>
