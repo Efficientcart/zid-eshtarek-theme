@@ -1,0 +1,401 @@
+{% extends "layout.jinja" %}
+
+{% block title %}{{ product.name }} – {{ store.name }}{% endblock %}
+
+{% block content %}
+  {# Breadcrumb Section #}
+  <section class="px-4 py-6 md:px-16">
+    <div class="theme-container">
+      {% if product.categories and product.categories|length > 0 %}
+        {% set category = product.categories[0] %}
+        {%
+          with
+          items=[
+            {'href': url_for('home'), 'label': _("Home")},
+            {'href': url_for("category_details", category_id=category.id or "a", slug=category.slug or category.id), 'label': category.name},
+            {'label': product.name}
+          ]
+        %}
+          {% include 'components/ui/breadcrumb.jinja' %}
+        {% endwith %}
+      {% else %}
+        {%
+          with
+          items=[
+            {'href': url_for('home'), 'label': _("Home")},
+            {'label': product.name}
+          ]
+        %}
+          {% include 'components/ui/breadcrumb.jinja' %}
+        {% endwith %}
+      {% endif %}
+    </div>
+  </section>
+
+  {# Product Main Section #}
+  <section class="px-4 pb-6 md:px-16 md:pb-16">
+    <div class="theme-container">
+      {# 2-Column Layout: Gallery + Details #}
+      <div
+        id="product-main-section"
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2"
+      >
+        {# Left Column: Product Gallery #}
+        <div class="product-gallery-column">
+          {% with product=product,gallery_id="product-gallery" %}
+            {% include 'components/products/product-gallery.jinja' %}
+          {% endwith %}
+        </div>
+
+        {# Right Column: Product Details #}
+        <div class="product-details-column flex flex-col gap-4">
+          {# Product Name #} {# Rating (if enabled) #}
+          <div
+            id="header"
+            class="space-y-4"
+          >
+            <div class="space-y-1">
+              <h1
+                class="text-primary text-[24px] leading-[33.6px] [font-variant:all-small-caps] md:text-[32px] md:leading-[41.6px]"
+              >
+                {{ product.name }}
+              </h1>
+              {% if store.settings.products.reviews_enabled %}
+                {% if product.rating %}
+                  <div class="flex items-center gap-2">
+                    {% with  rating=product.rating.average %}
+                      {% include 'components/rating-stars.jinja' %}
+                    {% endwith %}
+                    <a
+                      href="#reviews"
+                      class="text-secondary text-[14px] leading-[1.5] underline"
+                    >
+                      {{ _("See reviews") }}
+                    </a>
+                  </div>
+                {% endif %}
+              {% endif %}
+            </div>
+            {# Product Badges #}
+            <div
+              id="product-badges"
+              class="flex flex-wrap items-center gap-2"
+            >
+              {# Bundle Offer Badge #}
+              {% if product.bundle_offer %}
+                {% set bundle_badge %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M8.57129 1.25488H13.6562C13.9618 1.25489 14.2228 1.36327 14.4404 1.58105C14.6581 1.79871 14.7666 2.05976 14.7666 2.36523V7.4375C14.7666 7.58599 14.7358 7.72769 14.6738 7.8623C14.6115 7.99756 14.5316 8.11495 14.4346 8.21484L8.2334 14.4287C8.12146 14.5288 7.99845 14.606 7.86426 14.6602C7.73001 14.7143 7.5927 14.7412 7.45312 14.7412C7.31346 14.7412 7.17481 14.7155 7.03711 14.6641C6.89982 14.6127 6.77477 14.5342 6.66309 14.4287L1.5918 9.34082L1.59082 9.33984L1.51367 9.26074C1.4414 9.17848 1.38421 9.08497 1.34277 8.97949C1.28714 8.83758 1.25977 8.69644 1.25977 8.55762C1.25981 8.41792 1.28642 8.27939 1.33984 8.1416C1.39308 8.00461 1.47689 7.88034 1.5918 7.76855V7.76758L7.78027 1.58691H7.78125C7.88159 1.48455 8.00131 1.40329 8.14062 1.34375C8.2797 1.28424 8.42318 1.25489 8.57129 1.25488ZM8.55859 2.35156L2.33984 8.56152L2.32227 8.5791L2.33984 8.59668L7.40723 13.6816L7.42578 13.6992L7.44336 13.6816L13.6738 7.4209L13.6816 7.41406V2.34375H8.56641L8.55859 2.35156ZM11.9102 3.26074C12.1369 3.26074 12.333 3.34394 12.499 3.51074C12.6651 3.67744 12.748 3.87218 12.748 4.09668C12.748 4.32117 12.6653 4.51613 12.499 4.68262C12.3328 4.84889 12.1368 4.93153 11.9102 4.93164C11.6835 4.93164 11.4879 4.84927 11.3232 4.68262C11.1583 4.51565 11.0762 4.31964 11.0762 4.09473C11.0763 3.87001 11.1582 3.67486 11.3232 3.50879C11.4883 3.34293 11.6837 3.26084 11.9102 3.26074Z"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="0.05"
+                    ></path>
+                  </svg>
+                  {{ product.bundle_offer.name }}
+                {% endset %}
+                {%
+                  with
+                  content=bundle_badge,
+                  variant='outlined',
+                  class='text-destructive'
+                %}
+                  {% include 'components/ui/badge.jinja' %}
+                {% endwith %}
+              {% endif %}
+
+              {# Sold Items Badge #}
+              {% if product.sold_products_count or (product.selected_product and product.selected_product.sold_products_count) %}
+                {% set sold_badge %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M9.35059 1.25488C10.0392 1.25488 10.6 1.52568 11.0342 2.06934C11.4687 2.61337 11.6367 3.23657 11.5381 3.94043L11.5342 3.96875H13.8164C14.1051 3.96876 14.344 4.07663 14.5342 4.29199C14.7243 4.50715 14.8017 4.75891 14.7666 5.04883L13.7197 13.5957C13.6752 13.9276 13.5338 14.201 13.2949 14.417C13.0559 14.6331 12.7711 14.7412 12.4404 14.7412H3.5127C3.21892 14.7412 2.98865 14.6304 2.81934 14.4092C2.65316 14.1922 2.56811 13.9412 2.56348 13.6553H12.6152L12.6182 13.6338V13.6328L12.6221 13.6338L13.0283 10.3213C13.0396 10.2451 13.0499 10.1759 13.0596 10.1143V10.1133L13.1074 9.69629L13.2344 8.67188C13.2846 8.26141 13.3261 7.91589 13.3594 7.63574L13.3584 7.63477L13.6729 5.08691L13.6719 5.08594L13.6729 5.08301L13.6758 5.05469H11.3965L11.3936 5.07617L11.2383 6.37305C11.2142 6.53302 11.1441 6.66525 11.0293 6.77148V6.77246C10.9143 6.87874 10.7807 6.93432 10.6279 6.93945C10.4774 6.94455 10.3554 6.89357 10.2598 6.78809C10.164 6.6826 10.1249 6.55764 10.1436 6.41113L10.3076 5.08301L10.3105 5.05469H7.39551L7.39355 5.07617L7.23828 6.37695C7.21418 6.53699 7.1441 6.66853 7.0293 6.77344C6.9143 6.87858 6.78096 6.93431 6.62793 6.93945C6.4787 6.94497 6.35704 6.89375 6.26074 6.78711C6.1645 6.6805 6.12643 6.55631 6.14746 6.41211L6.14844 6.41113L6.31152 5.08301L6.31543 5.05469H3.61719C3.66031 4.7436 3.79943 4.48658 4.03613 4.2832C4.27999 4.07366 4.56352 3.96882 4.8877 3.96875H6.43945L6.44336 3.94922L6.47656 3.78223H6.47754V3.78027C6.5903 2.96648 6.89476 2.34327 7.38965 1.9082C7.88472 1.47312 8.53768 1.25493 9.35059 1.25488ZM1.4834 10.8027H3.8252C3.97895 10.8028 4.10614 10.8558 4.20898 10.9619C4.31202 11.0684 4.36426 11.198 4.36426 11.3525C4.36421 11.5069 4.31246 11.6346 4.20996 11.7373C4.10718 11.84 3.97921 11.8916 3.8252 11.8916H1.4834C1.32969 11.8915 1.20183 11.8391 1.09766 11.7344C0.993475 11.6296 0.941449 11.5012 0.941406 11.3467C0.941406 11.1921 0.993443 11.0633 1.09766 10.959C1.2018 10.8547 1.32973 10.8028 1.4834 10.8027ZM2.81738 8.12012H5.8252C5.97907 8.12016 6.10772 8.17262 6.21191 8.27734C6.31577 8.38194 6.36806 8.51064 6.36816 8.66504C6.36816 8.81963 6.31588 8.94799 6.21191 9.05078C6.10775 9.15367 5.9792 9.20504 5.8252 9.20508H2.81738C2.66355 9.20508 2.5349 9.15262 2.43066 9.04785C2.32656 8.943 2.27441 8.81376 2.27441 8.65918C2.27452 8.50465 2.32675 8.37711 2.43066 8.27441C2.53487 8.17159 2.6634 8.12012 2.81738 8.12012ZM9.22363 2.34375C8.76196 2.34375 8.38493 2.46741 8.09473 2.71582C7.80464 2.96414 7.63033 3.31727 7.57129 3.77246L7.53809 3.93945L7.53223 3.96875H10.4414L10.4443 3.94727C10.498 3.5318 10.4062 3.16059 10.1699 2.83496C9.93317 2.50842 9.61726 2.34378 9.22363 2.34375Z"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      stroke-width="0.05"
+                    ></path>
+                  </svg>
+                  {{ _("Sold more than %s times") | format(product.sold_products_count or product.selected_product.sold_products_count) }}
+                {% endset %}
+                {%
+                  with
+                  content=sold_badge,
+                  variant='outlined',
+                  class='text-primary border-primary'
+                %}
+                  {% include 'components/ui/badge.jinja' %}
+                {% endwith %}
+              {% endif %}
+
+              {# Remaining Stock Badge #}
+              {% if product.low_stock_quantity %}
+                {% set stock_badge %}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M3.33333 2.66667V13.3333H12.6667V2.66667H3.33333ZM2.66667 1.33333H13.3333C13.687 1.33333 14 1.64638 14 2V14C14 14.3536 13.687 14.6667 13.3333 14.6667H2.66667C2.31304 14.6667 2 14.3536 2 14V2C2 1.64638 2.31304 1.33333 2.66667 1.33333ZM8 4.66667C8.36819 4.66667 8.66667 4.96514 8.66667 5.33333V9.33333C8.66667 9.70152 8.36819 10 8 10C7.63181 10 7.33333 9.70152 7.33333 9.33333V5.33333C7.33333 4.96514 7.63181 4.66667 8 4.66667ZM8 10.6667C8.36819 10.6667 8.66667 10.9651 8.66667 11.3333C8.66667 11.7015 8.36819 12 8 12C7.63181 12 7.33333 11.7015 7.33333 11.3333C7.33333 10.9651 7.63181 10.6667 8 10.6667Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                  {{ _("Remaining %s only") | format(product.low_stock_quantity) }}
+                {% endset %}
+                {%
+                  with
+                  content=stock_badge,
+                  variant='outlined',
+                  class='text-primary border-primary'
+                %}
+                  {% include 'components/ui/badge.jinja' %}
+                {% endwith %}
+              {% endif %}
+            </div>
+            {# Price Section #}
+            <div class="flex flex-wrap items-center justify-between gap-y-1">
+              {% if product.formatted_sale_price is not none %}
+                {# Product on sale - show sale price, old price crossed out, and discount #}
+                <div class="flex flex-wrap items-center gap-2">
+                  <p class="text-[24px] leading-[33.6px] [font-variant:all-small-caps]">
+                    {{ product.formatted_sale_price }}
+                  </p>
+                  <span class="text-destructive text-[14px] leading-[21px] line-through">
+                    {{ product.formatted_price }}
+                  </span>
+                  {% if product.discount_percentage and product.discount_percentage > 0 %}
+                    <span
+                      class="bg-success/20 text-success rounded px-2 py-1 text-[16px] leading-[normal] [font-variant:all-small-caps]"
+                    >
+                      {{ _("Discount") }} {{ product.discount_percentage }}%
+                    </span>
+                  {% endif %}
+                </div>
+              {% else %}
+                {# Regular price - no sale #}
+                <p class="text-[24px] leading-[33.6px] [font-variant:all-small-caps]">{{ product.formatted_price }}</p>
+              {% endif %}
+              <span class="text-secondary text-[16px] leading-[24px]"> SKU {{ product.sku }} </span>
+            </div>
+          </div>
+
+          {# Short Description #}
+          {% if product.short_description %}
+            <div class="prose prose-sm max-w-none [font-variant:all-small-caps]">
+              {{ product.short_description|safe }}
+            </div>
+          {% endif %}
+
+          <form
+            id="product-form"
+            class="space-y-4"
+          >
+            <input
+              type="hidden"
+              name="product_id"
+              id="product-id"
+              value="{{ product.selected_product.id }}"
+            />
+
+            {# Custom Input Fields #}
+            {% with product=product %}
+              {% include 'components/products/custom-input-fields.jinja' %}
+            {% endwith %}
+            {# Product Options (if available) #}
+            {% if product.has_options or product.has_fields %}
+              {% with options=product.options, product=product %}
+                {% include 'components/products/product-options.jinja' %}
+              {% endwith %}
+            {% endif %}
+          </form>
+        </div>
+      </div>
+      <div
+        id="additional-info"
+        class="mt-6 flex flex-col gap-4"
+      >
+        {% set has_weight = product.selected_product and product.selected_product.weight and product.selected_product.weight.value %}
+        {% set has_metafields = product and product.metafields and store and store.settings.products.is_metafields_enabled and product.metafields|length > 0 %}
+        {% set has_description = product.description %}
+
+        {% if has_weight or has_metafields or has_description %}
+          {% set details %}
+            <div class="flex flex-col gap-4">
+              {# Weight #}
+              {% if has_weight %}
+                <div class="flex items-center gap-2">
+                  <dt class="text-secondary text-[16px] leading-[24px]">{{ _("Weight") }}:</dt>
+                  <dd class="text-primary text-[16px] leading-[24px]">
+                    {{ product.selected_product.weight.value }} {{ product.selected_product.weight.unit }}
+                  </dd>
+                </div>
+              {% endif %}
+
+              {# Metafields #}
+              {% if has_metafields %}
+                {% with entity=product %}
+                  {% include 'components/shared/metafields.jinja' %}
+                {% endwith %}
+              {% endif %}
+
+              {# Product Description #}
+              {% if has_description %}
+                <div class="text-primary prose prose-sm max-w-none">{{ product.description|safe }}</div>
+              {% endif %}
+            </div>
+          {% endset %}
+          {%
+            with
+            id='features-details',
+            title=_('Features & details'),
+            content=details,
+            button_class='bg-foreground rounded px-4 py-2'
+          %}
+            {% include 'components/ui/disclosure.jinja' %}
+          {% endwith %}
+        {% endif %}
+
+        {% if product.variants and product.variants|length > 0 %}
+          {% set productOptions %}
+          {# Filter in-stock variants #}
+          {% set in_stock_variants = [] %}
+          {% for variant in product.variants %}
+            {% if variant.in_stock %}
+              {% set temp = in_stock_variants.append(variant) %}
+            {% endif %}
+          {% endfor %}
+
+          {# Calculate split point (left column gets more if odd) #}
+          {% set total_variants = in_stock_variants | length %}
+          {% set left_count = ((total_variants + 1) / 2) | int %}
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {# Left Column #}
+              <div class="flex flex-col gap-4">
+                {% for variant in in_stock_variants[:left_count] %}
+                  {% include 'components/products/product-variant.jinja' %}
+                {% endfor %}
+              </div>
+
+              {# Right Column #}
+              <div class="flex flex-col gap-4">
+                {% for variant in in_stock_variants[left_count:] %}
+                  {% include 'components/products/product-variant.jinja' %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endset %}
+          {%
+            with
+            id='product-options',
+            title=_('Product options'),
+            content=productOptions,
+            button_class='bg-foreground rounded px-4 py-2'
+          %}
+            {% include 'components/ui/disclosure.jinja' %}
+          {% endwith %}
+        {% endif %}
+        {% set faq %}
+          {% with questions=product.questions %}
+            {% include 'components/products/product-questions.jinja' %}
+          {% endwith %}
+          {% include 'components/products/question-form.jinja' %}
+        {% endset %}
+        {%
+          with
+          id='faq',
+          title='FAQ',
+          content=faq,
+          button_class='bg-foreground rounded px-4 py-2'
+        %}
+          {% include 'components/ui/disclosure.jinja' %}
+        {% endwith %}
+      </div>
+
+      {# Reviews Section #}
+      {% if store.settings.products.reviews_enabled %}
+        <div id="reviews">
+          {% with product=product, store=store, session=session %}
+            {% include 'components/products/product-reviews.jinja' %}
+          {% endwith %}
+        </div>
+      {% endif %}
+
+      {# Related Products Section #}
+      {% if product.related_products and product.related_products|length > 0 %}
+        <div class="mt-12">
+          {%
+            with
+            products=product.related_products,
+            title=_("You may also like"),
+            carousel_id="related-products"
+          %}
+            {% include 'components/products/products-carousel.jinja' %}
+          {% endwith %}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <script src="{{ 'js/product-gallery-carousel.js' | asset_url }}"></script>
+  <script src="{{ 'js/question-form.js' | asset_url }}"></script>
+  <script>
+    (function () {
+      // Initialize product gallery
+      if (window.initializeProductGallery) {
+        window.initializeProductGallery("product-gallery");
+      } else {
+        // Wait for the gallery script to load
+        window.addEventListener("load", function () {
+          if (window.initializeProductGallery) {
+            window.initializeProductGallery("product-gallery");
+          }
+        });
+      }
+
+      // Buy Now functionality
+      const buyNowBtn = document.querySelector("[data-buy-now-btn]");
+
+      // Show Buy Now button when checkout dialog is available
+      window.addEventListener("load", function () {
+        if (window.checkout_dialog && buyNowBtn) {
+          buyNowBtn.classList.remove("hidden");
+        }
+      });
+
+      // Handle Buy Now click
+      if (buyNowBtn) {
+        buyNowBtn.addEventListener("click", async function () {
+          const originalContent = buyNowBtn.innerHTML;
+          const spinner =
+            '<span class="inline-flex items-center justify-center"><svg class="size-5 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></span>';
+
+          try {
+            buyNowBtn.disabled = true;
+            buyNowBtn.innerHTML = spinner;
+
+            await window.zid.cart.buyNow({ form_id: "product-form" }, { showErrorNotification: true });
+          } catch (error) {
+            console.error("Buy Now failed:", error);
+          } finally {
+            buyNowBtn.disabled = false;
+            buyNowBtn.innerHTML = originalContent;
+          }
+        });
+      }
+    })();
+  </script>
+{% endblock %}
