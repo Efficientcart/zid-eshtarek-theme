@@ -7,18 +7,18 @@
     />
   </div>
   <div class="flex-1">
-    <h3 class="text-primary text-[20px] leading-[28px] [font-variant:all-small-caps]">{{ variant.name }}</h3>
-    <p class="mt-1 text-[16px] text-[#545352] [font-variant:all-small-caps]">
+    <h3 class="text-foreground text-h5 [font-variant:all-small-caps]">{{ variant.name }}</h3>
+    <p class="text-muted mt-1 text-body1 [font-variant:all-small-caps]">
       {% for attribute in variant.attributes %}
         {{ attribute.value }}{% if not loop.last %}•{% endif %}
       {% endfor %}
     </p>
     <div class="mt-2 flex items-center gap-2">
       {% if variant.formatted_sale_price %}
-        <span class="text-[16px] leading-[24px]">{{ variant.formatted_sale_price }}</span>
-        <span class="text-[14px] leading-[21px] text-[#c22b51] line-through"> {{ variant.formatted_price }} </span>
+        <span class="text-body1">{{ variant.formatted_sale_price }}</span>
+        <span class="text-destructive text-body2 line-through"> {{ variant.formatted_price }} </span>
       {% else %}
-        <span class="text-[16px] leading-[24px]">{{ variant.formatted_price }}</span>
+        <span class="text-body1">{{ variant.formatted_price }}</span>
       {% endif %}
     </div>
   </div>

@@ -6,7 +6,7 @@
 #}
 {% if product %}
   <div class="border-border mt-4 border-t pt-4">
-    <h3 class="text-primary mb-4 text-[16px] leading-[24px] font-semibold">{{ _("Ask your question") }}</h3>
+    <h3 class="text-foreground text-subtitle1 mb-4">{{ _("Ask your question") }}</h3>
 
     <form
       id="question-form"
@@ -37,7 +37,7 @@
           {% endwith %}
           <p
             id="email-error"
-            class="text-destructive hidden text-[12px] leading-[1.5]"
+            class="text-destructive text-caption hidden"
           >
             {{ _("Email is incorrect") }}
           </p>
@@ -59,7 +59,7 @@
           {% endwith %}
           <p
             id="name-error"
-            class="text-destructive hidden text-[12px] leading-[1.5]"
+            class="text-destructive text-caption hidden"
           >
             {{ _("This field is required") }}
           </p>
@@ -77,11 +77,11 @@
           placeholder="{{ _('Enter your question here') }}"
           rows="3"
           required
-          class="border-input placeholder:text-secondary focus:border-primary w-full resize-none rounded border px-3 py-3 text-[16px] leading-[1.5] transition-[border-color,border-width] outline-none hover:border-2 focus:border-2"
+          class="border-input text-body1 placeholder:text-muted-foreground focus:border-foreground w-full resize-none rounded border px-3 py-3 transition-[border-color,border-width] outline-none hover:border-2 focus:border-2"
         ></textarea>
         <p
           id="question-error"
-          class="text-destructive hidden text-[12px] leading-[1.5]"
+          class="text-destructive text-caption hidden"
         >
           {{ _("This field is required") }}
         </p>

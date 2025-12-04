@@ -55,7 +55,7 @@
     class="flex flex-1 flex-col gap-3 group-data-[grid=list]/grid:col-span-1 group-data-[grid=list]/grid:row-span-1 group-data-[grid=list]/grid:min-w-0 group-data-[grid=list]/grid:self-start"
   >
     <div class="flex flex-col gap-2">
-      <h3 class="text-[20px] leading-[28px] [font-variant:all-small-caps]">
+      <h3 class="text-foreground text-h6">
         <a href="{{ url_for('product_details', slug=product.slug) }}"> {{ product.name }} </a>
       </h3>
       {% if store.settings.products.reviews_enabled %}
@@ -64,7 +64,7 @@
             {% set rating = product.rating.average %}
             {% include 'components/rating-stars.jinja' %}
             {% if product.rating.total_count > 0 %}
-              <span class="text-secondary text-[14px] leading-[1.5]">({{ product.rating.total_count }})</span>
+              <span class="text-muted text-body2">({{ product.rating.total_count }})</span>
             {% endif %}
           </div>
         {% endif %}
@@ -74,15 +74,15 @@
     {% if product.formatted_sale_price is not none %}
       {# Product on sale - show sale price, old price crossed out, and discount #}
       <div class="flex flex-col gap-1">
-        <p class="text-primary text-[16px] leading-[24px] font-semibold">
+        <p class="text-foreground text-body1 font-semibold">
           {% if product.has_options %}{{ _("From") }}{% endif %}
           {{ product.formatted_sale_price }}
         </p>
         <div class="flex flex-wrap items-center gap-2">
-          <span class="text-secondary text-[14px] leading-[21px] line-through"> {{ product.formatted_price }} </span>
+          <span class="text-destructive text-body2 line-through"> {{ product.formatted_price }} </span>
           {% if product.discount_percentage and product.discount_percentage > 0 %}
             <span
-              class="inline-flex items-center rounded-md bg-[#DDF8DC] px-2 py-1 text-[12px] leading-normal font-medium text-[#649560] [font-variant:all-small-caps]"
+              class="bg-success/20 text-tagline text-success inline-flex items-center rounded px-2 py-1 font-medium"
             >
               {{ _("Discount") }} {{ product.discount_percentage }}%
             </span>
@@ -91,7 +91,7 @@
       </div>
     {% else %}
       {# Regular price - no sale #}
-      <p class="text-primary text-[16px] leading-[24px]">
+      <p class="text-foreground text-body1">
         {% if product.has_options %}{{ _("From") }}{% endif %}
         {{ product.formatted_price }}
       </p>
@@ -99,7 +99,7 @@
     {# Description - Only visible in list view #}
     {% if product.short_description or product.description %}
       <p
-        class="text-secondary hidden text-[14px] leading-[21px] group-data-[grid=list]/grid:line-clamp-1 group-data-[grid=list]/grid:[display:-webkit-box] md:group-data-[grid=list]/grid:line-clamp-3"
+        class="text-muted text-body2 hidden group-data-[grid=list]/grid:line-clamp-1 group-data-[grid=list]/grid:[display:-webkit-box] md:group-data-[grid=list]/grid:line-clamp-3"
       >
         {{ product.short_description|striptags|truncate(200) or product.description|striptags|truncate(200) }}
       </p>
@@ -117,8 +117,8 @@
       hidden
     >
       <div
-        class="text-primary bg-background outline-primary inline-flex items-center justify-between gap-2 rounded px-4 py-3 outline outline-1 transition-all hover:outline-2 active:bg-[#F6F5F4] active:outline-2"
-        data-class=" hover:outline-2 active:outline-2 active:bg-[#F6F5F4] px-4 py-3 text-[16px] leading-[24px] w-full md:group-data-[grid=list]/grid:w-1/2"
+        class="text-foreground bg-background outline-foreground active:bg-secondary inline-flex items-center justify-between gap-2 rounded px-4 py-3 outline outline-1 transition-all hover:outline-2 active:outline-2"
+        data-class=" hover:outline-2 active:outline-2 active:bg-secondary px-4 py-3 text-body1 w-full md:group-data-[grid=list]/grid:w-1/2"
         data-quantity-input
         data-product-id="{{ product.id }}"
         data-quantity="1"
@@ -161,7 +161,7 @@
 
         {# Quantity display #}
         <span
-          class="text-primary min-w-[3rem] flex-1 text-center text-sm font-medium"
+          class="text-foreground text-body2 min-w-[3rem] flex-1 text-center font-medium"
           data-quantity-display
           >1</span
         >

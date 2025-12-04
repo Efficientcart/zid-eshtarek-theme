@@ -19,15 +19,11 @@
     {# Header #}
     {% if title %}
       <div class="flex items-center justify-between">
-        <h2
-          class="text-primary text-[32px] leading-[41.6px] [font-variant:all-small-caps] md:text-[40px] md:leading-[48px]"
-        >
-          {{ title }}
-        </h2>
+        <h2 class="text-foreground text-h4 md:text-h3">{{ title }}</h2>
         {% if more_url and more_text %}
           <a
             href="{{ more_url }}"
-            class="text-primary hidden items-center gap-2 px-4 py-3 text-[16px] leading-[24px] md:flex"
+            class="text-foreground text-body1 hidden items-center gap-2 px-4 py-3 md:flex"
           >
             {{ more_text }}
             <svg
@@ -65,15 +61,15 @@
 
     {# Controls #}
     <div class="flex items-center gap-2">
-      <div class="products-embla__progress bg-foreground h-1 w-full rounded-full">
+      <div class="products-embla__progress bg-secondary h-1 w-full rounded">
         <div
-          class="products-embla__progress-bar bg-primary h-1 rounded-full"
+          class="products-embla__progress-bar bg-accent h-1 rounded-sm"
           style="width: 0%"
         ></div>
       </div>
       <div class="hidden items-center gap-2 md:flex">
         <button
-          class="products-embla__prev p-2.5 disabled:opacity-30"
+          class="products-embla__prev flex size-10 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm disabled:opacity-30"
           aria-label="{{ _('Previous') }}"
         >
           <svg
@@ -91,7 +87,7 @@
           </svg>
         </button>
         <button
-          class="products-embla__next p-2.5 disabled:opacity-30"
+          class="products-embla__next flex size-10 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm disabled:opacity-30"
           aria-label="{{ _('Next') }}"
         >
           <svg
@@ -112,7 +108,7 @@
       {% if more_url and more_text %}
         <a
           href="{{ more_url }}"
-          class="text-primary flex items-center gap-2 px-4 py-3 text-[16px] leading-[24px] whitespace-nowrap md:hidden"
+          class="text-foreground text-body1 flex items-center gap-2 px-4 py-3 whitespace-nowrap md:hidden"
         >
           {{ more_text }}
           <svg

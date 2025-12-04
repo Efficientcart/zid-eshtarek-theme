@@ -37,9 +37,7 @@
 
   <div class="mt-6 flex flex-col gap-4">
     {# Title #}
-    <h2 class="text-primary text-[32px] leading-[1.2] [font-variant:all-small-caps] md:text-[40px]">
-      {{ _("Customer reviews") }}
-    </h2>
+    <h2 class="text-foreground text-h3 text-caps md:text-h3">{{ _("Customer reviews") }}</h2>
 
     {# Rating Summary Section #}
     <div class="flex flex-col gap-6 md:flex-row">
@@ -47,13 +45,9 @@
       <div class="flex shrink-0 flex-col gap-4">
         {% if product.rating %}
           <div class="flex flex-col gap-1">
-            <p class="text-primary text-[16px] leading-normal [font-variant:all-small-caps]">
-              {{ _("Overall rating") }}
-            </p>
+            <p class="text-foreground text-tagline">{{ _("Overall rating") }}</p>
             <div class="flex h-8 items-center gap-1.5">
-              <p class="text-primary text-[24px] leading-[1.4] [font-variant:all-small-caps]">
-                {{ product.rating.average|round(1) }}
-              </p>
+              <p class="text-foreground text-h5 text-caps">{{ product.rating.average|round(1) }}</p>
               <div class="flex gap-0.5 overflow-clip">
                 {% set rating = product.rating.average %}
                 {% include 'components/rating-stars.jinja' %}
@@ -90,9 +84,7 @@
       {# Right: Rating Snapshot #}
       {% if product.rating %}
         <div class="flex min-w-0 flex-1 flex-col gap-2">
-          <p class="text-primary text-[16px] leading-normal [font-variant:all-small-caps]">
-            {{ _("Rating snapshot") }}
-          </p>
+          <p class="text-foreground text-tagline">{{ _("Rating snapshot") }}</p>
 
           {% set total_reviews = product.rating.total_count or 1 %}
 
@@ -102,18 +94,18 @@
             {% set count = rating_data.count if rating_data else 0 %}
             {% set percentage = (count / total_reviews * 100) if total_reviews > 0 else 0 %}
             <div class="flex w-full items-center gap-2">
-              <span class="text-primary w-[50px] shrink-0 text-[14px] leading-[1.43]">
+              <span class="text-foreground text-body2 w-[42px] shrink-0">
                 {{ i }} {{ _("star") if i == 1 else _("stars") }}
               </span>
               <div class="min-w-0 flex-1">
-                <div class="bg-foreground h-1 w-full rounded">
+                <div class="bg-secondary h-1 w-full rounded">
                   <div
-                    class="bg-primary h-1 rounded"
+                    class="bg-accent h-1 rounded-sm"
                     style="width: {{ percentage|round(1) }}%"
                   ></div>
                 </div>
               </div>
-              <span class="text-secondary w-12 shrink-0 text-right text-[14px]">{{ count }}</span>
+              <span class="text-muted text-body1 w-10 shrink-0 text-right">{{ count }}</span>
             </div>
           {% endfor %}
         </div>
@@ -127,7 +119,7 @@
 
     {# Review Count #}
     {% if product.reviews and product.reviews.results %}
-      <p class="text-primary text-[16px] [font-variant:all-small-caps]">
+      <p class="text-foreground text-tagline">
         {{ product.reviews.results|length }} {{ _("out of") }}
         {{ product.reviews.count or product.reviews.results|length }}
         {{ _("reviews") }}
@@ -136,7 +128,7 @@
 
     {# Reviews List #}
     {% if product.reviews and product.reviews.results %}
-      <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
         {% for review in product.reviews.results %}
           {% with review=review, store=store %}
             {% include 'components/products/review-card.jinja' %}
@@ -161,7 +153,7 @@
     {% else %}
       {# No Reviews Message #}
       <div class="border-border rounded border p-4">
-        <p class="text-secondary text-[16px]">{{ _("No reviews, add yours") }}</p>
+        <p class="text-muted-foreground text-body1">{{ _("No reviews, add yours") }}</p>
       </div>
     {% endif %}
   </div>

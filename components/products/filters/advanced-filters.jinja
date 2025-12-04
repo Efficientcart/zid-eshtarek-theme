@@ -19,7 +19,7 @@
           title="{{ option.value }}"
         ></span>
       </span>
-      <span class="text-[16px] leading-[24px]">{{ option.value }}</span>
+      <span class="text-body1">{{ option.value }}</span>
     {% endset %}
     {%
       with
@@ -40,7 +40,7 @@
           class="size-full rounded object-cover"
         />
       </span>
-      <span class="text-[16px] leading-[24px]">{{ option.value }}</span>
+      <span class="text-body1">{{ option.value }}</span>
     {% endset %}
     {%
       with
@@ -74,7 +74,7 @@
   type="button"
   command="show-modal"
   commandfor="filters-drawer"
-  class="border-primary text-primary flex items-center gap-3 rounded border px-4 py-3 text-[16px] leading-[24px]"
+  class="border-foreground text-foreground text-body1 flex items-center gap-3 rounded border px-4 py-3"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +100,7 @@
     class="fixed inset-0 size-auto max-h-none max-w-none overflow-hidden bg-transparent not-open:hidden backdrop:bg-transparent"
   >
     <el-dialog-backdrop
-      class="absolute inset-0 bg-black/75 transition-opacity duration-500 ease-in-out data-closed:opacity-0"
+      class="absolute inset-0 bg-black/10 backdrop-blur-sm transition-opacity duration-500 ease-in-out data-closed:opacity-0"
     ></el-dialog-backdrop>
     <div
       tabindex="0"
@@ -120,7 +120,7 @@
             <div class="flex items-start justify-between">
               <h2
                 id="drawer-title"
-                class="text-primary text-[24px] leading-[33.6px] uppercase [font-variant:all-small-caps]"
+                class="text-foreground text-h5 uppercase [font-variant:all-small-caps]"
               >
                 {{ _("Filters") }}
               </h2>
@@ -265,7 +265,7 @@
                           type="button"
                           command="--toggle"
                           commandfor="{{ attribute.slug }}-more"
-                          class="group text-secondary mt-3 text-[14px] leading-[21px] underline"
+                          class="group text-muted-foreground text-body2 mt-3 underline"
                         >
                           <span class="hidden group-aria-[expanded=false]:inline">{{ _("View more") }}</span>
                           <span class="hidden group-aria-[expanded=true]:inline">{{ _("View less") }}</span>

@@ -34,7 +34,7 @@
 
           {# Hint text #}
           {% if custom_field.hint %}
-            <p class="text-secondary text-[12px] leading-[1.5]">{{ custom_field.hint }}</p>
+            <p class="text-muted-foreground text-caption">{{ custom_field.hint }}</p>
           {% endif %}
 
           {# Checkbox options #}
@@ -43,7 +43,7 @@
               {% set checkbox_label %}
                 {{ choice.name }}
                 {% if choice.price and choice.price > 0 %}
-                  <span class="text-secondary">(+{{ choice.formatted_price }})</span>
+                  <span class="text-muted-foreground">(+{{ choice.formatted_price }})</span>
                 {% endif %}
               {% endset %}
               {%
@@ -51,7 +51,7 @@
                 id=choice.id,
                 name=choice.name,
                 label=checkbox_label,
-                attrs='oninput="productOptionInputChanged(event)"'
+                attrs='data-price-settings="' ~ choice.id ~ '" data-group-id="' ~ custom_field.id ~ '" data-group-name="' ~ custom_field.label ~ '" data-field-type="CHECKBOX" oninput="productOptionInputChanged(event)"'
               %}
                 {% include 'components/ui/checkbox.jinja' %}
               {% endwith %}
@@ -72,7 +72,13 @@
             {% if choice.price and choice.price > 0 %}
               {% set option_label = choice.name ~ ' (+' ~ choice.formatted_price ~ ')' %}
             {% endif %}
-            {% set ns.dropdown_options = ns.dropdown_options + [{'value': choice.name, 'label': option_label}] %}
+            {%
+              set ns.dropdown_options = ns.dropdown_options + [{
+                'value': choice.name,
+                'label': option_label,
+                'attrs': 'data-price-settings="' ~ choice.id ~ '"'
+              }]
+            %}
           {% endfor %}
 
           {# Label #}
@@ -87,7 +93,7 @@
             id=custom_field.id,
             options=ns.dropdown_options,
             caption=custom_field.hint,
-            attrs='data-type="' ~ custom_field.type ~ '" lang="' ~ session.lang ~ '" onchange="productOptionInputChanged(event)"'
+            attrs='data-field-type="DROPDOWN" data-group-id="' ~ custom_field.id ~ '" data-group-name="' ~ custom_field.label ~ '" lang="' ~ session.lang ~ '" onchange="productOptionInputChanged(event)"'
           %}
             {% include 'components/ui/select.jinja' %}
           {% endwith %}
@@ -121,7 +127,7 @@
             id=custom_field.id,
             caption=custom_field.hint,
             required=custom_field.is_required,
-            attrs='data-type="' ~ custom_field.type ~ '" title="' ~ custom_field.label ~ '" lang="' ~ session.lang ~ '" accept="' ~ file_accept ~ '" onchange="' ~ file_onchange ~ '"'
+            attrs='data-field-type="' ~ custom_field.type ~ '" data-price-settings="' ~ custom_field.id ~ '" data-group-id="' ~ custom_field.id ~ '" data-group-name="' ~ custom_field.label ~ '" title="' ~ custom_field.label ~ '" lang="' ~ session.lang ~ '" accept="' ~ file_accept ~ '" onchange="' ~ file_onchange ~ '"'
           %}
             {% include 'components/ui/input.jinja' %}
           {% endwith %}
@@ -143,15 +149,17 @@
           <textarea
             id="{{ custom_field.id }}"
             name="{{ custom_field.label }}"
-            data-type="{{ custom_field.type }}"
-            data-type-att="TEXTAREA"
+            data-field-type="TEXTAREA"
+            data-price-settings="{{ custom_field.id }}"
+            data-group-id="{{ custom_field.id }}"
+            data-group-name="{{ custom_field.label }}"
             title="{{ custom_field.label }}"
             lang="{{ session.lang }}"
             placeholder="{{ custom_field.hint }}"
             rows="5"
             {% if custom_field.is_required %}required{% endif %}
             oninput="productOptionInputChanged(event)"
-            class="focus:border-primary border-input placeholder:text-secondary w-full resize-none rounded border px-3 py-3 text-[16px] leading-[1.5] transition-[border-color,border-width] outline-none hover:border-2 focus:border-2"
+            class="focus:border-foreground border-muted placeholder:text-muted-foreground w-full resize-none rounded border px-3 py-3 text-body1 transition-[border-color,border-width] outline-none hover:border-2 focus:border-2"
           ></textarea>
         </div>
 
@@ -166,7 +174,7 @@
             {% set input_type = 'text' %}
           {% endif %}
 
-          {% set extra_attrs = 'data-type="' ~ custom_field.type ~ '" title="' ~ custom_field.label ~ '" lang="' ~ session.lang ~ '" oninput="productOptionInputChanged(event)"' %}
+          {% set extra_attrs = 'data-field-type="' ~ custom_field.type ~ '" data-price-settings="' ~ custom_field.id ~ '" data-group-id="' ~ custom_field.id ~ '" data-group-name="' ~ custom_field.label ~ '" title="' ~ custom_field.label ~ '" lang="' ~ session.lang ~ '" oninput="productOptionInputChanged(event)"' %}
           {% if custom_field.type == 'NUMBER' %}
             {% set extra_attrs = extra_attrs ~ ' onkeypress="productOptionInputNumberValidate(event)"' %}
           {% elif custom_field.type == 'DATE' %}

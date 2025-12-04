@@ -2,11 +2,11 @@
 {% set availability_options = { 'in_stock': _('In stock'), 'out_of_stock': _('Out of stock') } %}
 
 <div class="flex flex-wrap items-center gap-3">
-  <span class="text-secondary text-[16px] leading-[24px]"> {{ _("Filters") }} </span>
+  <span class="text-muted-foreground text-body1"> {{ _("Filters") }} </span>
   <button
     popovertarget="availability-popover"
     type="button"
-    class="text-primary group inline-flex items-center justify-center gap-2 border-none bg-transparent text-[16px] leading-[24px] focus:ring-0"
+    class="text-foreground text-body1 group inline-flex items-center justify-center gap-2 border-none bg-transparent focus:ring-0"
   >
     <span>{{ _("Availability") }}</span>
     <svg
@@ -28,7 +28,7 @@
     id="availability-popover"
     anchor="bottom center"
     popover
-    class="origin-top-center border-border min-w-[200px] rounded-none border bg-white p-4 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+    class="origin-top-center border-border-light bg-background min-w-[200px] rounded-none border p-4 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
   >
     <div class="space-y-1">
       {% set availability_values = session.query_params.getlist('availability') if session and session.query_params else [] %}
@@ -52,7 +52,7 @@
   <button
     popovertarget="price-popover"
     type="button"
-    class="text-primary group inline-flex items-center justify-center gap-2 border-none bg-transparent text-[16px] leading-[24px] focus:ring-0"
+    class="text-foreground text-body1 group inline-flex items-center justify-center gap-2 border-none bg-transparent focus:ring-0"
   >
     <span>{{ _("Price") }}</span>
     <svg
@@ -74,7 +74,7 @@
     id="price-popover"
     anchor="bottom center"
     popover
-    class="origin-top-center border-border max-w-[260px] rounded-none border bg-white p-4 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+    class="origin-top-center border-border-light bg-background max-w-[260px] rounded-none border p-4 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
   >
     <form
       id="price-filter-form-simple"
@@ -91,7 +91,7 @@
       <div class="mt-3 flex justify-end">
         <button
           type="submit"
-          class="text-primary border-none bg-transparent px-2 py-1.5 text-[12px] leading-[18px]"
+          class="text-foreground text-caption border-none bg-transparent px-2 py-1.5"
         >
           {{ _("Apply") }}
         </button>
