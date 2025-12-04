@@ -8,7 +8,7 @@
   </div>
   <div class="flex-1">
     <h3 class="text-foreground text-h5 [font-variant:all-small-caps]">{{ variant.name }}</h3>
-    <p class="text-muted mt-1 text-body1 [font-variant:all-small-caps]">
+    <p class="text-muted text-body1 mt-1 [font-variant:all-small-caps]">
       {% for attribute in variant.attributes %}
         {{ attribute.value }}{% if not loop.last %}•{% endif %}
       {% endfor %}

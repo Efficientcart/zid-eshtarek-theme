@@ -92,9 +92,7 @@
     {% if badges %}
       <div class="absolute start-4 top-4 flex flex-col gap-2">
         {% for badge in badges %}
-          <span class="bg-background w-fit rounded px-2 text-body1 [font-variant:all-small-caps]">
-            {{ badge }}
-          </span>
+          <span class="bg-background text-body1 w-fit rounded px-2 [font-variant:all-small-caps]"> {{ badge }} </span>
         {% endfor %}
       </div>
     {% endif %}

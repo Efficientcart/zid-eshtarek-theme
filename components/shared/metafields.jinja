@@ -86,7 +86,7 @@
               </svg>
               <div class="flex min-w-0 flex-1 flex-col">
                 {% if item.value.name %}
-                  <span class="text-foreground truncate text-caption font-medium">{{ item.value.name }}</span>
+                  <span class="text-foreground text-caption truncate font-medium">{{ item.value.name }}</span>
                 {% endif %}
                 {% if item.value.formated_size %}
                   <span class="text-muted-foreground text-[10px] leading-3">{{ item.value.formated_size }}</span>
@@ -127,12 +127,12 @@
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
           <dd class="overflow-x-auto">
-            <table class="w-full text-body2">
+            <table class="text-body2 w-full">
               <thead>
                 <tr class="bg-secondary rounded-lg">
                   {% for header in item.value.headers %}
                     <th
-                      class="text-foreground px-6 py-5 text-start text-body2 font-semibold first:rounded-e-lg last:rounded-s-lg"
+                      class="text-foreground text-body2 px-6 py-5 text-start font-semibold first:rounded-e-lg last:rounded-s-lg"
                     >
                       {{ header.name[session.lang] if header.name[session.lang] else header.name.ar }}
                     </th>
@@ -170,12 +170,14 @@
                             </svg>
                             <div class="flex min-w-0 flex-1 flex-col">
                               {% if cell.value.name %}
-                                <span class="text-foreground max-w-[60px] truncate text-caption font-medium"
+                                <span class="text-foreground text-caption max-w-[60px] truncate font-medium"
                                   >{{ cell.value.name }}</span
                                 >
                               {% endif %}
                               {% if cell.value.formated_size %}
-                                <span class="text-muted-foreground text-[10px] leading-3">{{ cell.value.formated_size }}</span>
+                                <span class="text-muted-foreground text-[10px] leading-3"
+                                  >{{ cell.value.formated_size }}</span
+                                >
                               {% endif %}
                             </div>
                             <svg

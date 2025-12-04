@@ -36,7 +36,7 @@
           <el-dialog-panel
             class="group/dialog-panel relative block size-full transform transition duration-500 ease-in-out data-closed:translate-x-full sm:duration-700"
           >
-            <div class="relative flex h-full flex-col bg-background">
+            <div class="bg-background relative flex h-full flex-col">
               <div class="flex h-full flex-col items-start gap-8 overflow-y-auto pt-4">
                 <div class="flex min-h-px w-full min-w-px flex-1 flex-col items-start overflow-clip">
                   {% for menu in store.settings.menus.main_menu.items %}
@@ -375,7 +375,7 @@
                 >
                   <button
                     type="button"
-                    class="border-border text-foreground text-body1 grid w-full cursor-pointer grid-cols-1 rounded border bg-background py-1.5 ps-3 pe-2 outline-1 -outline-offset-1 outline-border focus-visible:outline-2 focus-visible:-outline-offset-2 ltr:text-left rtl:text-right"
+                    class="border-border text-foreground text-body1 bg-background outline-border grid w-full cursor-pointer grid-cols-1 rounded border py-1.5 ps-3 pe-2 outline-1 -outline-offset-1 focus-visible:outline-2 focus-visible:-outline-offset-2 ltr:text-left rtl:text-right"
                   >
                     <el-selectedcontent class="col-start-1 row-start-1 truncate pe-6 pt-[18px]">
                       {{ session.country.names[session.lang] if session.country.names else session.country.name }}
@@ -401,12 +401,12 @@
                   <el-options
                     anchor="bottom start"
                     popover
-                    class="text-foreground text-body1 max-h-60 w-(--button-width) overflow-auto rounded-md border border-foreground/10 bg-background py-1 shadow-lg [--anchor-gap:4px] data-leave:transition data-leave:transition-discrete data-leave:duration-150 data-leave:ease-in data-closed:data-leave:opacity-0"
+                    class="text-foreground text-body1 border-foreground/10 bg-background max-h-60 w-(--button-width) overflow-auto rounded-md border py-1 shadow-lg [--anchor-gap:4px] data-leave:transition data-leave:transition-discrete data-leave:duration-150 data-leave:ease-in data-closed:data-leave:opacity-0"
                   >
                     {% for country in store.countries %}
                       <el-option
                         value="{{ country.code | lower }}"
-                        class="group/option relative block cursor-pointer py-2 ps-3 pe-9 select-none hover:bg-secondary focus:bg-secondary focus:outline-hidden"
+                        class="group/option hover:bg-secondary focus:bg-secondary relative block cursor-pointer py-2 ps-3 pe-9 select-none focus:outline-hidden"
                       >
                         <span class="block truncate font-normal group-aria-selected/option:font-semibold">
                           {{ country.names[session.lang] if country.names else country.name }}
@@ -440,7 +440,7 @@
                 >
                   <button
                     type="button"
-                    class="border-border text-foreground text-body1 grid w-full cursor-pointer grid-cols-1 rounded border bg-background py-1.5 ps-3 pe-2 outline-1 -outline-offset-1 outline-border focus-visible:outline-2 focus-visible:-outline-offset-2 ltr:text-left rtl:text-right"
+                    class="border-border text-foreground text-body1 bg-background outline-border grid w-full cursor-pointer grid-cols-1 rounded border py-1.5 ps-3 pe-2 outline-1 -outline-offset-1 focus-visible:outline-2 focus-visible:-outline-offset-2 ltr:text-left rtl:text-right"
                   >
                     <el-selectedcontent class="col-start-1 row-start-1 truncate pe-6 pt-[18px]">
                       {% for language in store.languages %}
@@ -468,12 +468,12 @@
                   <el-options
                     anchor="bottom start"
                     popover
-                    class="text-foreground text-body1 max-h-60 w-(--button-width) overflow-auto rounded-md border border-foreground/10 bg-background py-1 shadow-lg [--anchor-gap:4px] data-leave:transition data-leave:transition-discrete data-leave:duration-150 data-leave:ease-in data-closed:data-leave:opacity-0"
+                    class="text-foreground text-body1 border-foreground/10 bg-background max-h-60 w-(--button-width) overflow-auto rounded-md border py-1 shadow-lg [--anchor-gap:4px] data-leave:transition data-leave:transition-discrete data-leave:duration-150 data-leave:ease-in data-closed:data-leave:opacity-0"
                   >
                     {% for language in store.languages %}
                       <el-option
                         value="{{ language.code }}"
-                        class="group/option relative block cursor-pointer py-2 ps-3 pe-9 select-none hover:bg-secondary focus:bg-secondary focus:outline-hidden"
+                        class="group/option hover:bg-secondary focus:bg-secondary relative block cursor-pointer py-2 ps-3 pe-9 select-none focus:outline-hidden"
                       >
                         <span class="block truncate font-normal group-aria-selected/option:font-semibold">
                           {{ language.name }}
@@ -548,7 +548,7 @@
           </svg>
           <span
             data-cart-badge
-            class="bg-destructive absolute -top-0.5 -right-0.5 flex hidden h-5 w-5 items-center justify-center rounded-full text-[10px] leading-none text-primary-foreground"
+            class="bg-destructive text-primary-foreground absolute -top-0.5 -right-0.5 flex hidden h-5 w-5 items-center justify-center rounded-full text-[10px] leading-none"
           >
             0
           </span>
