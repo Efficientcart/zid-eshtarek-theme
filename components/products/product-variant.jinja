@@ -22,14 +22,4 @@
       {% endif %}
     </div>
   </div>
-
-  {%
-    with
-    content=_('Add to cart'),
-    variant='text',
-    size='md',
-    attrs='data-variant-id="' ~ variant.id ~ '"'
-  %}
-    {% include 'components/ui/button.jinja' %}
-  {% endwith %}
 </div>

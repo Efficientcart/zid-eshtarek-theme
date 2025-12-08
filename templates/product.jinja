@@ -341,6 +341,9 @@
                 </div>
               {% endif %}
             </div>
+
+            {% include 'components/products/loyalty_points_widget.jinja' %}
+            {% include 'vitrin:products/payment_widgets.jinja' %}
           </form>
         </div>
       </div>
@@ -354,12 +357,12 @@
 
         {# Features & Details Disclosure #}
         {% if has_weight or has_metafields or has_description %}
-          <div class="bg-secondary rounded">
+          <div>
             <button
               type="button"
               command="--toggle"
               commandfor="features-details"
-              class="group flex w-full items-center justify-between gap-3 px-4 py-2"
+              class="bg-secondary group flex w-full items-center justify-between gap-3 rounded px-4 py-2"
               aria-expanded="false"
             >
               <span class="text-foreground text-h6">{{ _("Features & details") }}</span>
@@ -432,12 +435,12 @@
           {% endfor %}
 
           {% if in_stock_variants|length > 0 %}
-            <div class="bg-secondary rounded">
+            <div>
               <button
                 type="button"
                 command="--toggle"
                 commandfor="product-options"
-                class="group flex w-full items-center justify-between gap-3 px-4 py-2"
+                class="bg-secondary group flex w-full items-center justify-between gap-3 rounded px-4 py-2"
                 aria-expanded="false"
               >
                 <span class="text-foreground text-h6">{{ _("Product options") }}</span>
@@ -489,12 +492,12 @@
         {% endif %}
 
         {# FAQ Disclosure #}
-        <div class="bg-secondary rounded">
+        <div>
           <button
             type="button"
             command="--toggle"
             commandfor="faq"
-            class="group flex w-full items-center justify-between gap-3 px-4 py-2"
+            class="bg-secondary group flex w-full items-center justify-between gap-3 rounded px-4 py-2"
             aria-expanded="false"
           >
             <span class="text-foreground text-h6">{{ _("FAQ") }}</span>
