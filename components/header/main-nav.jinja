@@ -1,0 +1,48 @@
+<ul class="hidden items-center gap-6 md:flex">
+  {% for menu in store.settings.menus.main_menu.items %}
+    <li>
+      {% if menu.items | length > 0 %}
+        <el-dropdown class="inline-block">
+          <button class="text-foreground text-body1 flex items-center gap-1 py-2 hover:underline">
+            {{ menu.label }}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              class="text-foreground"
+              fill="none"
+            >
+              <path
+                d="M4.7251 6.18262C4.74222 6.18262 4.7492 6.18558 4.75146 6.18652L4.77783 6.20605L7.64502 9.09082L7.99854 9.44629L8.354 9.0918L11.2388 6.20605C11.2466 6.19822 11.2525 6.19432 11.2554 6.19238C11.257 6.19127 11.2579 6.19062 11.2583 6.19043H11.2651C11.2834 6.1911 11.2983 6.19338 11.3276 6.22266C11.3426 6.23759 11.3462 6.24664 11.3472 6.24902C11.3481 6.25126 11.3511 6.25818 11.3511 6.27539C11.3511 6.29239 11.3481 6.29941 11.3472 6.30176C11.3462 6.30414 11.3426 6.31319 11.3276 6.32812L8.04834 9.60742C8.03231 9.62345 8.02229 9.62992 8.01904 9.63184C8.0165 9.6329 8.01164 9.63472 8.00049 9.63477C7.989 9.63477 7.98354 9.63291 7.98096 9.63184L7.95166 9.60742L4.65576 6.31152C4.64868 6.30444 4.64476 6.2994 4.64307 6.29688C4.64222 6.29562 4.64233 6.29439 4.64209 6.29395H4.64111C4.64105 6.29372 4.64128 6.29204 4.64111 6.29102C4.64079 6.28895 4.63986 6.28428 4.64014 6.27637C4.64115 6.2478 4.64677 6.23164 4.67236 6.20605C4.68728 6.19115 4.69635 6.18752 4.69873 6.18652C4.70113 6.18553 4.70822 6.18262 4.7251 6.18262Z"
+                fill="currentColor"
+                stroke="currentColor"
+              ></path>
+            </svg>
+          </button>
+          <el-menu
+            anchor="bottom center"
+            popover
+            class="border-border-light bg-background min-w-30 origin-bottom gap-1 border p-4 transition transition-discrete data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
+          >
+            {% for submenu in menu.items %}
+              <a
+                href="{{ submenu.url | localized_url if submenu.resource_type != 'url' else submenu.url }}"
+                class="text-foreground text-body1 block py-2 hover:underline"
+              >
+                {{ submenu.label }}
+              </a>
+            {% endfor %}
+          </el-menu>
+        </el-dropdown>
+      {% else %}
+        <a
+          href="{{ menu.url | localized_url if menu.resource_type != 'url' else menu.url }}"
+          class="text-foreground text-body1 py-2 hover:underline"
+        >
+          {{ menu.label }}
+        </a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

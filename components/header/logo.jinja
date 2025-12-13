@@ -1,0 +1,26 @@
+{# Header Logo Component #}
+{# Displays responsive logo with separate desktop/mobile variants #}
+
+{% if settings.logo_desktop or settings.logo_mobile %}
+  <img
+    width="106"
+    height="44"
+    src="{{ settings.logo_desktop | default(settings.logo_mobile) | default(store.logo) }}"
+    class="hidden md:block"
+    alt="{{ store.name }}"
+  />
+  <img
+    width="106"
+    height="44"
+    src="{{ settings.logo_mobile | default(settings.logo_desktop) | default(store.logo) }}"
+    class="block md:hidden"
+    alt="{{ store.name }}"
+  />
+{% else %}
+  <img
+    width="106"
+    height="44"
+    src="{{ store.logo }}"
+    alt="{{ store.name }}"
+  />
+{% endif %}

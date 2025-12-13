@@ -1,0 +1,122 @@
+{# Mobile Navigation Drawer #}
+<el-dialog class="group contents">
+  <button
+    command="show-modal"
+    commandfor="mobile-drawer"
+    class="text-foreground relative h-10 w-10 p-2 group-data-[transition]:pointer-events-none focus:outline-none md:hidden"
+    aria-label="Toggle menu"
+  >
+    <span
+      aria-hidden="true"
+      class="absolute block h-0.5 w-5 transform bg-current transition duration-500 ease-in-out group-data-[closed]:-translate-y-1.5 group-data-[enter]:rotate-45 group-data-[leave]:!rotate-0 group-[:not([open])]:-translate-y-1.5 group-[[open]]:rotate-45"
+    ></span>
+    <span
+      aria-hidden="true"
+      class="absolute block h-0.5 w-5 transform bg-current transition duration-500 ease-in-out group-data-[enter]:opacity-0 group-data-[leave]:!opacity-100 group-[[open]]:opacity-0"
+    ></span>
+    <span
+      aria-hidden="true"
+      class="absolute block h-0.5 w-5 transform bg-current transition duration-500 ease-in-out group-data-[closed]:translate-y-1.5 group-data-[enter]:-rotate-45 group-data-[leave]:!-rotate-0 group-[:not([open])]:translate-y-1.5 group-[[open]]:-rotate-45"
+    ></span>
+  </button>
+  <dialog
+    id="mobile-drawer"
+    aria-labelledby="drawer-title"
+    class="fixed top-[var(--header-h)] right-0 bottom-0 left-0 size-auto max-h-none max-w-none overflow-hidden bg-transparent not-open:hidden backdrop:bg-transparent"
+  >
+    <el-dialog-backdrop
+      class="absolute inset-0 bg-black/10 backdrop-blur-sm transition-opacity duration-500 ease-in-out data-closed:opacity-0"
+    ></el-dialog-backdrop>
+    <div
+      tabindex="0"
+      class="absolute inset-0 focus:outline-none"
+    >
+      <el-dialog-panel
+        class="group/dialog-panel relative block size-full transform transition duration-500 ease-in-out data-closed:translate-x-full sm:duration-700"
+      >
+        <div class="bg-background relative flex h-full flex-col">
+          <div class="flex h-full flex-col items-start gap-8 overflow-y-auto pt-4">
+            {# Navigation Menu #}
+            <div class="flex min-h-px w-full min-w-px flex-1 flex-col items-start overflow-clip">
+              {% for menu in store.settings.menus.main_menu.items %}
+                {% if menu.items | length > 0 %}
+                  <details class="group w-full">
+                    <summary
+                      class="text-foreground text-body1 flex w-full cursor-pointer items-center justify-between gap-1 px-6 py-2 select-none"
+                    >
+                      <span class="text-foreground text-body1 min-h-px min-w-px flex-1 text-start"
+                        >{{ menu.label }}</span
+                      >
+                      <svg
+                        class="text-foreground size-4 rtl:rotate-180"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                      >
+                        <path
+                          d="M3 8h10M9 4l4 4-4 4"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </summary>
+                    <div class="mt-1 space-y-1 ps-8">
+                      {% for submenu in menu.items %}
+                        <a
+                          href="{{ submenu.url | localized_url if submenu.resource_type != 'url' else submenu.url }}"
+                          class="text-foreground text-body1 block px-6 py-2"
+                        >
+                          {{ submenu.label }}
+                        </a>
+                      {% endfor %}
+                    </div>
+                  </details>
+                {% else %}
+                  <a
+                    href="{{ menu.url | localized_url if menu.resource_type != 'url' else menu.url }}"
+                    class="text-foreground text-body1 min-h-px w-full min-w-px px-6 py-2 text-start"
+                  >
+                    {{ menu.label }}
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+            {# Footer: Login/Account + Region #}
+            <div class="border-border-light flex w-full flex-col items-start gap-[3px] border-t pt-4 pb-6">
+              {# Logged out state #}
+              <button
+                id="mobile-login-btn"
+                type="button"
+                onclick="handleLoginAction()"
+                class="text-foreground text-body1 min-h-px w-full min-w-px px-6 py-2 text-start"
+              >
+                {{ _("Login") }}
+              </button>
+              {# Logged in state #}
+              <div
+                id="mobile-logged-in-links"
+                class="hidden w-full flex-col"
+              >
+                <a
+                  href="{{ url_for('profile') }}"
+                  class="text-foreground text-body1 min-h-px w-full min-w-px px-6 py-2 text-start"
+                >
+                  {{ _("Account") }}
+                </a>
+                <button
+                  type="button"
+                  onclick="zid.customer.logout()"
+                  class="text-foreground text-body1 min-h-px w-full min-w-px px-6 py-2 text-start"
+                >
+                  {{ _("Log out") }}
+                </button>
+              </div>
+              {% include 'components/header/mobile-region-sheets.jinja' %}
+            </div>
+          </div>
+        </div>
+      </el-dialog-panel>
+    </div>
+  </dialog>
+</el-dialog>

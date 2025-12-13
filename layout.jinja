@@ -123,8 +123,26 @@
       defer
       src="{{ 'js/cart.js' | asset_url }}"
     ></script>
+    <script
+      defer
+      src="{{ 'js/search.js' | asset_url }}"
+    ></script>
 
-  <script  defer>
+  {# Layout config for header/locale functionality #}
+  <script>
+    window.layoutConfig = {
+      profileUrl: "{{ url_for('profile') }}",
+      currentCountry: "{{ session.country.code | lower }}",
+      currentLanguage: "{{ session.lang }}",
+      defaultCountryCode: "{{ store.default_locale.region.code | lower }}"
+    };
+  </script>
+  <script
+    defer
+    src="{{ 'js/layout.js' | asset_url }}"
+  ></script>
+
+  <script defer>
     // Product translations (used by product.js for variant changes)
     window.productTranslations = {
       discount: "{{ _('Discount') }}",
