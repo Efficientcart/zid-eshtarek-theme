@@ -167,72 +167,30 @@
           </a>
         {% endif %}
       </div>
-      {% if not settings.links_1_hide and settings.links_1_links %}
-        <div>
-          {% if settings.links_1_title %}
-            <h3 class="text-foreground text-subtitle1">{{ settings.links_1_title }}</h3>
-          {% endif %}
-          <ul
-            role="list"
-            class="mt-4"
-          >
-            {% for link in settings.links_1_links %}
-              <li class="py-2">
-                <a
-                  href="{{ link.url }}"
-                  class="text-foreground text-body1 hover:underline"
-                >
-                  {{ link.title }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-      {% if not settings.links_2_hide and settings.links_2_links %}
-        <div>
-          {% if settings.links_2_title %}
-            <h3 class="text-foreground text-subtitle1">{{ settings.links_2_title }}</h3>
-          {% endif %}
-          <ul
-            role="list"
-            class="mt-4"
-          >
-            {% for link in settings.links_2_links %}
-              <li class="py-2">
-                <a
-                  href="{{ link.url }}"
-                  class="text-foreground text-body1 hover:underline"
-                >
-                  {{ link.title }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-      {% if not settings.links_3_hide and settings.links_3_links %}
-        <div>
-          {% if settings.links_3_title %}
-            <h3 class="text-foreground text-subtitle1">{{ settings.links_3_title }}</h3>
-          {% endif %}
-          <ul
-            role="list"
-            class="mt-4"
-          >
-            {% for link in settings.links_3_links %}
-              <li class="py-2">
-                <a
-                  href="{{ link.url }}"
-                  class="text-foreground text-body1 hover:underline"
-                >
-                  {{ link.title }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
+      {% for group in settings.link_groups %}
+        {% if not group.hide and group.links %}
+          <div>
+            {% if group.title %}
+              <h3 class="text-foreground text-subtitle1">{{ group.title }}</h3>
+            {% endif %}
+            <ul
+              role="list"
+              class="mt-4"
+            >
+              {% for link in group.links %}
+                <li class="py-2">
+                  <a
+                    href="{{ link.url }}"
+                    class="text-foreground text-body1 hover:underline"
+                  >
+                    {{ link.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      {% endfor %}
       <div>
         <h3 class="text-foreground text-subtitle1">Subscribe</h3>
         <p class="text-foreground text-body1 my-4 text-balance">

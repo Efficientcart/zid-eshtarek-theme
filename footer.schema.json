@@ -40,37 +40,29 @@
       ]
     },
     {
-      "id": "links_1",
+      "id": "link_groups",
       "icon": "fa fa-link",
       "name": {
-        "ar": "روابط مهمة 1",
-        "en": "Links 1"
+        "ar": "مجموعات الروابط",
+        "en": "Link Groups"
       },
       "settings": [
         {
-          "id": "hide",
-          "type": "checkbox",
-          "label": {
-            "ar": "إخفاء",
-            "en": "Hide"
-          }
-        },
-        {
-          "id": "title",
-          "type": "text",
-          "label": {
-            "ar": "العنوان",
-            "en": "Title"
-          }
-        },
-        {
-          "id": "links",
+          "id": "link_groups",
           "type": "list",
           "label": {
-            "ar": "الروابط",
-            "en": "Links"
+            "ar": "مجموعات الروابط",
+            "en": "Link Groups"
           },
           "settings": [
+            {
+              "id": "hide",
+              "type": "checkbox",
+              "label": {
+                "ar": "إخفاء",
+                "en": "Hide"
+              }
+            },
             {
               "id": "title",
               "type": "text",
@@ -80,116 +72,30 @@
               }
             },
             {
-              "id": "url",
-              "type": "url",
+              "id": "links",
+              "type": "list",
               "label": {
-                "ar": "الرابط",
-                "en": "URL"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "links_2",
-      "icon": "fa fa-link",
-      "name": {
-        "ar": "روابط مهمة 2",
-        "en": "Links 2"
-      },
-      "settings": [
-        {
-          "id": "hide",
-          "type": "checkbox",
-          "label": {
-            "ar": "إخفاء",
-            "en": "Hide"
-          }
-        },
-        {
-          "id": "title",
-          "type": "text",
-          "label": {
-            "ar": "العنوان",
-            "en": "Title"
-          }
-        },
-        {
-          "id": "links",
-          "type": "list",
-          "label": {
-            "ar": "الروابط",
-            "en": "Links"
-          },
-          "settings": [
-            {
-              "id": "title",
-              "type": "text",
-              "label": {
-                "ar": "العنوان",
-                "en": "Title"
-              }
-            },
-            {
-              "id": "url",
-              "type": "url",
-              "label": {
-                "ar": "الرابط",
-                "en": "URL"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "links_3",
-      "icon": "fa fa-link",
-      "name": {
-        "ar": "روابط مهمة 3",
-        "en": "Links 3"
-      },
-      "settings": [
-        {
-          "id": "hide",
-          "type": "checkbox",
-          "label": {
-            "ar": "إخفاء",
-            "en": "Hide"
-          }
-        },
-        {
-          "id": "title",
-          "type": "text",
-          "label": {
-            "ar": "العنوان",
-            "en": "Title"
-          }
-        },
-        {
-          "id": "links",
-          "type": "list",
-          "label": {
-            "ar": "الروابط",
-            "en": "Links"
-          },
-          "settings": [
-            {
-              "id": "title",
-              "type": "text",
-              "label": {
-                "ar": "العنوان",
-                "en": "Title"
-              }
-            },
-            {
-              "id": "url",
-              "type": "url",
-              "label": {
-                "ar": "الرابط",
-                "en": "URL"
-              }
+                "ar": "الروابط",
+                "en": "Links"
+              },
+              "settings": [
+                {
+                  "id": "title",
+                  "type": "text",
+                  "label": {
+                    "ar": "العنوان",
+                    "en": "Title"
+                  }
+                },
+                {
+                  "id": "url",
+                  "type": "url",
+                  "label": {
+                    "ar": "الرابط",
+                    "en": "URL"
+                  }
+                }
+              ]
             }
           ]
         }
