@@ -3,41 +3,28 @@
   data-checkout-buttons
 >
   {% if store.settings.general.availability.closed_now %}
-    {%
-      with
-      variant="filled",
-      size="lg",
-      disabled=true,
-      full_width=true,
-      content=_("Store is closed")
-    %}
-      {% include 'components/ui/button.jinja' %}
-    {% endwith %}
+    <button
+      class="btn btn-filled btn-lg w-full"
+      disabled
+    >
+      {{ _("Store is closed") }}
+    </button>
   {% elif session.is_guest %}
-    {%
-      with
-      tag="a",
-      href="/auth/login?redirect_to=/checkout",
-      variant="filled",
-      size="lg",
-      full_width=true,
-      content=_("Checkout"),
-      attrs='data-action="login" data-redirect="/checkout"'
-    %}
-      {% include 'components/ui/button.jinja' %}
-    {% endwith %}
+    <a
+      href="/auth/login?redirect_to=/checkout"
+      class="btn btn-filled btn-lg w-full"
+      data-action="login"
+      data-redirect="/checkout"
+    >
+      {{ _("Checkout") }}
+    </a>
   {% else %}
-    {%
-      with
-      tag="a",
-      href="/checkout",
-      variant="filled",
-      size="lg",
-      full_width=true,
-      content=_("Checkout")
-    %}
-      {% include 'components/ui/button.jinja' %}
-    {% endwith %}
+    <a
+      href="/checkout"
+      class="btn btn-filled btn-lg w-full"
+    >
+      {{ _("Checkout") }}
+    </a>
   {% endif %}
   {{ template_for_cart_apple_pay_button }}
 </div>

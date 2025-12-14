@@ -194,6 +194,32 @@
           "default": "#B5B5B5"
         },
         {
+          "id": "input",
+          "type": "color",
+          "label": {
+            "ar": "لون حدود الإدخال",
+            "en": "Input Border Color"
+          },
+          "info": {
+            "ar": "حدود حقول الإدخال",
+            "en": "Input field borders"
+          },
+          "default": "#545352"
+        },
+        {
+          "id": "ring",
+          "type": "color",
+          "label": {
+            "ar": "لون حلقة التركيز",
+            "en": "Focus Ring Color"
+          },
+          "info": {
+            "ar": "حلقة التركيز للعناصر التفاعلية",
+            "en": "Focus ring for interactive elements"
+          },
+          "default": "#0B0A09"
+        },
+        {
           "id": "radius",
           "type": "range",
           "label": {

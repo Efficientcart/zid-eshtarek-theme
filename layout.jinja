@@ -41,17 +41,19 @@
         /* Font */
         --font-family: {{ (settings.font_family | default('Roboto')).replace('+', ' ') }}, sans-serif;
 
-        /* Customizable by merchant */
+        /* ========== MERCHANT CUSTOMIZABLE COLORS ========== */
+        --background: {{ settings.theme_background | default('#FFFFFF') }};
+        --foreground: {{ settings.theme_foreground | default('#0B0A09') }};
         --primary: {{ settings.theme_primary | default('#0B0A09') }};
         --primary-foreground: {{ settings.theme_primary_foreground | default('#FFFFFF') }};
         --secondary: {{ settings.theme_secondary | default('#F6F5F4') }};
-        --accent: {{ settings.theme_accent | default('#A89C90') }};
-        --background: {{ settings.theme_background | default('#FFFFFF') }};
-        --foreground: {{ settings.theme_foreground | default('#0B0A09') }};
         --muted: {{ settings.theme_muted | default('#545352') }};
+        --accent: {{ settings.theme_accent | default('#A89C90') }};
         --border: {{ settings.theme_border | default('#B5B5B5') }};
+        --input: {{ settings.theme_input | default('#545352') }};
+        --ring: {{ settings.theme_ring | default('#0B0A09') }};
 
-        /* Radius */
+        /* ========== RADIUS ========== */
         --radius: {{ settings.theme_radius | default(4) }}px;
       }
     </style>

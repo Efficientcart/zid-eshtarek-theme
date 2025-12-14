@@ -111,16 +111,16 @@
   >
     {# Add to Cart / Quick View Button #}
     {% set has_options = product.has_options or product.has_fields %}
-    {%
-      with
-      content=_("Select options") if has_options else _("Add to cart"),
-      variant='outlined',
-      size='lg',
-      class='w-full md:group-data-[grid=list]/grid:w-1/2',
-      attrs='data-open-quick-view="true" data-product-id="' + product.id + '"' if has_options else 'data-add-to-cart="' + product.id + '"'
-    %}
-      {% include 'components/ui/button.jinja' %}
-    {% endwith %}
+    <button
+      class="btn btn-outlined btn-lg w-full md:group-data-[grid=list]/grid:w-1/2"
+      {% if has_options %}
+        data-open-quick-view="true" data-product-id="{{ product.id }}"
+      {% else %}
+        data-add-to-cart="{{ product.id }}"
+      {% endif %}
+    >
+      {{ _("Select options") if has_options else _("Add to cart") }}
+    </button>
 
     {# Quantity Input (hidden, shown after adding to cart) #}
     <div

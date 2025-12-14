@@ -74,7 +74,7 @@
   type="button"
   command="show-modal"
   commandfor="filters-drawer"
-  class="border-foreground text-foreground text-body1 flex items-center gap-3 rounded border px-4 py-3"
+  class="btn btn-outlined btn-lg"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,13 @@
               >
                 {{ _("Filters") }}
               </h2>
-              {% set close_icon %}
+              <button
+                type="button"
+                class="btn btn-icon btn-icon-md"
+                command="close"
+                commandfor="filters-drawer"
+                aria-label="{{ _('Close panel') }}"
+              >
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -139,16 +145,7 @@
                     stroke-linejoin="round"
                   ></path>
                 </svg>
-              {% endset %}
-              {%
-                with
-                content=close_icon,
-                size='icon-md',
-                aria_label=_("Close panel"),
-                attrs='command="close" commandfor="filters-drawer"'
-              %}
-                {% include 'components/ui/button.jinja' %}
-              {% endwith %}
+              </button>
             </div>
 
             {# Filters List #}
@@ -318,26 +315,19 @@
 
           {# Footer Actions #}
           <div class="border-border flex shrink-0 justify-end gap-3 border-t px-4 py-4 sm:px-8 sm:py-6">
-            {%
-              with
-              content=_("Clear all"),
-              variant='outlined',
-              size='lg',
-              class='flex-1',
-              attrs='type="button" onclick="window.productFilter.clearDrawerFilters()"'
-            %}
-              {% include 'components/ui/button.jinja' %}
-            {% endwith %}
-            {%
-              with
-              content=_("Apply"),
-              variant='filled',
-              size='lg',
-              type='submit',
-              class='flex-1'
-            %}
-              {% include 'components/ui/button.jinja' %}
-            {% endwith %}
+            <button
+              type="button"
+              class="btn btn-outlined btn-lg flex-1"
+              onclick="window.productFilter.clearDrawerFilters()"
+            >
+              {{ _("Clear all") }}
+            </button>
+            <button
+              type="submit"
+              class="btn btn-filled btn-lg flex-1"
+            >
+              {{ _("Apply") }}
+            </button>
           </div>
         </form>
       </el-dialog-panel>

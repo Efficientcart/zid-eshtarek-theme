@@ -69,7 +69,12 @@
       %}
         {% include 'components/ui/input.jinja' %}
       {% endwith %}
-      {% set apply_btn_content %}
+      <button
+        type="submit"
+        class="btn btn-filled btn-lg"
+        disabled
+        data-coupon-submit-btn
+      >
         <span data-coupon-submit-text>{{ _("Apply") }}</span>
         <svg
           class="hidden size-5 animate-spin"
@@ -81,18 +86,7 @@
         >
           <path d="M21 12a9 9 0 1 1-6.219-8.56" />
         </svg>
-      {% endset %}
-      {%
-        with
-        type="submit",
-        variant="filled",
-        size="lg",
-        disabled=true,
-        content=apply_btn_content,
-        attrs='data-coupon-submit-btn'
-      %}
-        {% include 'components/ui/button.jinja' %}
-      {% endwith %}
+      </button>
     </form>
   {% endif %}
 </div>

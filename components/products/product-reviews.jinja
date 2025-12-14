@@ -58,26 +58,20 @@
 
         {# Write Review Button #}
         {% if session and session.is_guest %}
-          {%
-            with
-            content=_("Write a review"),
-            variant='outlined',
-            size='lg',
-            type='button',
-            attrs='data-login-redirect="' ~ url_for('add_product_review', slug=product.id) ~ '"'
-          %}
-            {% include 'components/ui/button.jinja' %}
-          {% endwith %}
+          <button
+            type="button"
+            class="btn btn-outlined btn-lg"
+            data-login-redirect="{{ url_for('add_product_review', slug=product.id) }}"
+          >
+            {{ _("Write a review") }}
+          </button>
         {% else %}
-          {%
-            with
-            content=_("Write a review"),
-            variant='outlined',
-            size='lg',
-            href=url_for('add_product_review', slug=product.slug)
-          %}
-            {% include 'components/ui/button.jinja' %}
-          {% endwith %}
+          <a
+            href="{{ url_for('add_product_review', slug=product.slug) }}"
+            class="btn btn-outlined btn-lg"
+          >
+            {{ _("Write a review") }}
+          </a>
         {% endif %}
       </div>
 
@@ -139,15 +133,12 @@
       {# All Reviews Link #}
       {% if product.reviews.pages_count > 1 %}
         <div class="flex justify-end">
-          {%
-            with
-            content=_("All reviews"),
-            variant='outlined',
-            size='sm',
-            href=url_for('product_reviews', slug=product.id)
-          %}
-            {% include 'components/ui/button.jinja' %}
-          {% endwith %}
+          <a
+            href="{{ url_for('product_reviews', slug=product.id) }}"
+            class="btn btn-outlined btn-sm"
+          >
+            {{ _("All reviews") }}
+          </a>
         </div>
       {% endif %}
     {% else %}

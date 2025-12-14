@@ -1,20 +1,21 @@
 @import "tailwindcss";
+@import "./components.css";
 
 :root {
   /* ========== LAYOUT ========== */
   --header-h: 107px;
 
-  /* ========== DERIVED TOKENS (auto-calculated) ========== */
+  /* ========== DERIVED TOKENS (fixed) ========== */
   --muted-foreground: #858484;
   --border-light: #f2f2f2;
-  --border-disabled: #dadada;
-  --background-disabled: #f2f2f2;
-  --text-disabled: #b5b5b5;
 
   /* ========== FIXED SYSTEM COLORS ========== */
   --destructive: #c22b51;
+  --destructive-foreground: #ffffff;
   --success: #649560;
+  --success-foreground: #ffffff;
   --warning: #ffb400;
+  --warning-foreground: #0b0a09;
 
   /* ========== TYPOGRAPHY - HEADINGS ========== */
   --font-h0--size: 64px;
@@ -76,36 +77,38 @@
 }
 
 @theme inline {
-  /* Customizable colors (set by merchant via Theme Editor) */
+  /* ========== CORE COLORS (set by layout.jinja from merchant settings) ========== */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --color-muted: var(--muted);
-  --color-border: var(--border);
-
-  /* Derived colors */
   --color-muted-foreground: var(--muted-foreground);
-  --color-border-light: var(--border-light);
-  --color-border-disabled: var(--border-disabled);
-  --color-background-disabled: var(--background-disabled);
-  --color-text-disabled: var(--text-disabled);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-  /* Fixed system colors */
+  /* ========== FIXED SYSTEM COLORS ========== */
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
 
-  /* Font */
+  /* ========== UTILITY COLORS ========== */
+  --color-border-light: var(--border-light);
+
+  /* ========== FONT ========== */
   --font-sans: var(--font-family);
 
-  /* Radius */
+  /* ========== RADIUS ========== */
   --radius-sm: calc(var(--radius) * 0.5);
   --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) * 1.5);
-  --radius-xl: calc(var(--radius) * 2);
+  --radius-lg: calc(var(--radius) * 2);
+  --radius-xl: calc(var(--radius) * 3);
 }
 
 body {

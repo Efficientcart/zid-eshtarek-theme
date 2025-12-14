@@ -33,7 +33,7 @@
                     {% if item.primary_button_text and item.primary_button_url %}
                       <a
                         href="{{ item.primary_button_url }}"
-                        class="bg-primary text-primary-foreground text-body1 ring-primary hover:bg-primary/90 inline-flex items-center justify-center rounded px-6 py-3 ring-1 transition-all hover:ring-2"
+                        class="btn btn-filled btn-lg"
                       >
                         {{ item.primary_button_text }}
                       </a>
@@ -41,7 +41,7 @@
                     {% if item.secondary_button_text and item.secondary_button_url %}
                       <a
                         href="{{ item.secondary_button_url }}"
-                        class="text-foreground text-body1 ring-foreground inline-flex items-center justify-center rounded bg-transparent px-6 py-3 ring-1 transition-all hover:ring-2"
+                        class="btn btn-outlined btn-lg"
                       >
                         {{ item.secondary_button_text }}
                       </a>

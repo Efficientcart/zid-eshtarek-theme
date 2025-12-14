@@ -79,16 +79,13 @@
           out of {{ total }} products
         {% endtrans %}
       </span>
-      {%
-        with
-        content=_('Clear all'),
-        variant='text',
-        size='md',
-        class='h-[40px]',
-        attrs='onclick="window.productFilter.clearFilters([\'sort_by\', \'order\', \'page_size\', \'q\'])"'
-      %}
-        {% include 'components/ui/button.jinja' %}
-      {% endwith %}
+      <button
+        type="button"
+        class="btn btn-text btn-md h-[40px]"
+        onclick="window.productFilter.clearFilters(['sort_by', 'order', 'page_size', 'q'])"
+      >
+        {{ _('Clear all') }}
+      </button>
     </div>
 
     {% for filter in active_filters %}

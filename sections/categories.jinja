@@ -10,7 +10,7 @@
       {% if settings.display_more %}
         <a
           href="{{ url_for('list_categories') }}"
-          class="text-foreground text-body1 hidden items-center gap-2 px-4 py-3 md:flex"
+          class="btn btn-text btn-lg hidden md:flex"
         >
           {{ settings.more_text }}
           <svg
@@ -108,7 +108,7 @@
       {% if settings.display_more %}
         <a
           href="{{ url_for('list_categories') }}"
-          class="text-foreground text-body1 flex items-center gap-2 px-4 py-3 whitespace-nowrap md:hidden"
+          class="btn btn-text btn-lg flex whitespace-nowrap md:hidden"
         >
           {{ settings.more_text }}
           <svg

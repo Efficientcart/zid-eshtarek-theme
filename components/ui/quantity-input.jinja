@@ -69,14 +69,26 @@
   data-quantity="{{ qty }}"
 >
   {# Delete button (visible when qty = 1) #}
-  {% with content=delete_icon, size='icon-sm', attrs='aria-label="' ~ _("Remove from cart") ~ '" data-quantity-action="remove"' ~ (' hidden' if qty > 1 else '') %}
-    {% include 'components/ui/button.jinja' %}
-  {% endwith %}
+  <button
+    type="button"
+    class="btn btn-icon btn-icon-sm"
+    aria-label="{{ _('Remove from cart') }}"
+    data-quantity-action="remove"
+    {{ 'hidden' if qty > 1 else '' }}
+  >
+    {{ delete_icon }}
+  </button>
 
   {# Minus button (visible when qty > 1) #}
-  {% with content=minus_icon, size='icon-sm', attrs='aria-label="' ~ _("Decrease quantity") ~ '" data-quantity-action="decrease"' ~ (' hidden' if qty == 1 else '') %}
-    {% include 'components/ui/button.jinja' %}
-  {% endwith %}
+  <button
+    type="button"
+    class="btn btn-icon btn-icon-sm"
+    aria-label="{{ _('Decrease quantity') }}"
+    data-quantity-action="decrease"
+    {{ 'hidden' if qty == 1 else '' }}
+  >
+    {{ minus_icon }}
+  </button>
 
   {# Quantity display #}
   <span
@@ -87,7 +99,12 @@
   </span>
 
   {# Plus button #}
-  {% with content=plus_icon, size='icon-sm', attrs='aria-label="' ~ _("Increase quantity") ~ '" data-quantity-action="increase"' %}
-    {% include 'components/ui/button.jinja' %}
-  {% endwith %}
+  <button
+    type="button"
+    class="btn btn-icon btn-icon-sm"
+    aria-label="{{ _('Increase quantity') }}"
+    data-quantity-action="increase"
+  >
+    {{ plus_icon }}
+  </button>
 </div>

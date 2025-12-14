@@ -98,17 +98,13 @@
       {% endwith %}
 
       {# Submit Button #}
-      {%
-        with
-        content=_('Ask question'),
-        variant='filled',
-        size='md',
-        type='submit',
-        class='self-start',
-        attrs='id="submit-question-btn"'
-      %}
-        {% include 'components/ui/button.jinja' %}
-      {% endwith %}
+      <button
+        type="submit"
+        id="submit-question-btn"
+        class="btn btn-filled btn-md self-start"
+      >
+        {{ _('Ask question') }}
+      </button>
     </form>
   </div>
 {% endif %}

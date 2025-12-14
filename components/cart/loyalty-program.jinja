@@ -67,7 +67,12 @@
           %}
             {% include 'components/ui/select.jinja' %}
           {% endwith %}
-          {% set apply_btn_content %}
+          <button
+            class="btn btn-filled btn-lg"
+            disabled
+            data-action="loyalty-apply"
+            data-loyalty-apply-btn
+          >
             <span data-loyalty-apply-text>{{ _("Apply") }}</span>
             <svg
               class="hidden size-5 animate-spin"
@@ -79,17 +84,7 @@
             >
               <path d="M21 12a9 9 0 1 1-6.219-8.56" />
             </svg>
-          {% endset %}
-          {%
-            with
-            variant="filled",
-            size="lg",
-            disabled=true,
-            content=apply_btn_content,
-            attrs='data-action="loyalty-apply" data-loyalty-apply-btn'
-          %}
-            {% include 'components/ui/button.jinja' %}
-          {% endwith %}
+          </button>
         </div>
         <div
           class="{{ 'hidden' if not cart.loyalty_applied_redemption_method }} flex flex-col gap-2"
