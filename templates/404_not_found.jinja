@@ -1,0 +1,40 @@
+{% extends "layout.jinja" %}
+
+{% block title %}{{ _("Page Not Found") }} – {{ store.name }}{% endblock %}
+
+{% block content %}
+  <section class="bg-background flex min-h-[60vh] flex-col items-center justify-center px-4 py-16 md:px-16 md:py-18">
+    <div class="flex flex-col items-center gap-8">
+      <div class="text-foreground size-12">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <circle
+            cx="11"
+            cy="11"
+            r="8"
+          />
+          <path d="m21 21-4.35-4.35" />
+          <path d="M8 8l6 6M14 8l-6 6" />
+        </svg>
+      </div>
+      <div class="flex flex-col items-center gap-2 text-center">
+        <h1 class="text-foreground text-h3 text-caps">{{ _("Page Not Found") }}</h1>
+        <p class="text-muted text-h6 max-w-md">
+          {{ _("The page you're looking for doesn't exist or has been moved. Please check the URL or go back to the homepage.") }}
+        </p>
+      </div>
+      <div class="flex items-center gap-4">
+        <a
+          href="{{ url_for('home') }}"
+          class="btn btn-outlined btn-lg"
+        >
+          {{ _("Back to Home") }}
+        </a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
