@@ -192,18 +192,22 @@
         {% endif %}
       {% endfor %}
       <div>
-        <h3 class="text-foreground text-subtitle1">Subscribe</h3>
-        <p class="text-foreground text-body1 my-4 text-balance">
-          Join our newsletter to stay up to date on features and releases.
-        </p>
-        <div class="mb-6 flex flex-col gap-2 md:flex-row">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            class="border-muted text-body1 placeholder:text-muted-foreground focus:border-foreground flex-1 rounded border p-3 focus:outline-none"
-          />
-          <button class="btn btn-outlined btn-lg">Subscribe</button>
-        </div>
+        {% if not settings.newsletter_hide %}
+          <div class="mb-6">
+            <label class="form-label mb-4 block">{{ settings.newsletter_title | default(_("Subscribe")) }}</label>
+            <p class="text-foreground text-body1 mb-4 text-balance">
+              {{ settings.newsletter_description | default(_("Join our newsletter to stay up to date on features and releases.")) }}
+            </p>
+            <div class="flex flex-col gap-2 md:flex-row">
+              <input
+                type="email"
+                placeholder="{{ settings.newsletter_placeholder | default(_("Enter your email")) }}"
+                class="form-input flex-1"
+              />
+              <button class="btn btn-outlined btn-lg">{{ settings.newsletter_button_label | default(_("Subscribe")) }}</button>
+            </div>
+          </div>
+        {% endif %}
         <div>
           <h3 class="text-foreground text-subtitle1">
             {% if settings.contact_info_title %}
