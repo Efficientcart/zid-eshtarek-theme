@@ -57,22 +57,20 @@
           class="{{ 'hidden' if cart.loyalty_applied_redemption_method }} flex items-center gap-2"
           data-loyalty-redemption-form
         >
-          <div class="form-select-wrapper flex-1">
-            <select
-              name="loyalty_redemption"
-              id="loyalty-redemption-select"
-              data-loyalty-redemption-select
+          <el-select
+            id="loyalty-redemption-select"
+            class="flex-1"
+            data-loyalty-redemption-select
+          >
+            <button
+              type="button"
+              class="border-input text-foreground text-body1 hover:ring-input focus:border-foreground flex min-h-12 w-full items-center justify-between gap-2 rounded border px-3 py-2 text-start transition-[border-color] hover:ring-1 focus:border-2 focus:outline-none"
             >
-              <option
-                value=""
-                disabled
-                selected
-              >
-                {{ _("Select redemption") }}
-              </option>
-            </select>
-            <div data-slot="icon">
+              <el-selectedcontent class="flex-1">
+                <span class="text-muted-foreground">{{ _("Select redemption") }}</span>
+              </el-selectedcontent>
               <svg
+                class="text-foreground shrink-0 transition-transform duration-200 group-aria-expanded:rotate-180"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -86,8 +84,16 @@
                   stroke-linejoin="round"
                 ></path>
               </svg>
-            </div>
-          </div>
+            </button>
+            <el-options
+              popover
+              anchor="bottom end"
+              class="bg-background border-border-light max-h-60 w-[var(--anchor-width)] origin-top overflow-y-auto rounded border py-2 shadow-lg transition transition-discrete [--anchor-gap:--spacing(1)] data-closed:scale-95 data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+              data-loyalty-options
+            >
+              {# Options will be populated by JS #}
+            </el-options>
+          </el-select>
           <button
             class="btn btn-filled btn-lg"
             disabled
