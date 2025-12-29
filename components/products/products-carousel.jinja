@@ -45,8 +45,15 @@
     {% endif %}
 
     {# Carousel #}
-    <div class="products-embla">
-      <div class="products-embla__viewport overflow-hidden">
+    <div
+      class="products-embla"
+      data-carousel
+      data-carousel-align="start"
+    >
+      <div
+        class="products-embla__viewport overflow-hidden"
+        data-carousel-viewport
+      >
         <div class="products-embla__container">
           {% for item in products %}
             <div class="products-embla__slide">
@@ -65,12 +72,14 @@
         <div
           class="products-embla__progress-bar bg-accent h-1 rounded-sm"
           style="width: 0%"
+          data-carousel-progress
         ></div>
       </div>
       <div class="hidden items-center gap-2 md:flex">
         <button
           class="products-embla__prev flex size-10 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm disabled:opacity-30"
           aria-label="{{ _('Previous') }}"
+          data-carousel-prev
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -89,6 +98,7 @@
         <button
           class="products-embla__next flex size-10 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm disabled:opacity-30"
           aria-label="{{ _('Next') }}"
+          data-carousel-next
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -161,47 +171,5 @@
     }
   </style>
 
-  <script>
-    (function () {
-      const root = document.querySelector('[data-products-carousel="{{ carousel_id }}"]');
-      if (!root) return;
-
-      const viewport = root.querySelector(".products-embla__viewport");
-      const container = root.querySelector(".products-embla__container");
-      const prevBtn = root.querySelector(".products-embla__prev");
-      const nextBtn = root.querySelector(".products-embla__next");
-      const progressBar = root.querySelector(".products-embla__progress-bar");
-
-      if (!container || container.children.length <= 1) return;
-
-      const embla = EmblaCarousel(viewport, {
-        direction: document.dir === "rtl" ? "rtl" : "ltr",
-        loop: false,
-        align: "start",
-        slidesToScroll: 1,
-        skipSnaps: false,
-        containScroll: "trimSnaps",
-        breakpoints: {
-          "(min-width: 1024px)": {
-            slidesToScroll: 2
-          }
-        }
-      });
-
-      if (prevBtn) prevBtn.onclick = () => embla.scrollPrev();
-      if (nextBtn) nextBtn.onclick = () => embla.scrollNext();
-
-      const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
-      const updateProgress = () => {
-        const p = clamp(embla.scrollProgress(), 0, 1);
-        if (progressBar) progressBar.style.width = `${p * 100}%`;
-        if (prevBtn) prevBtn.disabled = !embla.canScrollPrev();
-        if (nextBtn) nextBtn.disabled = !embla.canScrollNext();
-      };
-
-      embla.on("init", updateProgress);
-      embla.on("scroll", updateProgress);
-      embla.on("reInit", updateProgress);
-    })();
-  </script>
+  {# Carousel is now initialized by main.js using data-carousel attributes #}
 {% endif %}

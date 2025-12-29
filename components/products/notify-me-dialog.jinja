@@ -77,49 +77,9 @@
             />
           </div>
 
-          {# Phone Input with Country Code #}
-          <div class="flex gap-2">
-            <div class="form-select-wrapper w-24 shrink-0">
-              <select
-                name="country_code"
-                class="form-select"
-                data-notify-country-code
-              >
-                <option value="+966">+966</option>
-                <option value="+971">+971</option>
-                <option value="+973">+973</option>
-                <option value="+974">+974</option>
-                <option value="+965">+965</option>
-                <option value="+968">+968</option>
-                <option value="+20">+20</option>
-                <option value="+962">+962</option>
-                <option value="+961">+961</option>
-              </select>
-              <div data-slot="icon">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M6 9L12 15L18 9"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  ></path>
-                </svg>
-              </div>
-            </div>
-            <input
-              type="tel"
-              name="phone"
-              placeholder="{{ _('Phone number') }}"
-              class="form-input flex-1"
-              data-notify-phone
-            />
-          </div>
+          {# Phone Input with Country Code - All countries for global customers #}
+          {% set all_countries = true %}
+          {% include 'components/ui/phone-input.jinja' with context %}
 
           {# Submit Button #}
           <div class="flex justify-end pt-2">

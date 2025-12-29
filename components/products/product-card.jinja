@@ -34,6 +34,15 @@
       {% if product.in_stock == false or (product.is_infinite == false and product.quantity is not none and product.quantity <= 0) %}
         <span class="badge badge-filled">{{ _("OUT OF STOCK") }}</span>
       {% endif %}
+      {# VAT exemption badge #}
+      {% if product.is_taxable == false %}
+        <span class="badge badge-filled">{{ _("Tax free") }}</span>
+      {% endif %}
+      {# Bundle offer badge - loaded via client-side JS #}
+      <span
+        class="bundle-offer-badge hidden"
+        data-bundle-offer-product-id="{{ product.id }}"
+      ></span>
       {# Keyword badges #}
       {% if product.keywords and product.keywords|length > 0 %}
         {% for keyword in product.keywords[:2] %}

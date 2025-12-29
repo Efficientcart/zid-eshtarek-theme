@@ -185,8 +185,8 @@
 {# {% set totalPages = products.pages_count %} #}
 {# {% set currentPage = products.page %}      #}
 
-{# Optional: read current per-page from query params (default 12) #}
-{% set page_size = session.query_params.get('page_size') or '12' %}
+{# Optional: read current per-page from query params (default 24) #}
+{% set page_size = session.query_params.get('page_size') or '24' %}
 
 <div
   data-pagination-root

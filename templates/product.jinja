@@ -77,6 +77,13 @@
               id="product-badges"
               class="flex flex-wrap items-center gap-2"
             >
+              {# Merchant Badge (custom product badge) #}
+              {% if product.badge %}
+                {% with product=product %}
+                  {% include 'components/products/merchant-badge.jinja' %}
+                {% endwith %}
+              {% endif %}
+
               {# Bundle Offer Badge #}
               {% if product.bundle_offer %}
                 <span class="badge badge-outlined text-destructive border-destructive">
@@ -223,6 +230,11 @@
               {% endwith %}
             </div>
 
+            {# Dynamic Bundle Product Selection #}
+            {% if product.product_class == 'dynamic_bundle' %}
+              {% include 'vitrin:products/bundle-products.jinja' %}
+            {% endif %}
+
             {# Action Buttons #}
             <div
               class="flex flex-col gap-3 pt-2"
@@ -230,7 +242,7 @@
             >
               {# In Stock State #}
               <div
-                class="{{ 'hidden' if not product.in_stock }}"
+                class="{{ 'hidden' if not product.in_stock }} flex items-center gap-2"
                 data-in-stock
               >
                 {# Add to Cart Button #}
@@ -238,7 +250,7 @@
                   type="button"
                   data-add-to-cart-form="product-form"
                   data-success-text="{{ _('Added!') }}"
-                  class="btn btn-filled btn-lg w-full"
+                  class="btn btn-filled btn-lg flex-1"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -265,6 +277,10 @@
                   </svg>
                   {{ _("Add to cart") }}
                 </button>
+                {# Wishlist Button #}
+                {% with product_id=product.id, class="btn-lg border-input border" %}
+                  {% include 'components/products/wishlist-button.jinja' %}
+                {% endwith %}
               </div>
 
               {# Out of Stock State #}
@@ -281,13 +297,113 @@
                   {{ _("Add to cart") }}
                 </button>
 
-                {# Notify Me Button #}
+                {# Notify Me & Wishlist Buttons #}
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    class="btn btn-filled btn-lg flex-1"
+                    data-notify-me-btn
+                    command="show-modal"
+                    commandfor="notify-me-dialog"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+                      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                    </svg>
+                    {{ _("Notify me when available") }}
+                  </button>
+                  {# Wishlist Button #}
+                  {% with product_id=product.id, class="btn-lg border-input border" %}
+                    {% include 'components/products/wishlist-button.jinja' %}
+                  {% endwith %}
+                </div>
+              </div>
+            </div>
+
+            {#{% include 'vitrin:products/loyalty_points_widget.jinja' %}#}
+            {% include 'vitrin:products/payment_widgets.jinja' %}
+            {% include 'vitrin:checkout/apple-pay-quick-checkout.jinja' %}
+
+            {# Social Share Links #}
+            <div class="border-border-light flex items-center gap-4 border-t pt-4">
+              <span class="text-body2 text-muted">{{ _("Share product") }}:</span>
+              <div class="flex items-center gap-3">
+                {# WhatsApp #}
+                <a
+                  href="https://api.whatsapp.com/send?text={{ _('Check Out this Product') }}: {{ product.name }} {{ product.html_url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-muted-foreground transition-colors hover:text-[#25D366]"
+                  aria-label="{{ _('Share on WhatsApp') }}"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                    />
+                  </svg>
+                </a>
+                {# Twitter/X #}
+                <a
+                  href="https://twitter.com/intent/tweet?text={{ product.name }}: {{ product.html_url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="{{ _('Share on Twitter') }}"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                    />
+                  </svg>
+                </a>
+                {# Facebook #}
+                <a
+                  href="https://www.facebook.com/sharer/sharer.php?u={{ product.html_url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-muted-foreground transition-colors hover:text-[#1877F2]"
+                  aria-label="{{ _('Share on Facebook') }}"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                    />
+                  </svg>
+                </a>
+                {# Copy Link #}
                 <button
                   type="button"
-                  class="btn btn-filled btn-lg w-full"
-                  data-notify-me-btn
-                  command="show-modal"
-                  commandfor="notify-me-dialog"
+                  class="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="{{ _('Copy link') }}"
+                  onclick='navigator.clipboard.writeText(&apos;{{ product.html_url }}&apos;); this.innerHTML = &apos;<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>&apos;; setTimeout(() => this.innerHTML = &apos;<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>&apos;, 2000);'
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -300,16 +416,12 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
                   </svg>
-                  {{ _("Notify me when available") }}
                 </button>
               </div>
             </div>
-
-            {% include 'vitrin:products/loyalty_points_widget.jinja' %}
-            {% include 'vitrin:products/payment_widgets.jinja' %}
           </form>
         </div>
 
@@ -393,6 +505,94 @@
               </div>
             </el-disclosure>
           </div>
+        {% endif %}
+
+        {# Bundle Offer Details Section #}
+        {% if product.bundle_offer %}
+          <div class="bg-secondary rounded-lg p-4">
+            <div class="flex items-start gap-3">
+              {# Gift Icon #}
+              <div
+                class="bg-destructive/10 text-destructive flex size-10 shrink-0 items-center justify-center rounded-full"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                  <rect
+                    x="2"
+                    y="7"
+                    width="20"
+                    height="5"
+                  ></rect>
+                  <line
+                    x1="12"
+                    y1="22"
+                    x2="12"
+                    y2="7"
+                  ></line>
+                  <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                  <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                </svg>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-subtitle1 text-foreground">{{ product.bundle_offer.name }}</h3>
+                {% if product.bundle_offer.description %}
+                  <p class="text-body2 text-muted mt-1">{{ product.bundle_offer.description }}</p>
+                {% endif %}
+              </div>
+            </div>
+
+            {# Bundle Products Grid #}
+            {% if product.bundle_offer.products and product.bundle_offer.products.results %}
+              <div class="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-5">
+                {% for bundle_product in product.bundle_offer.products.results[:5] %}
+                  <a
+                    href="{{ bundle_product.html_url }}"
+                    class="bg-background hover:border-primary group flex flex-col overflow-hidden rounded border border-transparent p-2 transition-colors"
+                  >
+                    <img
+                      src="{{ image_url(bundle_product.images[0] if bundle_product.images else ('images/placeholder.png' | asset_url), w=150, q=85, f='auto') }}"
+                      alt="{{ bundle_product.name }}"
+                      class="aspect-square w-full rounded object-cover"
+                      loading="lazy"
+                    />
+                    <span class="text-caption text-foreground mt-2 line-clamp-2">{{ bundle_product.name }}</span>
+                    <span class="text-caption text-muted"
+                      >{{ bundle_product.formatted_sale_price or bundle_product.formatted_price }}</span
+                    >
+                  </a>
+                {% endfor %}
+              </div>
+
+              {# Show all products link #}
+              {% if product.bundle_offer.products.results|length > 5 %}
+                <div class="mt-3 text-center">
+                  <button
+                    type="button"
+                    class="text-body2 text-primary hover:underline"
+                    command="show-modal"
+                    commandfor="bundle-products-modal"
+                  >
+                    {{ _("Display all products") }} ({{ product.bundle_offer.products.results|length }})
+                  </button>
+                </div>
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {# Grouped Products (products bundled together) #}
+        {% if product.group_products %}
+          {% include 'vitrin:products/grouped-product.jinja' %}
         {% endif %}
 
         {# Product Options Disclosure #}
@@ -536,24 +736,85 @@
     {% include 'components/products/sticky-product-actions.jinja' %}
   {% endwith %}
 
-  <script src="{{ 'js/product-gallery-carousel.js' | asset_url }}"></script>
   <script src="{{ 'js/question-form.js' | asset_url }}"></script>
-  <script
-    src="{{ 'js/sticky-product-actions.js' | asset_url }}"
-    defer
-  ></script>
+  <!-- prettier-ignore-start -->
   <script>
-    (function () {
-      // Initialize product gallery
-      if (window.initializeProductGallery) {
-        window.initializeProductGallery("product-gallery");
-      } else {
-        window.addEventListener("load", function () {
-          if (window.initializeProductGallery) {
-            window.initializeProductGallery("product-gallery");
-          }
-        });
-      }
-    })();
+    window.notifyMeTranslations = {
+      success: "{{ _('You will be notified when this product is back in stock!') }}",
+      error: "{{ _('Failed to submit. Please try again.') }}",
+      required: "{{ _('Please fill in all required fields') }}",
+      phoneRequired: "{{ _('Phone number is required') }}",
+      phoneTooShort: "{{ _('Phone number is too short') }}",
+      phoneTooLong: "{{ _('Phone number is too long') }}",
+      phoneInvalid: "{{ _('Invalid phone number') }}"
+    };
   </script>
+  <!-- prettier-ignore-end -->
+
+  {# Bundle Products Modal #}
+  {% if product.bundle_offer and product.bundle_offer.products and product.bundle_offer.products.results|length > 5 %}
+    <dialog
+      id="bundle-products-modal"
+      class="bg-background open:animate-dialog-show w-full max-w-3xl rounded-lg p-0 backdrop:bg-black/50 backdrop:backdrop-blur-sm"
+    >
+      <div class="flex items-center justify-between border-b p-4">
+        <h2 class="text-h6 text-foreground">{{ product.bundle_offer.name }}</h2>
+        <button
+          type="button"
+          class="text-muted-foreground hover:text-foreground"
+          command="close"
+          commandfor="bundle-products-modal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line
+              x1="18"
+              y1="6"
+              x2="6"
+              y2="18"
+            ></line>
+            <line
+              x1="6"
+              y1="6"
+              x2="18"
+              y2="18"
+            ></line>
+          </svg>
+        </button>
+      </div>
+      <div class="max-h-[70vh] overflow-y-auto p-4">
+        {% if product.bundle_offer.description %}
+          <p class="text-body2 text-muted mb-4">{{ product.bundle_offer.description }}</p>
+        {% endif %}
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+          {% for bundle_product in product.bundle_offer.products.results %}
+            <a
+              href="{{ bundle_product.html_url }}"
+              class="bg-secondary hover:border-primary group flex flex-col overflow-hidden rounded border border-transparent p-2 transition-colors"
+            >
+              <img
+                src="{{ image_url(bundle_product.images[0] if bundle_product.images else ('images/placeholder.png' | asset_url), w=200, q=85, f='auto') }}"
+                alt="{{ bundle_product.name }}"
+                class="aspect-square w-full rounded object-cover"
+                loading="lazy"
+              />
+              <span class="text-body2 text-foreground mt-2 line-clamp-2">{{ bundle_product.name }}</span>
+              <span class="text-caption text-muted"
+                >{{ bundle_product.formatted_sale_price or bundle_product.formatted_price }}</span
+              >
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </dialog>
+  {% endif %}
 {% endblock %}

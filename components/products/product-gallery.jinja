@@ -1,30 +1,36 @@
 {# Product Gallery Component - Embla Carousel #}
-{# Parameters: product (object with images array), badges (optional array), gallery_id (optional unique id) #}
+{# Parameters: product (object with images/media array), badges (optional array), gallery_id (optional unique id) #}
 {% set gallery_id = gallery_id|default('product-gallery-' ~ range(1000, 9999)|random) %}
-{% set has_multiple_images = product.images and product.images|length > 1 %}
 
-{# Hidden lightbox gallery for PhotoSwipe #}
+{# Use media array if available (includes videos), otherwise fall back to images #}
+{% set gallery_media = product.selected_product.media if product.selected_product and product.selected_product.media and product.selected_product.media|length > 0 else product.images %}
+{% set has_multiple_items = gallery_media and gallery_media|length > 1 %}
+
+{# Hidden lightbox gallery for PhotoSwipe (images only, not videos) #}
 <div
   id="product-gallery-lightbox"
   class="hidden"
 >
-  {% if product.images and product.images|length > 0 %}
-    {% for image in product.images %}
-      {% set full_src = image.image.full_size if image.image else image %}
-      <a
-        href="{{ image_url(full_src, w=1600, q=90, f='auto') }}"
-        data-pswp-width="1600"
-        data-pswp-height="2133"
-      >
-        <img
-          src="{{ image_url(full_src, w=200, q=85, f='auto') }}"
-          alt="{{ product.name }} - {{ _('Image') }} {{ loop.index }}"
-          data-lightbox-item
-          data-lightbox-src="{{ image_url(full_src, w=1600, q=90, f='auto') }}"
-          data-lightbox-width="1600"
-          data-lightbox-height="2133"
-        />
-      </a>
+  {% if gallery_media and gallery_media|length > 0 %}
+    {% for item in gallery_media %}
+      {# Only include images in lightbox, not videos #}
+      {% if not (item.provider and item.link) %}
+        {% set full_src = item.image.full_size if item.image else item %}
+        <a
+          href="{{ image_url(full_src, w=1600, q=90, f='auto') }}"
+          data-pswp-width="1600"
+          data-pswp-height="2133"
+        >
+          <img
+            src="{{ image_url(full_src, w=200, q=85, f='auto') }}"
+            alt="{{ product.name }} - {{ _('Image') }} {{ loop.index }}"
+            data-lightbox-item
+            data-lightbox-src="{{ image_url(full_src, w=1600, q=90, f='auto') }}"
+            data-lightbox-width="1600"
+            data-lightbox-height="2133"
+          />
+        </a>
+      {% endif %}
     {% endfor %}
   {% endif %}
 </div>
@@ -37,10 +43,12 @@
       data-gallery-id="{{ gallery_id }}"
     >
       <div class="product-gallery__container flex gap-2">
-        {% if product.images and product.images|length > 0 %}
-          {% for image in product.images %}
-            {% set img_src = image.image.medium if image.image else image %}
-            <div class="product-gallery__slide min-w-0 flex-[0_0_75%] md:flex-[0_0_calc(100%-8px)]">
+        {% if gallery_media and gallery_media|length > 0 %}
+          {% for item in gallery_media %}
+            {% set img_src = item.image.medium if item.image else item %}
+
+            <div class="product-gallery__slide relative min-w-0 flex-[0_0_75%] md:flex-[0_0_calc(100%-8px)]">
+              {# Image (thumbnail for videos) #}
               <img
                 src="{{ image_url(img_src, w=750, q=85, f='auto') }}"
                 srcset="
@@ -51,11 +59,64 @@
                   {{ image_url(img_src, w=1200, q=85, f='auto') }} 1200w
                 "
                 sizes="(max-width: 640px) 100vw, 50vw"
-                alt="{{ product.name }} - {{ _('Image') }} {{ loop.index }}"
-                class="aspect-[3/4] w-full cursor-zoom-in rounded object-cover"
-                data-lightbox-trigger="{{ loop.index0 }}"
+                alt="{{ item.alt_text|default(product.name ~ ' - ' ~ _('Image') ~ ' ' ~ loop.index) }}"
+                class="{{ 'cursor-zoom-in' if not is_video else '' }} aspect-[3/4] w-full rounded object-cover"
+                {% if not is_video %}data-lightbox-trigger="{{ loop.index0 }}"{% endif %}
                 {% if loop.index > 1 %}loading="lazy"{% endif %}
               />
+
+              {% if is_video %}
+                {# Video play button overlay #}
+                <button
+                  type="button"
+                  class="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/20 transition-colors hover:bg-black/30"
+                  data-video-play
+                  data-video-src="{{ item.link }}"
+                  aria-label="{{ _('Play video') }}"
+                >
+                  <span class="bg-background/90 flex size-16 items-center justify-center rounded-full shadow-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="text-foreground size-8 rtl:rotate-180"
+                    >
+                      <path d="M8 5.14v14l11-7-11-7z" />
+                    </svg>
+                  </span>
+                </button>
+
+                {# Video iframe container (hidden by default) #}
+                <div
+                  class="absolute inset-0 hidden rounded bg-black"
+                  data-video-container
+                >
+                  <button
+                    type="button"
+                    class="bg-background/80 text-foreground absolute end-2 top-2 z-10 flex size-8 items-center justify-center rounded-full"
+                    data-video-close
+                    aria-label="{{ _('Close video') }}"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      class="size-5"
+                    >
+                      <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                  </button>
+                  <iframe
+                    class="size-full rounded"
+                    src=""
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              {% endif %}
             </div>
           {% endfor %}
         {% else %}
@@ -72,7 +133,7 @@
     </div>
 
     {# Navigation Buttons - Overlaid on desktop only #}
-    {% if has_multiple_images %}
+    {% if has_multiple_items %}
       <button
         class="product-gallery__prev bg-background/30 absolute start-4 top-1/2 hidden -translate-y-1/2 rounded p-2.5 backdrop-blur-xs disabled:opacity-30 md:flex"
         aria-label="{{ _('Previous image') }}"
@@ -126,7 +187,7 @@
   </div>
 
   {# Progress Bar with Navigation Buttons - Mobile only #}
-  {% if has_multiple_images %}
+  {% if has_multiple_items %}
     <div class="flex items-center gap-2 md:hidden">
       {# Progress Bar #}
       <div class="product-gallery__progress bg-secondary h-1 w-full rounded-full">
@@ -178,14 +239,15 @@
   {% endif %}
 
   {# Thumbnails - Hidden on mobile, shown on desktop #}
-  {% if has_multiple_images %}
+  {% if has_multiple_items %}
     <div
       class="product-gallery-thumbs hidden overflow-hidden md:flex"
       data-gallery-id="{{ gallery_id }}"
     >
       <div class="product-gallery-thumbs__container flex gap-2">
-        {% for image in product.images %}
-          {% set thumb_src = image.image.thumbnail if image.image else image %}
+        {% for item in gallery_media %}
+          {% set thumb_src = item.image.thumbnail if item.image else item %}
+          {% set is_video = item.provider and item.link %}
           <button
             class="product-gallery-thumbs__slide hover:border-primary relative min-w-0 flex-[0_0_calc(25%-8px)] overflow-hidden rounded border-1 border-transparent transition-colors"
             data-gallery-id="{{ gallery_id }}"
@@ -197,6 +259,19 @@
               class="aspect-square w-full object-cover"
               loading="lazy"
             />
+            {% if is_video %}
+              {# Video indicator on thumbnail #}
+              <span class="bg-background/80 absolute inset-0 flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="text-foreground size-6 rtl:rotate-180"
+                >
+                  <path d="M8 5.14v14l11-7-11-7z" />
+                </svg>
+              </span>
+            {% endif %}
           </button>
         {% endfor %}
       </div>
