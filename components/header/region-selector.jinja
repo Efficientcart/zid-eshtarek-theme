@@ -1,163 +1,34 @@
-{# Desktop Region Selector - Country/Language Popover #}
+{# Desktop Region Selector - Opens Vitrin's shared region dialog #}
 {% set multiple_countries = store.countries | length > 1 %}
 {% set multiple_languages = store.languages | length > 1 %}
-{% set show_country = multiple_countries and not safeget(settings, "hide_country", false) %}
-{% set show_language = multiple_languages and not safeget(settings, "hide_language", false) %}
+{% set show_country = multiple_countries and not safeget(settings, "header_hide_country", false) %}
+{% set show_language = multiple_languages and not safeget(settings, "header_hide_language", false) %}
 
 {% if show_country or show_language %}
   <li class="hidden md:block">
-    <el-popover-group class="relative">
-      <button
-        type="button"
-        popovertarget="region-popover"
-        class="text-foreground text-body1 flex items-center gap-1 py-2 hover:underline"
+    <button
+      type="button"
+      onclick="zidOpenRegionSettingDialog()"
+      class="text-foreground text-body1 flex items-center gap-1.5 py-2 hover:underline"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
       >
-        {% if show_country %}{{ session.country.name }}{% if show_language %}|{% endif %}{% endif %}
-        {% if show_language %}{{ session.lang | upper }}{% endif %}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          class="text-foreground"
-          fill="none"
-        >
-          <path
-            d="M4.7251 6.18262C4.74222 6.18262 4.7492 6.18558 4.75146 6.18652L4.77783 6.20605L7.64502 9.09082L7.99854 9.44629L8.354 9.0918L11.2388 6.20605C11.2466 6.19822 11.2525 6.19432 11.2554 6.19238C11.257 6.19127 11.2579 6.19062 11.2583 6.19043H11.2651C11.2834 6.1911 11.2983 6.19338 11.3276 6.22266C11.3426 6.23759 11.3462 6.24664 11.3472 6.24902C11.3481 6.25126 11.3511 6.25818 11.3511 6.27539C11.3511 6.29239 11.3481 6.29941 11.3472 6.30176C11.3462 6.30414 11.3426 6.31319 11.3276 6.32812L8.04834 9.60742C8.03231 9.62345 8.02229 9.62992 8.01904 9.63184C8.0165 9.6329 8.01164 9.63472 8.00049 9.63477C7.989 9.63477 7.98354 9.63291 7.98096 9.63184L7.95166 9.60742L4.65576 6.31152C4.64868 6.30444 4.64476 6.2994 4.64307 6.29688C4.64222 6.29562 4.64233 6.29439 4.64209 6.29395H4.64111C4.64105 6.29372 4.64128 6.29204 4.64111 6.29102C4.64079 6.28895 4.63986 6.28428 4.64014 6.27637C4.64115 6.2478 4.64677 6.23164 4.67236 6.20605C4.68728 6.19115 4.69635 6.18752 4.69873 6.18652C4.70113 6.18553 4.70822 6.18262 4.7251 6.18262Z"
-            fill="currentColor"
-            stroke="currentColor"
-          ></path>
-        </svg>
-      </button>
-      <el-popover
-        id="region-popover"
-        popover
-        anchor="bottom"
-        anchor-strategy="fixed"
-        class="bg-background border-border-light min-w-[420px] border px-4 pt-4 pb-2 transition transition-discrete [--anchor-gap:8px] data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
-      >
-        <form
-          data-region-form
-          class="flex flex-col gap-2"
-        >
-          <div class="grid grid-cols-2 gap-2">
-            {% if show_country %}
-              <el-select
-                id="country-desktop"
-                name="country"
-                value="{{ session.country.code | lower }}"
-                class="grid items-center gap-2"
-              >
-                <label
-                  for="country-desktop"
-                  class="form-label"
-                >
-                  {{ _("Country") }}
-                </label>
-                <button
-                  type="button"
-                  class="form-select-wrapper"
-                >
-                  <el-selectedcontent class="text-foreground text-body1 flex-1">
-                    {{ session.country.names[session.lang] if session.country.names else session.country.name }}
-                  </el-selectedcontent>
-                  <div data-slot="icon">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        d="M6 9L12 15L18 9"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-                <el-options
-                  popover
-                  anchor="bottom start"
-                  class="border-border-light bg-background max-h-60 w-(--button-width) overflow-auto border py-2 [--anchor-gap:4px] data-leave:transition data-leave:transition-discrete data-leave:duration-150 data-leave:ease-in data-closed:data-leave:opacity-0"
-                >
-                  {% for country in store.countries %}
-                    <el-option
-                      value="{{ country.code | lower }}"
-                      class="text-foreground text-body1 hover:bg-secondary aria-selected:bg-secondary block w-full cursor-pointer px-4 py-2 transition-colors"
-                    >
-                      {{ country.names[session.lang] if country.names else country.name }}
-                    </el-option>
-                  {% endfor %}
-                </el-options>
-              </el-select>
-            {% endif %}
-            {% if show_language %}
-              <el-select
-                id="language-desktop"
-                name="language"
-                value="{{ session.lang }}"
-                class="{% if not show_country %}col-span-2{% endif %} grid items-center gap-2"
-              >
-                <label
-                  for="language-desktop"
-                  class="form-label"
-                >
-                  {{ _("Language") }}
-                </label>
-                <button
-                  type="button"
-                  class="form-select-wrapper"
-                >
-                  <el-selectedcontent class="text-foreground text-body1 flex-1">
-                    {% for language in store.languages %}
-                      {% if session.lang == language.code %}{{ language.name }}{% endif %}
-                    {% endfor %}
-                  </el-selectedcontent>
-                  <div data-slot="icon">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        d="M6 9L12 15L18 9"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </svg>
-                  </div>
-                </button>
-                <el-options
-                  popover
-                  anchor="bottom start"
-                  class="border-border-light bg-background max-h-60 w-(--button-width) overflow-auto border py-2 [--anchor-gap:4px] data-leave:transition data-leave:transition-discrete data-leave:duration-150 data-leave:ease-in data-closed:data-leave:opacity-0"
-                >
-                  {% for language in store.languages %}
-                    <el-option
-                      value="{{ language.code }}"
-                      class="text-foreground text-body1 hover:bg-secondary aria-selected:bg-secondary block w-full cursor-pointer px-4 py-2 transition-colors"
-                    >
-                      {{ language.name }}
-                    </el-option>
-                  {% endfor %}
-                </el-options>
-              </el-select>
-            {% endif %}
-          </div>
-          <button
-            type="submit"
-            class="btn btn-text btn-sm self-end"
-          >
-            {{ _("Save") }}
-          </button>
-        </form>
-      </el-popover>
-    </el-popover-group>
+        <circle
+          cx="12"
+          cy="12"
+          r="10"
+        />
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      </svg>
+      {% if show_country %}{{ session.country.name }}{% if show_language %}|{% endif %}{% endif %}
+      {% if show_language %}{{ session.lang | upper }}{% endif %}
+    </button>
   </li>
 {% endif %}
