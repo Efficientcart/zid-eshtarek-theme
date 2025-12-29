@@ -48,7 +48,7 @@
       },
       "settings": [
         {
-          "id": "link_groups",
+          "id": "items",
           "type": "list",
           "label": {
             "ar": "مجموعات الروابط",

@@ -3,10 +3,19 @@
   class="relative overflow-hidden"
   data-variant="{{ settings.style_variant | default('default') }}"
 >
-  <!-- Embla root -->
-  <div class="embla w-full">
-    <div class="embla__container h-full">
-      {% for slide in settings.slides %}
+  <!-- Carousel with data attributes for JS initialization -->
+  <div
+    class="embla w-full"
+    data-carousel
+    data-carousel-loop="true"
+    data-carousel-autoplay="{{ settings.autoplay_delay | default(4000) if settings.autoplay_enabled | default(true) else '' }}"
+    data-carousel-fade="{{ 'true' if settings.transition_effect | default('fade') == 'fade' else 'false' }}"
+  >
+    <div
+      class="embla__container h-full"
+      data-carousel-viewport
+    >
+      {% for slide in settings.slides or [] %}
         <div class="embla__slide relative flex items-center justify-center overflow-hidden">
           <!-- Background image for this slide -->
           <div
@@ -54,13 +63,12 @@
       {% endfor %}
     </div>
 
-    <!-- arrows & dots -->
-    {% if settings.slides | length > 1 %}
-      {% if settings.show_dots %}
-        <div
-          class="embla__dots pointer-events-auto absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-1 rounded-full bg-white/10 p-1 backdrop-blur-sm"
-        ></div>
-      {% endif %}
+    <!-- Dots -->
+    {% if settings.slides and settings.slides | length > 1 and settings.show_dots %}
+      <div
+        class="embla__dots pointer-events-auto absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-1 rounded-full bg-white/10 p-1 backdrop-blur-sm"
+        data-carousel-dots
+      ></div>
     {% endif %}
   </div>
 
@@ -94,75 +102,4 @@
   <!-- prettier-ignore-end -->
 </section>
 
-<!-- prettier-ignore-start -->
-<script>
-  (function () {
-    const root = document.querySelector('[section-id="{{ sectionId }}"]');
-    const emblaRoot = root.querySelector(".embla");
-    const slideCount = emblaRoot.querySelectorAll(".embla__slide").length;
-
-    // Only initialize Embla if there's more than one slide
-    if (slideCount <= 1) return;
-
-    const dotsRoot = emblaRoot.querySelector(".embla__dots");
-
-    // Settings
-    const autoplayEnabled = {{ settings.autoplay_enabled | default(true) | tojson }};
-    const autoplayDelay = {{ settings.autoplay_delay | default(4000) }};
-    const transitionEffect = "{{ settings.transition_effect | default('fade') }}";
-
-    // Build plugins array
-    const plugins = [];
-
-    // Add fade plugin if selected
-    if (transitionEffect === "fade") {
-      plugins.push(EmblaCarouselFade());
-    }
-
-    // Add autoplay plugin if enabled
-    if (autoplayEnabled) {
-      const autoplay = EmblaCarouselAutoplay(
-        { delay: autoplayDelay, stopOnMouseEnter: true, stopOnInteraction: false },
-        emblaRoot
-      );
-      plugins.push(autoplay);
-    }
-
-    // Initialize Embla
-    const embla = EmblaCarousel(
-      emblaRoot,
-      {
-        direction: document.dir === "rtl" ? "rtl" : "ltr",
-        loop: true,
-        duration: transitionEffect === "fade" ? 25 : 20
-      },
-      plugins
-    );
-
-    // Dots
-    const addDots = () => {
-      if (!dotsRoot) return;
-      dotsRoot.innerHTML = "";
-      embla.slideNodes().forEach((_, i) => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.className =
-          "h-1.5 w-3 rounded-full bg-white/50 transition-all data-[active=true]:w-5 data-[active=true]:bg-white/80";
-        b.addEventListener("click", () => embla.scrollTo(i));
-        dotsRoot.appendChild(b);
-      });
-    };
-    const setActiveDot = () => {
-      if (!dotsRoot) return;
-      const i = embla.selectedScrollSnap();
-      dotsRoot.querySelectorAll("button").forEach((b, idx) => (b.dataset.active = String(idx === i)));
-    };
-
-    embla.on("init", () => {
-      addDots();
-      setActiveDot();
-    });
-    embla.on("select", setActiveDot);
-  })();
-</script>
-<!-- prettier-ignore-end -->
+{# Carousel is now initialized by main.js using data-carousel attributes #}

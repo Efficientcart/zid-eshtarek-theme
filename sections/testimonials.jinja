@@ -7,8 +7,15 @@
       <h2 class="text-foreground text-h3">{{ settings.title }}</h2>
     {% endif %}
 
-    <div class="embla">
-      <div class="embla__viewport overflow-hidden">
+    <div
+      class="embla"
+      data-carousel
+      data-carousel-align="start"
+    >
+      <div
+        class="embla__viewport overflow-hidden"
+        data-carousel-viewport
+      >
         <div class="embla__container">
           {% for testimonial in safeget(settings, "testimonials", []) %}
             <div class="embla__slide">
@@ -50,12 +57,14 @@
         <div
           class="embla__progress-bar bg-accent h-1 rounded-sm"
           style="width: 0%"
+          data-carousel-progress
         ></div>
       </div>
       <div class="hidden items-center gap-2 md:flex">
         <button
           class="embla__prev flex size-10 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm disabled:opacity-30"
           aria-label="{{ _('Previous') }}"
+          data-carousel-prev
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -75,6 +84,7 @@
         <button
           class="embla__next flex size-10 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm disabled:opacity-30"
           aria-label="{{ _('Next') }}"
+          data-carousel-next
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -131,42 +141,4 @@
   }
 </style>
 
-<script>
-  (function () {
-    const section = document.querySelector('[section-id="{{ sectionId }}"]');
-    if (!section) return;
-
-    const emblaRoot = section.querySelector(".embla");
-    const viewport = emblaRoot.querySelector(".embla__viewport");
-    const container = emblaRoot.querySelector(".embla__container");
-    const prevBtn = section.querySelector(".embla__prev");
-    const nextBtn = section.querySelector(".embla__next");
-    const progressBar = section.querySelector(".embla__progress-bar");
-
-    if (!container || container.children.length <= 1) return;
-
-    const embla = EmblaCarousel(viewport, {
-      direction: document.dir === "rtl" ? "rtl" : "ltr",
-      loop: false,
-      align: "start",
-      slidesToScroll: 1,
-      skipSnaps: false,
-      containScroll: "trimSnaps"
-    });
-
-    if (prevBtn) prevBtn.onclick = () => embla.scrollPrev();
-    if (nextBtn) nextBtn.onclick = () => embla.scrollNext();
-
-    const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
-    const updateProgress = () => {
-      const p = clamp(embla.scrollProgress(), 0, 1);
-      if (progressBar) progressBar.style.width = `${p * 100}%`;
-      if (prevBtn) prevBtn.disabled = !embla.canScrollPrev();
-      if (nextBtn) nextBtn.disabled = !embla.canScrollNext();
-    };
-
-    embla.on("init", updateProgress);
-    embla.on("scroll", updateProgress);
-    embla.on("reInit", updateProgress);
-  })();
-</script>
+{# Carousel is now initialized by main.js using data-carousel attributes #}

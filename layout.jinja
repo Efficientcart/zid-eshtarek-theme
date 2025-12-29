@@ -102,85 +102,55 @@
     data-template="{{ session.template }}"
     class="min-h-dvh font-sans antialiased"
   >
+    {# DEV TOOL: Theme Selector - Remove in production #}
+    {% include 'components/dev/theme-selector.jinja' %}
     {% include 'header.jinja' %}
     <main id="main">{% block content %}{% endblock %}</main>
 
     {% include 'footer.jinja' %}
-    <script
-      src="{{ 'locale-switcher.js' | asset_url }}"
-      defer
-    ></script>
-    <script
-      src="{{ 'js/price-slider.js' | asset_url }}"
-      defer
-    ></script>
-    <script
-      src="{{ 'js/product-filter.js' | asset_url }}"
-      defer
-    ></script>
-    <script
-      defer
-      src="{{ 'js/product-gallery-carousel.js' | asset_url }}"
-    ></script>
-    <script
-      defer
-      src="{{ 'js/wishlist.js' | asset_url }}"
-    ></script>
-    <script
-      defer
-      src="{{ 'js/qty-input.js' | asset_url }}"
-    ></script>
-    <script
-      defer
-      src="{{ 'js/cart.js' | asset_url }}"
-    ></script>
-    <script
-      defer
-      src="{{ 'js/notify-me.js' | asset_url }}"
-    ></script>
-    <script
-      defer
-      src="{{ 'js/search.js' | asset_url }}"
-    ></script>
-
-    {# Layout config for header/locale functionality #}
+    {% include "vitrin:shared/region_settings_dialog.jinja" %}
+    <script>
+      window.zidOpenRegionSettingDialog = () => {
+        region_settings_dialog?.open();
+      };
+    </script>
+    {# Global config scripts (must run before theme bundle) #}
     <!-- prettier-ignore-start -->
-  <script>
-    window.layoutConfig = {
-      profileUrl: "{{ url_for('profile') }}",
-      currentCountry: "{{ session.country.code | lower }}",
-      currentLanguage: "{{ session.lang }}",
-      defaultCountryCode: "{{ store.default_locale.region.code | lower }}"
-    };
-  </script>
-  <!-- prettier-ignore-end -->
+    <script>
+      // Layout config for header functionality
+      window.layoutConfig = {
+        profileUrl: "{{ url_for('profile') }}"
+      };
+
+      // Product translations (used by variants.js for variant changes)
+      window.productTranslations = {
+        discount: "{{ _('Discount') }}",
+        remaining: "{{ _('Remaining %s only') }}",
+        sold: "{{ _('Sold more than %s times') }}"
+      };
+      window.storeLowStockEnabled = {{ 'true' if store.settings.products.low_stock_enabled else 'false' }};
+      window.storeLowStockThreshold = {{ store.settings.products.low_stock_threshold | default(5) }};
+
+      // Loyalty Rewards config (only set if enabled)
+      {% if session.template not in ['product_details', 'cart_page', 'page_details'] and store.settings.checkout.is_loyalty_enabled %}
+      window.loyaltyConfig = {
+        direction: "{{ session.locale.language.direction }}",
+        textRewards: "{{ _('Rewards') }}",
+        textLoyaltyOptions: "{{ _('For {points} get a discount {percentage}') }}",
+        currencyCode: "{{ session.currency.code }}"
+      };
+      {% endif %}
+    </script>
+    <!-- prettier-ignore-end -->
+
+    {# Bundled theme JS (Vite output) - includes all feature modules #}
     <script
       defer
-      src="{{ 'js/layout.js' | asset_url }}"
+      src="{{ 'dist/theme.js' | asset_url }}"
     ></script>
 
-    <!-- prettier-ignore-start -->
-  <script defer>
-    // Product translations (used by product.js for variant changes)
-    window.productTranslations = {
-      discount: "{{ _('Discount') }}",
-      remaining: "{{ _('Remaining %s only') }}",
-      sold: "{{ _('Sold more than %s times') }}"
-    };
-    window.storeLowStockEnabled = {{ 'true' if store.settings.products.low_stock_enabled else 'false' }};
-    window.storeLowStockThreshold = {{ store.settings.products.low_stock_threshold | default(5) }};
-  </script>
-  <!-- prettier-ignore-end -->
-
-    <script
-      defer
-      src="{{ 'js/product.js' | asset_url }}"
-    ></script>
-    <script
-      defer
-      src="{{ 'js/image-lightbox.js' | asset_url }}"
-    ></script>
     {% vitrin_body %}
+
     {% block footer_scripts %}
     {% endblock %}
   </body>
