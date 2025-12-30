@@ -35,7 +35,7 @@
             {% include 'components/products/product-card.jinja' %}
           {% endfor %}
         </div>
-        {% set totalPages = ((products.count / (session.query_params.get('page_size') or 12)|int) | round(0, 'ceil')) | int %}
+        {% set totalPages = ((products.count / (session.query_params.get('page_size') or 24)|int) | round(0, 'ceil')) | int %}
         {% set currentPage = products.page %}
         {% include 'components/products/pagination.jinja' %}
       </div>

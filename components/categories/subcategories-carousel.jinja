@@ -47,9 +47,20 @@
     {% endif %}
 
     {# Carousel #}
-    <div class="subcategories-embla">
-      <div class="subcategories-embla__viewport overflow-hidden">
-        <div class="subcategories-embla__container">
+    <div
+      class="subcategories-embla"
+      data-carousel
+      data-carousel-conditional="true"
+      data-carousel-align="start"
+    >
+      <div
+        class="subcategories-embla__viewport overflow-hidden"
+        data-carousel-viewport
+      >
+        <div
+          class="subcategories-embla__container"
+          data-carousel-container
+        >
           {% for item in subcategories %}
             <div class="subcategories-embla__slide">
               {% with subcategory=item, index=loop.index0 %}
@@ -62,17 +73,22 @@
     </div>
 
     {# Controls - hidden by default, shown only when carousel is active #}
-    <div class="subcategories-embla__controls hidden items-center gap-2">
+    <div
+      class="subcategories-embla__controls hidden items-center gap-2"
+      data-carousel-controls
+    >
       <div class="subcategories-embla__progress bg-secondary h-1 w-full rounded">
         <div
           class="subcategories-embla__progress-bar bg-accent h-1 rounded-sm"
           style="width: 0%"
+          data-carousel-progress
         ></div>
       </div>
       <div class="hidden items-center gap-2 md:flex">
         <button
           class="subcategories-embla__prev flex size-10 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm disabled:opacity-30"
           aria-label="{{ _('Previous') }}"
+          data-carousel-prev
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -91,6 +107,7 @@
         <button
           class="subcategories-embla__next flex size-10 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm disabled:opacity-30"
           aria-label="{{ _('Next') }}"
+          data-carousel-next
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -142,86 +159,5 @@
     }
   </style>
 
-  <script>
-    (function () {
-      const root = document.querySelector('[data-subcategories-carousel="{{ carousel_id }}"]');
-      if (!root) return;
-
-      const viewport = root.querySelector(".subcategories-embla__viewport");
-      const container = root.querySelector(".subcategories-embla__container");
-      const controls = root.querySelector(".subcategories-embla__controls");
-      const prevBtn = root.querySelector(".subcategories-embla__prev");
-      const nextBtn = root.querySelector(".subcategories-embla__next");
-      const progressBar = root.querySelector(".subcategories-embla__progress-bar");
-
-      if (!container || container.children.length === 0) return;
-
-      let embla = null;
-
-      function needsCarousel() {
-        return container.scrollWidth > viewport.clientWidth;
-      }
-
-      function initCarousel() {
-        if (embla) return;
-
-        embla = EmblaCarousel(viewport, {
-          direction: document.dir === "rtl" ? "rtl" : "ltr",
-          loop: false,
-          align: "start",
-          slidesToScroll: 1,
-          skipSnaps: false,
-          containScroll: "trimSnaps",
-          breakpoints: {
-            "(min-width: 768px)": { slidesToScroll: 2 },
-            "(min-width: 1024px)": { slidesToScroll: 3 }
-          }
-        });
-
-        if (prevBtn) prevBtn.onclick = () => embla.scrollPrev();
-        if (nextBtn) nextBtn.onclick = () => embla.scrollNext();
-
-        const clamp = (n, min, max) => Math.max(min, Math.min(n, max));
-        const updateProgress = () => {
-          const p = clamp(embla.scrollProgress(), 0, 1);
-          if (progressBar) progressBar.style.width = `${p * 100}%`;
-          if (prevBtn) prevBtn.disabled = !embla.canScrollPrev();
-          if (nextBtn) nextBtn.disabled = !embla.canScrollNext();
-        };
-
-        embla.on("init", updateProgress);
-        embla.on("scroll", updateProgress);
-        embla.on("reInit", updateProgress);
-
-        if (controls) controls.classList.remove("hidden");
-        if (controls) controls.classList.add("flex");
-      }
-
-      function destroyCarousel() {
-        if (!embla) return;
-        embla.destroy();
-        embla = null;
-        if (controls) controls.classList.add("hidden");
-        if (controls) controls.classList.remove("flex");
-      }
-
-      function checkAndInit() {
-        if (needsCarousel()) {
-          initCarousel();
-        } else {
-          destroyCarousel();
-        }
-      }
-
-      // Initial check
-      checkAndInit();
-
-      // Re-check on resize
-      let resizeTimer;
-      window.addEventListener("resize", () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(checkAndInit, 150);
-      });
-    })();
-  </script>
+  {# Carousel is now initialized by main.js using data-carousel attributes #}
 {% endif %}
