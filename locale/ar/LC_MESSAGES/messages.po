@@ -33,6 +33,9 @@ msgstr "جميع التصنيفات"
 msgid "All Products"
 msgstr "جميع المنتجات"
 
+msgid "More"
+msgstr "المزيد"
+
 msgid "Cart"
 msgstr "السلة"
 
@@ -259,6 +262,12 @@ msgstr "الصورة السابقة"
 msgid "Next image"
 msgstr "الصورة التالية"
 
+msgid "Play video"
+msgstr "تشغيل الفيديو"
+
+msgid "Close video"
+msgstr "إغلاق الفيديو"
+
 # ==============================================================================
 # Wishlist
 # ==============================================================================
@@ -284,6 +293,27 @@ msgstr "البريد الإلكتروني"
 
 msgid "Phone number"
 msgstr "رقم الهاتف"
+
+msgid "Phone number is required"
+msgstr "رقم الهاتف مطلوب"
+
+msgid "Phone number is too short"
+msgstr "رقم الهاتف قصير جداً"
+
+msgid "Phone number is too long"
+msgstr "رقم الهاتف طويل جداً"
+
+msgid "Invalid phone number"
+msgstr "رقم الهاتف غير صحيح"
+
+msgid "You will be notified when this product is back in stock!"
+msgstr "سيتم إشعارك عند توفر هذا المنتج!"
+
+msgid "Failed to submit. Please try again."
+msgstr "فشل الإرسال. يرجى المحاولة مرة أخرى."
+
+msgid "Please fill in all required fields"
+msgstr "يرجى ملء جميع الحقول المطلوبة"
 
 msgid "Submit"
 msgstr "إرسال"
@@ -910,3 +940,14 @@ msgstr "رسوم الشحن"
 
 msgid "Cash on delivery"
 msgstr "الدفع عند الاستلام"
+
+# ==============================================================================
+# Loyalty Rewards
+# ==============================================================================
+
+msgid "Rewards"
+msgstr "المكافآت"
+
+#, python-brace-format
+msgid "For {points} get a discount {percentage}"
+msgstr "مقابل {points} نقطة احصل على خصم {percentage}"
