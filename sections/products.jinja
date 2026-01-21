@@ -24,11 +24,11 @@
           {# Header #}
           {% if settings.title %}
             <div class="flex items-center justify-between">
-              <h2 class="text-foreground text-h4 md:text-h3">{{ settings.title }}</h2>
+              <h2 class="text-foreground text-xl md:text-2xl font-semibold tracking-tight">{{ settings.title }}</h2>
               {% if settings.display_more and settings.more_text %}
                 <a
                   href="{{ settings.products.url or url_for('list_products') }}"
-                  class="text-foreground text-body1 flex items-center gap-2 px-4 py-3"
+                  class="text-foreground text-sm flex items-center gap-2 px-4 py-3"
                 >
                   {{ settings.more_text }}
                   <svg

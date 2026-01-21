@@ -17,7 +17,7 @@
       {% endfor %}
     </div>
     {% if store.settings.payment_description %}
-      <p class="text-muted text-body2 mt-4">{{ store.settings.payment_description }}</p>
+      <p class="text-muted text-sm mt-4">{{ store.settings.payment_description }}</p>
     {% endif %}
   </div>
 {% else %}
@@ -31,6 +31,6 @@
     >
       <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H6a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3z" />
     </svg>
-    <p class="text-muted text-body2 md:text-body1">{{ _("No payment methods available") }}</p>
+    <p class="text-muted text-sm md:text-sm">{{ _("No payment methods available") }}</p>
   </div>
 {% endif %}

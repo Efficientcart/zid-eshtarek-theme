@@ -55,7 +55,7 @@
             class="space-y-4"
           >
             <div class="space-y-1">
-              <h1 class="text-foreground text-h5 text-caps md:text-h4">{{ product.name }}</h1>
+              <h1 class="text-foreground text-lg md:text-xl font-semibold">{{ product.name }}</h1>
               {% if store.settings.products.reviews_enabled %}
                 {% if product.rating %}
                   <div class="flex items-center gap-2">
@@ -64,7 +64,7 @@
                     {% endwith %}
                     <a
                       href="#reviews"
-                      class="text-muted-foreground text-body2 underline"
+                      class="text-muted-foreground text-sm underline"
                     >
                       {{ _("See reviews") }}
                     </a>
@@ -155,21 +155,21 @@
               <div class="flex flex-wrap items-center gap-2">
                 {# Current Price (sale or regular) #}
                 <p
-                  class="text-h5 text-caps"
+                  class="text-lg font-semibold"
                   data-product-price
                 >
                   {{ product.formatted_sale_price if product.formatted_sale_price else product.formatted_price }}
                 </p>
                 {# Old Price (if on sale) #}
                 <span
-                  class="text-destructive text-body2 {{ 'hidden' if not product.formatted_sale_price }} line-through"
+                  class="text-destructive text-sm {{ 'hidden' if not product.formatted_sale_price }} line-through"
                   data-product-price-old
                 >
                   {{ product.formatted_price if product.formatted_sale_price else '' }}
                 </span>
                 {# Discount Badge #}
                 <span
-                  class="bg-success/20 text-success text-tagline {{ 'hidden' if not (product.discount_percentage and product.discount_percentage > 0) }} rounded px-2 py-1"
+                  class="bg-success/20 text-success text-xs uppercase tracking-wide {{ 'hidden' if not (product.discount_percentage and product.discount_percentage > 0) }} rounded px-2 py-1"
                   data-product-discount
                 >
                   {% if product.discount_percentage and product.discount_percentage > 0 %}
@@ -180,7 +180,7 @@
               </div>
               {# SKU #}
               <span
-                class="text-muted-foreground text-body1 {{ 'hidden' if not product.sku }}"
+                class="text-muted-foreground text-sm {{ 'hidden' if not product.sku }}"
                 data-product-sku-wrapper
               >
                 SKU <span data-product-sku>{{ product.sku }}</span>
@@ -190,7 +190,7 @@
 
           {# Short Description #}
           {% if product.short_description %}
-            <div class="prose prose-sm text-caps max-w-none">{{ product.short_description|safe }}</div>
+            <div class="prose prose-sm max-w-none">{{ product.short_description|safe }}</div>
           {% endif %}
 
           <form
@@ -336,7 +336,7 @@
 
             {# Social Share Links #}
             <div class="border-border-light flex items-center gap-4 border-t pt-4">
-              <span class="text-body2 text-muted">{{ _("Share product") }}:</span>
+              <span class="text-sm text-muted">{{ _("Share product") }}:</span>
               <div class="flex items-center gap-3">
                 {# WhatsApp #}
                 <a
@@ -448,7 +448,7 @@
               class="bg-secondary group flex w-full items-center justify-between gap-3 rounded px-4 py-2"
               aria-expanded="false"
             >
-              <span class="text-foreground text-h6">{{ _("Features & details") }}</span>
+              <span class="text-foreground text-sm font-medium">{{ _("Features & details") }}</span>
               <span
                 class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm"
               >
@@ -479,9 +479,9 @@
                   class="{{ 'hidden' if not has_weight }} flex items-center gap-2"
                   data-product-weight-wrapper
                 >
-                  <dt class="text-muted-foreground text-body1">{{ _("Weight") }}:</dt>
+                  <dt class="text-muted-foreground text-sm">{{ _("Weight") }}:</dt>
                   <dd
-                    class="text-foreground text-body1"
+                    class="text-foreground text-sm"
                     data-product-weight
                   >
                     {% if has_weight %}
@@ -519,13 +519,13 @@
             >
               <div class="flex flex-col items-start gap-1">
                 <div class="flex items-center gap-3">
-                  <span class="text-foreground text-h6">{{ product.bundle_offer.name }}</span>
+                  <span class="text-foreground text-sm font-medium">{{ product.bundle_offer.name }}</span>
                   <span class="badge badge-outlined text-destructive border-destructive">
                     {{ product.bundle_offer.products.results|length }} {{ _("Products") }}
                   </span>
                 </div>
                 {% if product.bundle_offer.description %}
-                  <p class="text-body2 text-muted text-start">{{ product.bundle_offer.description }}</p>
+                  <p class="text-sm text-muted text-start">{{ product.bundle_offer.description }}</p>
                 {% endif %}
               </div>
               <span
@@ -589,7 +589,7 @@
                 class="bg-secondary group flex w-full items-center justify-between gap-3 rounded px-4 py-2"
                 aria-expanded="false"
               >
-                <span class="text-foreground text-h6">{{ _("Product options") }}</span>
+                <span class="text-foreground text-sm font-medium">{{ _("Product options") }}</span>
                 <span
                   class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm"
                 >
@@ -646,7 +646,7 @@
             class="bg-secondary group flex w-full items-center justify-between gap-3 rounded px-4 py-2"
             aria-expanded="false"
           >
-            <span class="text-foreground text-h6">{{ _("FAQ") }}</span>
+            <span class="text-foreground text-sm font-medium">{{ _("FAQ") }}</span>
             <span
               class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm"
             >

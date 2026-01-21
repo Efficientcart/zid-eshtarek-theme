@@ -1,10 +1,10 @@
 {% if shipping_methods %}
   <div class="flex flex-col gap-2">
     <div class="border-border-light flex gap-6 border-b pb-4">
-      <div class="text-foreground text-tagline text-caps flex-1">{{ _("Shipping Provider") }}</div>
-      <div class="text-foreground text-tagline text-caps flex-1">{{ _("Covered Areas") }}</div>
-      <div class="text-foreground text-tagline text-caps w-[200px]">{{ _("Shipping Charges") }}</div>
-      <div class="text-foreground text-tagline text-caps w-[220px] text-end">{{ _("Cash on Delivery") }}</div>
+      <div class="text-foreground text-xs uppercase tracking-wide flex-1">{{ _("Shipping Provider") }}</div>
+      <div class="text-foreground text-xs uppercase tracking-wide flex-1">{{ _("Covered Areas") }}</div>
+      <div class="text-foreground text-xs uppercase tracking-wide w-[200px]">{{ _("Shipping Charges") }}</div>
+      <div class="text-foreground text-xs uppercase tracking-wide w-[220px] text-end">{{ _("Cash on Delivery") }}</div>
     </div>
     <div class="flex flex-col gap-4">
       {% for method in shipping_methods %}
@@ -32,9 +32,9 @@
                 </svg>
               </div>
             {% endif %}
-            <span class="text-foreground text-tagline text-caps">{{ method.name }}</span>
+            <span class="text-foreground text-xs uppercase tracking-wide">{{ method.name }}</span>
           </div>
-          <div class="text-foreground text-body2 flex-1">
+          <div class="text-foreground text-sm flex-1">
             {% if method.delivery_option_cities and method.delivery_option_cities | length > 0 %}
               {% set cities = method.delivery_option_cities %}
               {% set preview_count = 3 %}
@@ -58,7 +58,7 @@
               <span>{{ _("All areas") }}</span>
             {% endif %}
           </div>
-          <div class="text-foreground text-tagline text-caps w-[200px]">
+          <div class="text-foreground text-xs uppercase tracking-wide w-[200px]">
             {% if method.cost %}
               {% for cost in method.cost %}
                 <span>{{ cost.cost_string }}</span>{% if not loop.last %}<br />{% endif %}
@@ -69,7 +69,7 @@
           </div>
           <div class="w-[220px] text-end">
             {% if method.cod_enabled %}
-              <span class="text-foreground text-tagline text-caps">
+              <span class="text-foreground text-xs uppercase tracking-wide">
                 {% if method.cod_fee %}
                   {% for cod_fee in method.cod_fee %}
                     {{ cod_fee.cod_fee_string }}{% if not loop.last %}<br />{% endif %}
@@ -79,7 +79,7 @@
                 {% endif %}
               </span>
             {% else %}
-              <span class="text-muted-foreground text-tagline text-caps">{{ _("Not supported") }}</span>
+              <span class="text-muted-foreground text-xs uppercase tracking-wide">{{ _("Not supported") }}</span>
             {% endif %}
           </div>
         </div>
@@ -99,7 +99,7 @@
         d="M13 16V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1m8-1a1 1 0 0 1-1 1H9m4-1V8a1 1 0 0 1 1-1h2.586a1 1 0 0 1 .707.293l3.414 3.414a1 1 0 0 1 .293.707V16a1 1 0 0 1-1 1h-1m-6-1a1 1 0 0 0 1 1h1M5 17a2 2 0 1 0 4 0m-4 0a2 2 0 1 1 4 0m6 0a2 2 0 1 0 4 0m-4 0a2 2 0 1 1 4 0"
       />
     </svg>
-    <p class="text-muted text-body1">{{ _("No shipping options available") }}</p>
+    <p class="text-muted text-sm">{{ _("No shipping options available") }}</p>
   </div>
 {% endif %}
 <!-- prettier-ignore-start -->

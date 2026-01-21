@@ -39,13 +39,13 @@
           {% endif %}
         </div>
         <div>
-          <h1 class="text-foreground text-h5 text-caps">{{ product.name }}</h1>
+          <h1 class="text-foreground text-lg font-semibold">{{ product.name }}</h1>
           {% if product.rating %}
             <div class="mt-1 flex items-center gap-2">
               {% with rating=product.rating.average %}
                 {% include 'components/rating-stars.jinja' %}
               {% endwith %}
-              <span class="text-muted text-body2">({{ product.rating.total_count }} {{ _("reviews") }})</span>
+              <span class="text-muted text-sm">({{ product.rating.total_count }} {{ _("reviews") }})</span>
             </div>
           {% endif %}
         </div>
@@ -56,7 +56,7 @@
         <div class="lg:col-span-4">
           <div class="bg-secondary sticky top-32 rounded-lg p-6">
             <div class="mb-6 flex items-center justify-between">
-              <h2 class="text-foreground text-h6">{{ _("Reviews") }}</h2>
+              <h2 class="text-foreground text-sm font-medium">{{ _("Reviews") }}</h2>
               <a
                 href="{{ url_for('add_product_review', slug=product.id) }}"
                 class="btn btn-filled btn-sm"
@@ -81,12 +81,12 @@
             {% if product.rating %}
               {# Average Rating #}
               <div class="mb-6 flex items-center gap-4">
-                <span class="text-foreground text-h2">{{ product.rating.average }}</span>
+                <span class="text-foreground text-2xl font-semibold">{{ product.rating.average }}</span>
                 <div>
                   {% with rating=product.rating.average %}
                     {% include 'components/rating-stars.jinja' %}
                   {% endwith %}
-                  <p class="text-muted text-caption mt-1">{{ product.rating.total_count }} {{ _("reviews") }}</p>
+                  <p class="text-muted text-xs mt-1">{{ product.rating.total_count }} {{ _("reviews") }}</p>
                 </div>
               </div>
 
@@ -94,7 +94,7 @@
               <div class="space-y-2">
                 {# 5 Stars #}
                 <div class="flex items-center gap-3">
-                  <span class="text-muted text-caption w-4 shrink-0">5</span>
+                  <span class="text-muted text-xs w-4 shrink-0">5</span>
                   <svg
                     class="text-warning size-4 shrink-0"
                     viewBox="0 0 20 20"
@@ -111,14 +111,14 @@
                       style="width: {{ percent }}%"
                     ></div>
                   </div>
-                  <span class="text-muted text-caption w-8 shrink-0 text-end"
+                  <span class="text-muted text-xs w-8 shrink-0 text-end"
                     >{{ product.rating.ratings_5.count }}</span
                   >
                 </div>
 
                 {# 4 Stars #}
                 <div class="flex items-center gap-3">
-                  <span class="text-muted text-caption w-4 shrink-0">4</span>
+                  <span class="text-muted text-xs w-4 shrink-0">4</span>
                   <svg
                     class="text-warning size-4 shrink-0"
                     viewBox="0 0 20 20"
@@ -135,14 +135,14 @@
                       style="width: {{ percent }}%"
                     ></div>
                   </div>
-                  <span class="text-muted text-caption w-8 shrink-0 text-end"
+                  <span class="text-muted text-xs w-8 shrink-0 text-end"
                     >{{ product.rating.ratings_4.count }}</span
                   >
                 </div>
 
                 {# 3 Stars #}
                 <div class="flex items-center gap-3">
-                  <span class="text-muted text-caption w-4 shrink-0">3</span>
+                  <span class="text-muted text-xs w-4 shrink-0">3</span>
                   <svg
                     class="text-warning size-4 shrink-0"
                     viewBox="0 0 20 20"
@@ -159,14 +159,14 @@
                       style="width: {{ percent }}%"
                     ></div>
                   </div>
-                  <span class="text-muted text-caption w-8 shrink-0 text-end"
+                  <span class="text-muted text-xs w-8 shrink-0 text-end"
                     >{{ product.rating.ratings_3.count }}</span
                   >
                 </div>
 
                 {# 2 Stars #}
                 <div class="flex items-center gap-3">
-                  <span class="text-muted text-caption w-4 shrink-0">2</span>
+                  <span class="text-muted text-xs w-4 shrink-0">2</span>
                   <svg
                     class="text-warning size-4 shrink-0"
                     viewBox="0 0 20 20"
@@ -183,14 +183,14 @@
                       style="width: {{ percent }}%"
                     ></div>
                   </div>
-                  <span class="text-muted text-caption w-8 shrink-0 text-end"
+                  <span class="text-muted text-xs w-8 shrink-0 text-end"
                     >{{ product.rating.ratings_2.count }}</span
                   >
                 </div>
 
                 {# 1 Star #}
                 <div class="flex items-center gap-3">
-                  <span class="text-muted text-caption w-4 shrink-0">1</span>
+                  <span class="text-muted text-xs w-4 shrink-0">1</span>
                   <svg
                     class="text-warning size-4 shrink-0"
                     viewBox="0 0 20 20"
@@ -207,13 +207,13 @@
                       style="width: {{ percent }}%"
                     ></div>
                   </div>
-                  <span class="text-muted text-caption w-8 shrink-0 text-end"
+                  <span class="text-muted text-xs w-8 shrink-0 text-end"
                     >{{ product.rating.ratings_1.count }}</span
                   >
                 </div>
               </div>
             {% else %}
-              <p class="text-muted text-body2">{{ _("No reviews yet") }}</p>
+              <p class="text-muted text-sm">{{ _("No reviews yet") }}</p>
             {% endif %}
           </div>
         </div>
@@ -256,8 +256,8 @@
               >
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              <h2 class="text-foreground text-h6 mb-2">{{ _("No reviews yet") }}</h2>
-              <p class="text-muted text-body2 mb-4">{{ _("Be the first to review this product") }}</p>
+              <h2 class="text-foreground text-sm font-medium mb-2">{{ _("No reviews yet") }}</h2>
+              <p class="text-muted text-sm mb-4">{{ _("Be the first to review this product") }}</p>
               <a
                 href="{{ url_for('add_product_review', slug=product.id) }}"
                 class="btn btn-filled"

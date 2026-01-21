@@ -121,8 +121,8 @@ function initCitiesDialog() {
         const headerEl = document.createElement("div");
         headerEl.className = "mb-3 flex items-center gap-2";
         headerEl.innerHTML = `
-          <span class="text-foreground text-subtitle2">${country}</span>
-          <span class="text-muted-foreground text-caption">(${cityCount} cities)</span>
+          <span class="text-foreground text-sm font-semibold">${country}</span>
+          <span class="text-muted-foreground text-xs">(${cityCount} cities)</span>
         `;
 
         // Tags wrapper
@@ -153,8 +153,8 @@ function initCitiesDialog() {
         triggerEl.setAttribute("data-country-trigger", "");
         triggerEl.innerHTML = `
           <div class="flex items-center gap-2">
-            <span class="text-foreground text-subtitle2">${country}</span>
-            <span class="text-muted-foreground text-caption">(${cityCount} cities)</span>
+            <span class="text-foreground text-sm font-semibold">${country}</span>
+            <span class="text-muted-foreground text-xs">(${cityCount} cities)</span>
           </div>
           <span class="text-foreground flex size-10 shrink-0 items-center justify-center rounded bg-white/10 backdrop-blur-sm">
             <svg class="size-6 transition-transform duration-200 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-country-icon>

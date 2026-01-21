@@ -32,7 +32,7 @@
     <div class="theme-container">
       <div class="flex flex-col gap-6">
         {# Section Title #}
-        <h2 class="text-foreground text-h3">{{ _("Shop by Categories") }}</h2>
+        <h2 class="text-foreground text-xl md:text-2xl font-semibold tracking-tight">{{ _("Shop by Categories") }}</h2>
 
         {# Categories Grid - 3 columns #}
         {% if categories and categories|length > 0 %}
@@ -45,7 +45,7 @@
           </div>
         {% else %}
           <div class="bg-secondary flex flex-col items-center justify-center rounded-lg py-16">
-            <p class="text-muted text-body1">{{ _("No categories found") }}</p>
+            <p class="text-muted text-sm">{{ _("No categories found") }}</p>
           </div>
         {% endif %}
       </div>

@@ -1,4 +1,7 @@
-<footer class="bg-secondary px-4 py-8 md:px-16 md:py-16">
+<footer
+  id="footer"
+  class="bg-secondary px-4 py-8 md:px-16 md:py-16"
+>
   <div class="theme-container">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
       <div class="space-y-4">
@@ -25,8 +28,8 @@
             alt="{{ store.name }}"
           />
         {% endif %}
-        <p class="text-foreground text-body1 text-balance">{{ settings.about_us_about_us|safe }}</p>
-        <h3 class="text-foreground text-subtitle1">
+        <p class="text-foreground text-sm text-balance">{{ settings.about_us_about_us|safe }}</p>
+        <h3 class="text-foreground text-sm font-medium">
           {% if store.settings.contact.title %}
             {{ store.settings.contact.title }}
           {% else %}
@@ -171,7 +174,7 @@
         {% if not group.hide and group.links %}
           <div>
             {% if group.title %}
-              <h3 class="text-foreground text-subtitle1">{{ group.title }}</h3>
+              <h3 class="text-foreground text-sm font-medium">{{ group.title }}</h3>
             {% endif %}
             <ul
               role="list"
@@ -181,7 +184,7 @@
                 <li class="py-2">
                   <a
                     href="{{ link.url }}"
-                    class="text-foreground text-body1 hover:underline"
+                    class="text-foreground text-sm hover:underline"
                   >
                     {{ link.title }}
                   </a>
@@ -193,7 +196,7 @@
       {% endfor %}
       <div>
         <div>
-          <h3 class="text-foreground text-subtitle1">
+          <h3 class="text-foreground text-sm font-medium">
             {% if settings.contact_info_contact_info_title %}
               {{ settings.contact_info_contact_info_title }}
             {% else %}
@@ -226,7 +229,7 @@
                 </div>
                 <a
                   href="mailto:{{ store.settings.contact.email }}"
-                  class="text-foreground text-body1 ms-2"
+                  class="text-foreground text-sm ms-2"
                 >
                   {{ store.settings.contact.email }}
                 </a>
@@ -250,7 +253,7 @@
                   </svg>
                 </div>
                 <a
-                  class="text-foreground text-body1 ms-2"
+                  class="text-foreground text-sm ms-2"
                   {% if store.settings.general.business_address.latitude %}
                     target="_blank"
                     href="https://maps.google.com/?q={{ store.settings.general.business_address.latitude }},{{ store.settings.general.business_address.longitude }}"
@@ -284,7 +287,7 @@
                 </div>
                 <a
                   href="tel:{{ store.settings.contact.phone }}"
-                  class="text-foreground text-body1 ms-2"
+                  class="text-foreground text-sm ms-2"
                 >
                   {{ store.settings.contact.phone }}
                 </a>
@@ -296,18 +299,8 @@
     </div>
     <div class="border-border-light mt-6 border-t pt-6">
       <div class="flex flex-col items-center justify-between space-y-4 lg:flex-row lg:space-y-0">
-        <div class="text-foreground text-body2 flex items-center gap-x-2">
+        <div class="text-foreground text-sm">
           <span>{{ store.settings.branding.copyrights | safe }}</span>
-          <span>|</span>
-          <div class="flex items-center gap-x-1">
-            <span class="text-body2"> {{ _("Powered by") }} </span>
-            <img
-              width="54"
-              height="20"
-              src="{{ "images/zid-logo.svg" | asset_url }}"
-              alt="Zid"
-            />
-          </div>
         </div>
 
         <div class="flex flex-wrap items-center gap-x-2">
@@ -375,17 +368,17 @@
                 alt="{{ _('Business Center') }}"
                 class="h-6 max-w-13.5 rounded-sm object-contain"
               />
-              <div class="text-foreground text-caption">{{ store.settings.contact.business_center }}</div>
+              <div class="text-foreground text-xs">{{ store.settings.contact.business_center }}</div>
             </a>
           {% endif %}
 
           {% if store.settings.general.tax_settings.tax_number %}
-            <span class="text-muted text-body2">
+            <span class="text-muted text-sm">
               {{ _("VAT number:") }} {{ store.settings.general.tax_settings.tax_number }}
             </span>
           {% endif %}
           {% if store.settings.general.commercial_registration_number %}
-            <span class="text-muted text-body2">
+            <span class="text-muted text-sm">
               {{ _("The commercial register number:") }} {{ store.settings.general.commercial_registration_number }}
             </span>
           {% endif %}

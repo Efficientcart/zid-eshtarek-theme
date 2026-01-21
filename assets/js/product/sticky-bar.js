@@ -23,6 +23,7 @@ let btnLoading = null;
 let btnSuccess = null;
 let inStockSection = null;
 let outOfStockSection = null;
+let footer = null;
 let isVisible = false;
 let isAddingToCart = false;
 let observer = null;
@@ -36,6 +37,9 @@ function show() {
   isVisible = true;
   stickyCta.classList.remove("hidden");
   stickyCta.setAttribute("aria-hidden", "false");
+  if (footer) {
+    footer.style.paddingBottom = `${stickyCta.offsetHeight}px`;
+  }
 }
 
 function hide() {
@@ -43,6 +47,9 @@ function hide() {
   isVisible = false;
   stickyCta.setAttribute("aria-hidden", "true");
   stickyCta.classList.add("translate-y-full");
+  if (footer) {
+    footer.style.paddingBottom = "";
+  }
   setTimeout(() => {
     if (!isVisible && stickyCta) {
       stickyCta.classList.add("hidden");
@@ -142,6 +149,7 @@ export function init() {
   if (!stickyCta) return;
 
   // Cache elements
+  footer = document.getElementById("footer");
   productActions = document.querySelector("[data-product-actions]");
   mainAddToCartBtn = document.querySelector("[data-add-to-cart-form]");
   stickyAddToCartBtn = document.querySelector("[data-sticky-cta-add-to-cart]");

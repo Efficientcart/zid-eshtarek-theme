@@ -28,7 +28,7 @@
           title="{{ option.value }}"
         ></span>
       </span>
-      <span class="text-body1">{{ option.value }}</span>
+      <span class="text-sm">{{ option.value }}</span>
     </label>
   {% elif option.type == 'icon' and option.type_value.thumbnail %}
     <label class="form-control">
@@ -47,7 +47,7 @@
           class="size-full rounded object-cover"
         />
       </span>
-      <span class="text-body1">{{ option.value }}</span>
+      <span class="text-sm">{{ option.value }}</span>
     </label>
   {% endif %}
 {% endmacro %}
@@ -115,7 +115,7 @@
             <div class="flex items-start justify-between">
               <h2
                 id="drawer-title"
-                class="text-foreground text-h5 uppercase [font-variant:all-small-caps]"
+                class="text-foreground text-base font-semibold uppercase"
               >
                 {{ _("Filters") }}
               </h2>
@@ -259,7 +259,7 @@
                           type="button"
                           command="--toggle"
                           commandfor="{{ attribute.slug }}-more"
-                          class="group text-muted-foreground text-body2 mt-3 underline"
+                          class="group text-muted-foreground text-sm mt-3 underline"
                         >
                           <span class="hidden group-aria-[expanded=false]:inline">{{ _("View more") }}</span>
                           <span class="hidden group-aria-[expanded=true]:inline">{{ _("View less") }}</span>

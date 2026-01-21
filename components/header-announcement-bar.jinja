@@ -25,12 +25,12 @@
                 {% if settings.announcement_bar_url %}
                   <a
                     href="{{ settings.announcement_bar_url }}"
-                    class="text-body1 px-8 whitespace-nowrap underline"
+                    class="text-sm px-8 whitespace-nowrap underline"
                   >
                     {{ text }}
                   </a>
                 {% else %}
-                  <span class="text-body1 px-8 whitespace-nowrap">{{ text }}</span>
+                  <span class="text-sm px-8 whitespace-nowrap">{{ text }}</span>
                 {% endif %}
               {% endfor %}
             {% endfor %}
@@ -42,12 +42,12 @@
           {% if settings.announcement_bar_url %}
             <a
               href="{{ settings.announcement_bar_url }}"
-              class="text-body1 text-center underline"
+              class="text-sm text-center underline"
             >
               {{ ns.texts[0] }}
             </a>
           {% else %}
-            <p class="text-body1 text-center">{{ ns.texts[0] }}</p>
+            <p class="text-sm text-center">{{ ns.texts[0] }}</p>
           {% endif %}
         </div>
       {% endif %}

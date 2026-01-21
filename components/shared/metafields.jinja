@@ -6,10 +6,10 @@
     {% if item.data_type == 'text' %}
       {% if item.value and item.value[session.lang] %}
         <div class="flex flex-wrap items-center gap-2">
-          <dt class="text-muted-foreground text-body1">
+          <dt class="text-muted-foreground text-sm">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
-          <dd class="text-foreground text-body1">{{ item.value[session.lang] }}</dd>
+          <dd class="text-foreground text-sm">{{ item.value[session.lang] }}</dd>
         </div>
       {% endif %}
 
@@ -17,10 +17,10 @@
     {% elif item.data_type == 'number' %}
       {% if item.value is not none %}
         <div class="flex flex-wrap items-center gap-2">
-          <dt class="text-muted-foreground text-body1">
+          <dt class="text-muted-foreground text-sm">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
-          <dd class="text-foreground text-body1">{{ item.value }}</dd>
+          <dd class="text-foreground text-sm">{{ item.value }}</dd>
         </div>
       {% endif %}
 
@@ -28,7 +28,7 @@
     {% elif item.data_type == 'rich_text' %}
       {% if item.value and item.value[session.lang] %}
         <div class="flex flex-col gap-1">
-          <dt class="text-muted-foreground text-body1">
+          <dt class="text-muted-foreground text-sm">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
           <dd class="text-foreground prose prose-sm max-w-none">{{ item.value[session.lang]|safe }}</dd>
@@ -39,7 +39,7 @@
     {% elif item.data_type == 'image' %}
       {% if item.value and item.value.small %}
         <div class="flex flex-col gap-1">
-          <dt class="text-muted-foreground text-body1">
+          <dt class="text-muted-foreground text-sm">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
           <dd>
@@ -57,7 +57,7 @@
     {% elif item.data_type == 'file' %}
       {% if item.value and item.value.url %}
         <div class="flex flex-col gap-1">
-          <dt class="text-muted-foreground text-body1">
+          <dt class="text-muted-foreground text-sm">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
           <dd>
@@ -86,7 +86,7 @@
               </svg>
               <div class="flex min-w-0 flex-1 flex-col">
                 {% if item.value.name %}
-                  <span class="text-foreground text-caption truncate font-medium">{{ item.value.name }}</span>
+                  <span class="text-foreground text-xs truncate font-medium">{{ item.value.name }}</span>
                 {% endif %}
                 {% if item.value.formated_size %}
                   <span class="text-muted-foreground text-[10px] leading-3">{{ item.value.formated_size }}</span>
@@ -123,16 +123,16 @@
     {% elif item.data_type == 'table' %}
       {% if item.value %}
         <div class="flex flex-col gap-1">
-          <dt class="text-muted-foreground text-body1">
+          <dt class="text-muted-foreground text-sm">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
           <dd class="overflow-x-auto">
-            <table class="text-body2 w-full">
+            <table class="text-sm w-full">
               <thead>
                 <tr class="bg-secondary rounded-lg">
                   {% for header in item.value.headers %}
                     <th
-                      class="text-foreground text-body2 px-6 py-5 text-start font-semibold first:rounded-e-lg last:rounded-s-lg"
+                      class="text-foreground text-sm px-6 py-5 text-start font-semibold first:rounded-e-lg last:rounded-s-lg"
                     >
                       {{ header.name[session.lang] if header.name[session.lang] else header.name.ar }}
                     </th>
@@ -170,7 +170,7 @@
                             </svg>
                             <div class="flex min-w-0 flex-1 flex-col">
                               {% if cell.value.name %}
-                                <span class="text-foreground text-caption max-w-[60px] truncate font-medium"
+                                <span class="text-foreground text-xs max-w-[60px] truncate font-medium"
                                   >{{ cell.value.name }}</span
                                 >
                               {% endif %}
@@ -231,10 +231,10 @@
     {% else %}
       {% if item.value %}
         <div class="flex flex-wrap items-center gap-2">
-          <dt class="text-muted-foreground text-body1">
+          <dt class="text-muted-foreground text-sm">
             {{ item.name[session.lang] if item.name[session.lang] else item.name.ar }}:
           </dt>
-          <dd class="text-foreground text-body1">{{ item.value }}</dd>
+          <dd class="text-foreground text-sm">{{ item.value }}</dd>
         </div>
       {% endif %}
     {% endif %}

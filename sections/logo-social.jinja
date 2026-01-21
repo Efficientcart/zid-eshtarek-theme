@@ -39,7 +39,7 @@
     {% set has_social = store.settings.contact.facebook or store.settings.contact.instagram or store.settings.contact.twitter or store.settings.contact.snapchat or store.settings.contact.tiktok or store.settings.contact.youtube or store.settings.contact.linkedin %}
     {% if has_social %}
       <div class="flex flex-col items-center gap-2">
-        <span class="text-foreground text-body1">
+        <span class="text-foreground text-sm">
           {% if store.settings.contact.title %}
             {{ store.settings.contact.title }}
           {% else %}

@@ -34,7 +34,7 @@
     },
     {
       "id": "end_date",
-      "type": "date",
+      "type": "text",
       "label": {
         "ar": "تاريخ الانتهاء",
         "en": "End Date"

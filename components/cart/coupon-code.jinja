@@ -2,7 +2,7 @@
   class="flex flex-col gap-2 py-4"
   data-coupon-section
 >
-  <h3 class="text-foreground text-tagline">{{ _("Coupon code") }}</h3>
+  <h3 class="text-foreground text-xs uppercase tracking-wide">{{ _("Coupon code") }}</h3>
 
   {% if cart.coupon and cart.coupon.code %}
     <div
@@ -20,7 +20,7 @@
           fill="currentColor"
         />
       </svg>
-      <span class="text-foreground text-tagline uppercase">{{ cart.coupon.code }}</span>
+      <span class="text-foreground text-xs uppercase tracking-wide uppercase">{{ cart.coupon.code }}</span>
       <button
         type="button"
         class="text-foreground hover:text-destructive transition-colors"

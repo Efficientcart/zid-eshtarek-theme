@@ -62,7 +62,7 @@
     class="flex flex-1 flex-col gap-3 group-data-[grid=list]/grid:col-span-1 group-data-[grid=list]/grid:row-span-1 group-data-[grid=list]/grid:min-w-0 group-data-[grid=list]/grid:self-start"
   >
     <div class="flex flex-col gap-2">
-      <h3 class="text-foreground text-h6">
+      <h3 class="text-foreground text-sm font-medium">
         <a href="{{ url_for('product_details', slug=product.slug) }}"> {{ product.name }} </a>
       </h3>
       {% if store.settings.products.reviews_enabled %}
@@ -71,7 +71,7 @@
             {% set rating = product.rating.average %}
             {% include 'components/rating-stars.jinja' %}
             {% if product.rating.total_count > 0 %}
-              <span class="text-muted text-body2">({{ product.rating.total_count }})</span>
+              <span class="text-muted text-sm">({{ product.rating.total_count }})</span>
             {% endif %}
           </div>
         {% endif %}
@@ -81,15 +81,15 @@
     {% if product.formatted_sale_price is not none %}
       {# Product on sale - show sale price, old price crossed out, and discount #}
       <div class="flex flex-col gap-1">
-        <p class="text-foreground text-body1 font-semibold">
+        <p class="text-foreground text-sm font-semibold">
           {% if product.has_options %}{{ _("From") }}{% endif %}
           {{ product.formatted_sale_price }}
         </p>
         <div class="flex flex-wrap items-center gap-2">
-          <span class="text-destructive text-body2 line-through"> {{ product.formatted_price }} </span>
+          <span class="text-destructive text-sm line-through"> {{ product.formatted_price }} </span>
           {% if product.discount_percentage and product.discount_percentage > 0 %}
             <span
-              class="bg-success/20 text-tagline text-success inline-flex items-center rounded px-2 py-1 font-medium"
+              class="bg-success/20 text-xs uppercase tracking-wide text-success inline-flex items-center rounded px-2 py-1 font-medium"
             >
               {{ _("Discount") }} {{ product.discount_percentage }}%
             </span>
@@ -98,7 +98,7 @@
       </div>
     {% else %}
       {# Regular price - no sale #}
-      <p class="text-foreground text-body1">
+      <p class="text-foreground text-sm">
         {% if product.has_options %}{{ _("From") }}{% endif %}
         {{ product.formatted_price }}
       </p>
@@ -106,7 +106,7 @@
     {# Description - Only visible in list view #}
     {% if product.short_description or product.description %}
       <p
-        class="text-muted text-body2 hidden group-data-[grid=list]/grid:line-clamp-1 group-data-[grid=list]/grid:[display:-webkit-box] md:group-data-[grid=list]/grid:line-clamp-3"
+        class="text-muted text-sm hidden group-data-[grid=list]/grid:line-clamp-1 group-data-[grid=list]/grid:[display:-webkit-box] md:group-data-[grid=list]/grid:line-clamp-3"
       >
         {{ product.short_description|striptags|truncate(200) or product.description|striptags|truncate(200) }}
       </p>

@@ -23,15 +23,15 @@
           fill="currentColor"
         ></path>
       </svg>
-      <span class="text-foreground text-body1 flex-1 text-start">{{ _("Make it a gift") }}</span>
+      <span class="text-foreground text-sm flex-1 text-start">{{ _("Make it a gift") }}</span>
       <span
-        class="text-foreground text-body1 {{ 'hidden' if has_gift }}"
+        class="text-foreground text-sm {{ 'hidden' if has_gift }}"
         data-gift-add-link
       >
         {{ _("Add details") }}
       </span>
       <span
-        class="text-foreground text-body1 {{ 'hidden' if not has_gift }}"
+        class="text-foreground text-sm {{ 'hidden' if not has_gift }}"
         data-gift-edit-link
       >
         {{ _("Edit details") }}

@@ -27,22 +27,22 @@
               </svg>
             </div>
           {% endif %}
-          <span class="text-foreground text-tagline flex-1">{{ bank.bank.name }}</span>
+          <span class="text-foreground text-xs uppercase tracking-wide flex-1">{{ bank.bank.name }}</span>
         </div>
         <div class="flex flex-col gap-2">
           {% if bank.beneficiary_name %}
             <div class="flex items-start gap-4">
-              <span class="text-muted text-body2 w-[78px] shrink-0">{{ _("Name") }}</span>
-              <span class="text-foreground text-body2 flex-1 text-end">{{ bank.beneficiary_name }}</span>
+              <span class="text-muted text-sm w-[78px] shrink-0">{{ _("Name") }}</span>
+              <span class="text-foreground text-sm flex-1 text-end">{{ bank.beneficiary_name }}</span>
             </div>
           {% endif %}
           <div class="flex flex-col gap-1">
             {% if bank.account_number %}
               <div class="flex items-center gap-4">
-                <span class="text-muted text-body2 w-[78px] shrink-0">{{ _("Account No.") }}</span>
+                <span class="text-muted text-sm w-[78px] shrink-0">{{ _("Account No.") }}</span>
                 <div class="flex flex-1 items-center justify-end gap-0.5">
                   <span
-                    class="text-foreground text-body2"
+                    class="text-foreground text-sm"
                     dir="ltr"
                     >{{ bank.account_number }}</span
                   >
@@ -74,10 +74,10 @@
             {% endif %}
             {% if bank.iban %}
               <div class="flex items-center gap-4">
-                <span class="text-muted text-body2 w-[78px] shrink-0">{{ _("IBAN") }}</span>
+                <span class="text-muted text-sm w-[78px] shrink-0">{{ _("IBAN") }}</span>
                 <div class="flex flex-1 items-center justify-end gap-0.5">
                   <span
-                    class="text-foreground text-body2"
+                    class="text-foreground text-sm"
                     dir="ltr"
                     >{{ bank.iban }}</span
                   >
@@ -123,6 +123,6 @@
     >
       <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3" />
     </svg>
-    <p class="text-muted text-body2 md:text-body1">{{ _("No bank accounts available") }}</p>
+    <p class="text-muted text-sm md:text-sm">{{ _("No bank accounts available") }}</p>
   </div>
 {% endif %}

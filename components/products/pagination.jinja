@@ -34,7 +34,7 @@
       data-slot="pagination-link"
       data-active="true"
       aria-current="page"
-      class="text-foreground text-body1 {{ class }} relative flex size-11 items-center justify-center [&_.underline]:hidden data-[active=true]:[&_.underline]:block"
+      class="text-foreground text-sm {{ class }} relative flex size-11 items-center justify-center [&_.underline]:hidden data-[active=true]:[&_.underline]:block"
     >
       {{ page if page else caller() }}
       <span
@@ -46,7 +46,7 @@
       href="{{ href }}"
       data-slot="pagination-link"
       data-active="false"
-      class="text-foreground text-body1 {{ class }} flex size-11 items-center justify-center"
+      class="text-foreground text-sm {{ class }} flex size-11 items-center justify-center"
     >
       {{ page if page else caller() }}
     </a>
@@ -58,7 +58,7 @@
   <span
     aria-hidden="true"
     data-slot="pagination-ellipsis"
-    class="text-muted-foreground text-body1 {{ class }} flex size-11 items-center justify-center"
+    class="text-muted-foreground text-sm {{ class }} flex size-11 items-center justify-center"
   >
     ...
     <span class="sr-only">More pages</span>
@@ -194,7 +194,7 @@
 >
   {# Per-page select #}
   <div class="flex items-center gap-2">
-    <span class="text-muted text-body1">{{ _("Products on page") }}</span>
+    <span class="text-muted text-sm">{{ _("Products on page") }}</span>
     <el-select
       id="per-page-select"
       value="{{ page_size }}"
@@ -202,7 +202,7 @@
     >
       <button
         type="button"
-        class="text-foreground text-body1 group inline-flex items-center justify-center gap-2 border-none bg-transparent focus:ring-0"
+        class="text-foreground text-sm group inline-flex items-center justify-center gap-2 border-none bg-transparent focus:ring-0"
       >
         <el-selectedcontent class="underline underline-offset-auto"> {{ page_size }} </el-selectedcontent>
         <svg
@@ -228,7 +228,7 @@
         {% for value in [12, 24, 48] %}
           <el-option
             value="{{ value }}"
-            class="text-foreground text-body1 hover:bg-secondary aria-selected:bg-secondary block w-full cursor-pointer px-4 py-2 text-center transition-colors"
+            class="text-foreground text-sm hover:bg-secondary aria-selected:bg-secondary block w-full cursor-pointer px-4 py-2 text-center transition-colors"
           >
             {{ value }}
           </el-option>

@@ -160,11 +160,11 @@ class SearchManager {
       <a href="${product.url}" class="block w-[320px] shrink-0 md:w-[380px]">
         <div class="relative aspect-[3/4] overflow-hidden rounded">
           ${product.image ? `<img src="${product.image}" alt="${this.escapeHtml(product.name)}" class="h-full w-full object-cover" loading="lazy" />` : '<div class="bg-secondary h-full w-full rounded"></div>'}
-          ${product.badges.length > 0 ? `<div class="absolute left-4 top-4 flex flex-col gap-1 rtl:left-auto rtl:right-4">${product.badges.map((b) => `<span class="bg-secondary text-foreground text-tagline rounded px-2 py-1">${this.escapeHtml(b)}</span>`).join("")}</div>` : ""}
+          ${product.badges.length > 0 ? `<div class="absolute left-4 top-4 flex flex-col gap-1 rtl:left-auto rtl:right-4">${product.badges.map((b) => `<span class="bg-secondary text-foreground text-xs uppercase tracking-wide rounded px-2 py-1">${this.escapeHtml(b)}</span>`).join("")}</div>` : ""}
         </div>
         <div class="mt-4 flex flex-col gap-2">
           <div class="flex flex-col gap-1">
-            <h3 class="text-foreground text-h6 text-caps">${this.escapeHtml(product.name)}</h3>
+            <h3 class="text-foreground text-sm font-medium">${this.escapeHtml(product.name)}</h3>
             ${this.renderRating(product.rating)}
           </div>
           ${this.renderPrice(product)}
@@ -207,7 +207,7 @@ class SearchManager {
     return `
       <div class="flex items-center gap-2">
         <div class="flex gap-0.5">${starsHtml}</div>
-        ${rating.total_count ? `<span class="text-muted text-body2">(${rating.total_count})</span>` : ""}
+        ${rating.total_count ? `<span class="text-muted text-sm">(${rating.total_count})</span>` : ""}
       </div>
     `;
   }
@@ -218,13 +218,13 @@ class SearchManager {
     if (product.salePrice) {
       return `
         <div class="flex flex-col">
-          <p class="text-foreground text-body1">${fromPrefix}${this.escapeHtml(product.salePrice)}</p>
-          <span class="text-destructive text-body2 line-through">${this.escapeHtml(product.price)}</span>
+          <p class="text-foreground text-sm">${fromPrefix}${this.escapeHtml(product.salePrice)}</p>
+          <span class="text-destructive text-sm line-through">${this.escapeHtml(product.price)}</span>
         </div>
       `;
     }
 
-    return `<p class="text-foreground text-body1">${fromPrefix}${this.escapeHtml(product.price)}</p>`;
+    return `<p class="text-foreground text-sm">${fromPrefix}${this.escapeHtml(product.price)}</p>`;
   }
 
   showLoading() {

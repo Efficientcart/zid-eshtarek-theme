@@ -6,7 +6,7 @@
 #}
 {% if product %}
   <div class="border-border mt-4 border-t pt-4">
-    <h3 class="text-foreground text-subtitle1 mb-4">{{ _("Ask your question") }}</h3>
+    <h3 class="text-foreground text-sm font-semibold mb-4">{{ _("Ask your question") }}</h3>
 
     <form
       id="question-form"
@@ -38,7 +38,7 @@
           />
           <p
             id="email-error"
-            class="text-destructive text-caption hidden"
+            class="text-destructive text-xs hidden"
           >
             {{ _("Email is incorrect") }}
           </p>
@@ -62,7 +62,7 @@
           />
           <p
             id="name-error"
-            class="text-destructive text-caption hidden"
+            class="text-destructive text-xs hidden"
           >
             {{ _("This field is required") }}
           </p>
@@ -87,7 +87,7 @@
         ></textarea>
         <p
           id="question-error"
-          class="text-destructive text-caption hidden"
+          class="text-destructive text-xs hidden"
         >
           {{ _("This field is required") }}
         </p>

@@ -20,7 +20,7 @@
       aria-expanded="false"
     >
       <div class="flex items-center gap-3">
-        <span class="text-foreground text-h6">{{ _("Included products") }}</span>
+        <span class="text-foreground text-sm font-medium">{{ _("Included products") }}</span>
         <span class="badge badge-outlined border-foreground">
           {{ product.group_products | length }} {{ _("items") }}
         </span>
@@ -80,8 +80,8 @@
 
             {# Product Info #}
             <div class="min-w-0 flex-1">
-              <h4 class="text-foreground text-subtitle2 line-clamp-2">{{ groupedProduct.item.name }}</h4>
-              <div class="text-muted text-caption mt-1 flex items-center gap-2">
+              <h4 class="text-foreground text-sm font-medium line-clamp-2">{{ groupedProduct.item.name }}</h4>
+              <div class="text-muted text-xs mt-1 flex items-center gap-2">
                 <span>x{{ groupedProduct.item_quantity }}</span>
                 {% if groupedProduct.item.short_description %}
                   <span class="text-border">•</span>

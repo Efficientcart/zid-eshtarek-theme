@@ -57,13 +57,13 @@
                 >
                   <div class="flex flex-col gap-4">
                     {% if slide.badge_text and slide.badge_text | trim %}
-                      <span class="text-foreground text-tagline">{{ slide.badge_text }}</span>
+                      <span class="text-foreground text-xs uppercase tracking-wide">{{ slide.badge_text }}</span>
                     {% endif %}
                     {% if slide.heading and slide.heading | trim %}
-                      <h2 class="text-foreground text-h3 md:text-h1">{{ slide.heading }}</h2>
+                      <h2 class="text-foreground text-2xl md:text-3xl font-semibold tracking-tight">{{ slide.heading }}</h2>
                     {% endif %}
                     {% if slide.description and slide.description | trim %}
-                      <p class="text-foreground text-h6">{{ slide.description }}</p>
+                      <p class="text-foreground text-base">{{ slide.description }}</p>
                     {% endif %}
                   </div>
                   {% if slide.button_text and slide.button_text | trim %}

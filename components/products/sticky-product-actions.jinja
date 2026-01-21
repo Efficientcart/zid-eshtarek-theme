@@ -26,14 +26,14 @@
         <div class="min-w-0 flex-1">
           {# Product Name #}
           <h3
-            class="text-foreground text-h6 truncate"
+            class="text-foreground text-sm font-medium truncate"
             data-sticky-cta-name
           >
             {{ product.name }}
           </h3>
           {# Selected Options #}
           <p
-            class="text-muted text-tagline truncate"
+            class="text-muted text-xs uppercase tracking-wide truncate"
             data-sticky-cta-options
           >
             {# Will be populated by JS when variant changes #}
@@ -43,7 +43,7 @@
         {# Price #}
         <div class="shrink-0">
           <span
-            class="text-foreground text-h6"
+            class="text-foreground text-sm font-semibold"
             data-sticky-cta-price
           >
             {{ product.formatted_sale_price if product.formatted_sale_price else product.formatted_price }}

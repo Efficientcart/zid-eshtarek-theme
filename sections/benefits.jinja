@@ -27,10 +27,10 @@
             {% endif %}
             <div class="space-y-2">
               {% if feature.title and feature.title | trim %}
-                <h3 class="text-foreground text-h5">{{ feature.title }}</h3>
+                <h3 class="text-foreground text-base font-semibold">{{ feature.title }}</h3>
               {% endif %}
               {% if feature.description and feature.description | trim %}
-                <p class="text-foreground text-body1">{{ feature.description }}</p>
+                <p class="text-foreground text-sm">{{ feature.description }}</p>
               {% endif %}
             </div>
           </div>

@@ -37,27 +37,33 @@ export function updateCartTotals(cart, config) {
     if (total.code === "sub_totals") {
       totalsHtml +=
         '<div class="flex items-center justify-between gap-2">' +
-        '<span class="text-foreground text-body2">' +
+        '<span class="text-foreground text-sm">' +
         total.title +
         ' <span class="text-muted" data-cart-items-count>. ' +
         itemsCountText +
         "</span></span>" +
-        '<span class="text-foreground text-body2 shrink-0 text-end">' +
+        '<span class="text-foreground text-sm shrink-0 text-end">' +
         total.value_string +
         "</span></div>";
     } else if (total.code === "shipping") {
       totalsHtml +=
         '<div class="flex items-center justify-between gap-2">' +
-        '<span class="text-foreground text-body2">' +
+        '<span class="text-foreground text-sm">' +
         total.title +
         "</span>" +
-        '<span class="text-foreground text-body2 shrink-0 text-end">' +
+        '<span class="text-foreground text-sm shrink-0 text-end">' +
         total.value_string +
         "</span></div>";
     } else if (total.code === "discount" || total.code === "coupon_discount" || total.code === "products_discount") {
+      // Helper to format discount value with single negative sign
+      const formatDiscount = (value) => {
+        const str = String(value || "");
+        return str.startsWith("-") ? str : "-" + str;
+      };
+
       let discountHtml =
         '<div class="flex flex-col gap-2">' +
-        '<span class="text-foreground text-body2">' +
+        '<span class="text-foreground text-sm">' +
         (translations.discount || "Discount") +
         "</span>";
 
@@ -65,20 +71,20 @@ export function updateCartTotals(cart, config) {
         discountHtml +=
           '<div class="flex items-center gap-1">' +
           ICONS.coupon +
-          '<span class="text-muted text-body2 flex-1">' +
+          '<span class="text-muted text-sm flex-1">' +
           couponCode +
           "</span>" +
-          '<span class="text-success text-body2 shrink-0 text-end">-' +
-          total.value_string +
+          '<span class="text-success text-sm shrink-0 text-end">' +
+          formatDiscount(total.value_string) +
           "</span></div>";
       } else {
         discountHtml +=
           '<div class="flex items-center justify-between gap-2">' +
-          '<span class="text-muted text-body2">' +
+          '<span class="text-muted text-sm">' +
           total.title +
           "</span>" +
-          '<span class="text-success text-body2 shrink-0 text-end">-' +
-          total.value_string +
+          '<span class="text-success text-sm shrink-0 text-end">' +
+          formatDiscount(total.value_string) +
           "</span></div>";
       }
 
@@ -86,11 +92,11 @@ export function updateCartTotals(cart, config) {
         discountHtml +=
           '<div class="flex items-center gap-1">' +
           ICONS.giftCard +
-          '<span class="text-muted text-body2 flex-1">' +
+          '<span class="text-muted text-sm flex-1">' +
           giftCardDetails.code +
           "</span>" +
-          '<span class="text-success text-body2 shrink-0 text-end">-' +
-          (giftCardDetails.amount_string || "") +
+          '<span class="text-success text-sm shrink-0 text-end">' +
+          formatDiscount(giftCardDetails.amount_string) +
           "</span></div>";
       }
 
@@ -98,13 +104,13 @@ export function updateCartTotals(cart, config) {
         discountHtml +=
           '<div class="flex items-center gap-1">' +
           ICONS.loyalty +
-          '<span class="text-muted text-body2 flex-1">' +
+          '<span class="text-muted text-sm flex-1">' +
           (translations.loyalty || "Loyalty") +
           " " +
           loyaltyRedemption.points_to_redeem +
           "</span>" +
-          '<span class="text-success text-body2 shrink-0 text-end">-' +
-          loyaltyRedemption.reward.discount_amount +
+          '<span class="text-success text-sm shrink-0 text-end">' +
+          formatDiscount(loyaltyRedemption.reward.discount_amount) +
           " " +
           (cart.currency?.cart_currency?.code || "") +
           "</span></div>";
@@ -115,28 +121,28 @@ export function updateCartTotals(cart, config) {
     } else if (total.code === "tax" || total.code === "vat") {
       totalsHtml +=
         '<div class="flex items-center justify-between gap-2">' +
-        '<span class="text-foreground text-body2">' +
+        '<span class="text-foreground text-sm">' +
         total.title +
         "</span>" +
-        '<span class="text-foreground text-body2 shrink-0 text-end">' +
+        '<span class="text-foreground text-sm shrink-0 text-end">' +
         total.value_string +
         "</span></div>";
     } else if (total.code === "total") {
       totalRow =
         '<div class="flex items-center justify-between gap-2">' +
-        '<span class="text-foreground text-subtitle1">' +
+        '<span class="text-foreground text-sm font-semibold">' +
         total.title +
         "</span>" +
-        '<span class="text-foreground text-subtitle1 shrink-0 text-end">' +
+        '<span class="text-foreground text-sm font-semibold shrink-0 text-end">' +
         total.value_string +
         "</span></div>";
     } else {
       totalsHtml +=
         '<div class="flex items-center justify-between gap-2">' +
-        '<span class="text-foreground text-body2">' +
+        '<span class="text-foreground text-sm">' +
         total.title +
         "</span>" +
-        '<span class="text-foreground text-body2 shrink-0 text-end">' +
+        '<span class="text-foreground text-sm shrink-0 text-end">' +
         total.value_string +
         "</span></div>";
     }

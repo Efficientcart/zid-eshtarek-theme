@@ -23,11 +23,11 @@
         <div class="cart-with-products">
           <div class="grid grid-cols-1 md:gap-8 lg:grid-cols-12 lg:gap-12">
             <div class="lg:col-span-8">
-              <h1 class="text-foreground text-h3 text-caps">{{ _("Cart") }}</h1>
+              <h1 class="text-foreground text-xl md:text-2xl font-semibold tracking-tight">{{ _("Cart") }}</h1>
 
               {% include 'components/cart/shipping-progress.jinja' %}
 
-              <div class="border-border-light text-foreground text-tagline mt-6 hidden border-b pb-4 lg:flex">
+              <div class="border-border-light text-foreground text-xs uppercase tracking-wide mt-6 hidden border-b pb-4 lg:flex">
                 <div class="flex-1">{{ _("Product") }}</div>
                 <div class="w-48">{{ _("Amount") }}</div>
                 <div class="w-48 text-end">{{ _("Total") }}</div>
@@ -46,7 +46,7 @@
 
               <a
                 href="{{ url_for('home') }}"
-                class="text-foreground text-body2 mt-6 inline-flex items-center gap-2 rounded py-2.5 transition-opacity hover:opacity-70"
+                class="text-foreground text-sm mt-6 inline-flex items-center gap-2 rounded py-2.5 transition-opacity hover:opacity-70"
               >
                 <svg
                   class="size-4 rtl:rotate-180"

@@ -60,7 +60,7 @@
         {# In overflow dropdown: render as nested dropdown #}
         <el-dropdown class="block w-full">
           <button
-            class="text-foreground text-body2 hover:bg-secondary data-[state=open]:bg-secondary flex w-full cursor-default items-center justify-between gap-2 rounded-sm px-2 py-1.5 text-start outline-none"
+            class="text-foreground text-sm hover:bg-secondary data-[state=open]:bg-secondary flex w-full cursor-default items-center justify-between gap-2 rounded-sm px-2 py-1.5 text-start outline-none"
           >
             {{ menu.label }}
             {{ chevron_right }}
@@ -73,11 +73,11 @@
             {% for submenu in menu.items %}
               {% if submenu.items | length > 0 %}
                 {# Level 2 with Level 3 #}
-                <div class="text-body2 px-2 py-1 !font-medium">{{ submenu.label }}</div>
+                <div class="text-sm font-medium px-2 py-1">{{ submenu.label }}</div>
                 {% for subsubmenu in submenu.items %}
                   <a
                     href="{{ subsubmenu.url | localized_url if subsubmenu.resource_type != 'url' else subsubmenu.url }}"
-                    class="text-foreground text-body2 hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5 ps-4"
+                    class="text-foreground text-sm hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5 ps-4"
                   >
                     {{ subsubmenu.label }}
                   </a>
@@ -85,7 +85,7 @@
               {% else %}
                 <a
                   href="{{ submenu.url | localized_url if submenu.resource_type != 'url' else submenu.url }}"
-                  class="text-foreground text-body2 hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
+                  class="text-foreground text-sm hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
                 >
                   {{ submenu.label }}
                 </a>
@@ -99,7 +99,7 @@
           <button
             type="button"
             popovertarget="{{ menu_popover_id }}"
-            class="text-foreground text-body1 flex items-center gap-1 py-2 hover:underline"
+            class="text-foreground text-sm flex items-center gap-1 py-2 hover:underline"
           >
             {{ menu.label }}
             {{ chevron_down }}
@@ -115,7 +115,7 @@
                 {# Level 2 with Level 3: nested el-dropdown #}
                 <el-dropdown class="block w-full">
                   <button
-                    class="text-foreground text-body2 hover:bg-secondary data-[state=open]:bg-secondary flex w-full cursor-default items-center justify-between gap-2 rounded-sm px-2 py-1.5 text-start outline-none"
+                    class="text-foreground text-sm hover:bg-secondary data-[state=open]:bg-secondary flex w-full cursor-default items-center justify-between gap-2 rounded-sm px-2 py-1.5 text-start outline-none"
                   >
                     {{ submenu.label }}
                     {{ chevron_right }}
@@ -128,7 +128,7 @@
                     {% for subsubmenu in submenu.items %}
                       <a
                         href="{{ subsubmenu.url | localized_url if subsubmenu.resource_type != 'url' else subsubmenu.url }}"
-                        class="text-foreground text-body2 hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
+                        class="text-foreground text-sm hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
                       >
                         {{ subsubmenu.label }}
                       </a>
@@ -139,7 +139,7 @@
                 {# Level 2 without children: regular link #}
                 <a
                   href="{{ submenu.url | localized_url if submenu.resource_type != 'url' else submenu.url }}"
-                  class="text-foreground text-body2 hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
+                  class="text-foreground text-sm hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
                 >
                   {{ submenu.label }}
                 </a>
@@ -154,7 +154,7 @@
         {# In overflow: nested dropdown #}
         <el-dropdown class="block w-full">
           <button
-            class="text-foreground text-body2 hover:bg-secondary data-[state=open]:bg-secondary flex w-full cursor-default items-center justify-between gap-2 rounded-sm px-2 py-1.5 text-start outline-none"
+            class="text-foreground text-sm hover:bg-secondary data-[state=open]:bg-secondary flex w-full cursor-default items-center justify-between gap-2 rounded-sm px-2 py-1.5 text-start outline-none"
           >
             {{ menu.label }}
             {{ chevron_right }}
@@ -167,7 +167,7 @@
             {% for submenu in menu.items %}
               <a
                 href="{{ submenu.url | localized_url if submenu.resource_type != 'url' else submenu.url }}"
-                class="text-foreground text-body2 hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
+                class="text-foreground text-sm hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
               >
                 {{ submenu.label }}
               </a>
@@ -177,7 +177,7 @@
       {% else %}
         {# Top level: regular dropdown #}
         <el-dropdown class="inline-block">
-          <button class="text-foreground text-body1 flex items-center gap-1 py-2 hover:underline">
+          <button class="text-foreground text-sm flex items-center gap-1 py-2 hover:underline">
             {{ menu.label }}
             {{ chevron_down }}
           </button>
@@ -189,7 +189,7 @@
             {% for submenu in menu.items %}
               <a
                 href="{{ submenu.url | localized_url if submenu.resource_type != 'url' else submenu.url }}"
-                class="text-foreground text-body2 hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
+                class="text-foreground text-sm hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
               >
                 {{ submenu.label }}
               </a>
@@ -203,14 +203,14 @@
     {% if in_overflow %}
       <a
         href="{{ menu.url | localized_url if menu.resource_type != 'url' else menu.url }}"
-        class="text-foreground text-body2 hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
+        class="text-foreground text-sm hover:bg-secondary flex w-full items-center rounded-sm px-2 py-1.5"
       >
         {{ menu.label }}
       </a>
     {% else %}
       <a
         href="{{ menu.url | localized_url if menu.resource_type != 'url' else menu.url }}"
-        class="text-foreground text-body1 py-2 hover:underline"
+        class="text-foreground text-sm py-2 hover:underline"
       >
         {{ menu.label }}
       </a>
@@ -219,7 +219,7 @@
 {% endmacro %}
 
 {# Main Navigation #}
-<ul class="hidden items-center gap-6 md:flex">
+<ul class="hidden items-center gap-6 lg:flex">
   {# Render visible items #}
   {% for menu in visible_items %}
     <li>{{ render_menu_item(menu, loop.index) }}</li>
@@ -232,7 +232,7 @@
         <button
           type="button"
           popovertarget="more-menu-popover"
-          class="text-foreground text-body1 flex items-center gap-1 py-2 hover:underline"
+          class="text-foreground text-sm flex items-center gap-1 py-2 hover:underline"
         >
           {{ _("More") }}
           {{ chevron_down }}

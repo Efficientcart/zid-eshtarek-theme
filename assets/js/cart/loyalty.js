@@ -151,7 +151,7 @@ function populateRedemptionSelect(methods, cartCurrencyCode, translations) {
       const option = document.createElement("el-option");
       // Use setAttribute for custom elements, not property assignment
       option.setAttribute("value", method.id);
-      option.className = `text-foreground text-body1 hover:bg-secondary aria-selected:bg-secondary block w-full cursor-pointer px-4 py-3 text-start transition-colors ${isDisabled ? "opacity-50 pointer-events-none" : ""}`;
+      option.className = `text-foreground text-sm hover:bg-secondary aria-selected:bg-secondary block w-full cursor-pointer px-4 py-3 text-start transition-colors ${isDisabled ? "opacity-50 pointer-events-none" : ""}`;
       option.textContent = label;
 
       if (isDisabled) {

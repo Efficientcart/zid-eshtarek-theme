@@ -38,15 +38,15 @@
             <div class="bg-secondary size-full"></div>
           {% endif %}
         </div>
-        <h1 class="text-foreground text-h5 text-caps">{{ product.name }}</h1>
+        <h1 class="text-foreground text-lg font-semibold">{{ product.name }}</h1>
       </a>
 
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
         {# Left Column: Ask Question Form #}
         <div class="lg:col-span-4">
           <div class="bg-secondary sticky top-32 rounded-lg p-6">
-            <h2 class="text-foreground text-h6 mb-4">{{ _("Have a question?") }}</h2>
-            <p class="text-muted text-body2 mb-6">
+            <h2 class="text-foreground text-sm font-medium mb-4">{{ _("Have a question?") }}</h2>
+            <p class="text-muted text-sm mb-6">
               {{ _("Ask about this product and get an answer from the store.") }}
             </p>
 
@@ -140,10 +140,10 @@
         {# Right Column: Questions List #}
         <div class="lg:col-span-8">
           <div class="mb-6 flex items-center justify-between">
-            <h2 class="text-foreground text-h6">
+            <h2 class="text-foreground text-sm font-medium">
               {{ _("Questions") }}
               {% if product.questions and product.questions.count %}
-                <span class="text-muted text-body2">({{ product.questions.count }})</span>
+                <span class="text-muted text-sm">({{ product.questions.count }})</span>
               {% endif %}
             </h2>
           </div>
@@ -160,9 +160,9 @@
                       Q
                     </span>
                     <div class="flex-1">
-                      <p class="text-foreground text-subtitle1">{{ question.question }}</p>
+                      <p class="text-foreground text-sm font-semibold">{{ question.question }}</p>
                       {% if not question.is_anonymous and question.name %}
-                        <p class="text-muted-foreground text-caption mt-1">{{ question.name }}</p>
+                        <p class="text-muted-foreground text-xs mt-1">{{ question.name }}</p>
                       {% endif %}
                     </div>
                   </div>
@@ -176,7 +176,7 @@
                         A
                       </span>
                       <div class="flex-1">
-                        <p class="text-foreground text-body1">{{ question.answers[0].answer }}</p>
+                        <p class="text-foreground text-sm">{{ question.answers[0].answer }}</p>
 
                         {# Answer Images #}
                         {% if question.answers[0].images and question.answers[0].images|length > 0 %}
@@ -197,7 +197,7 @@
                     </div>
                   {% else %}
                     <div class="ms-11">
-                      <p class="text-muted text-body2 italic">{{ _("Awaiting answer from the store") }}</p>
+                      <p class="text-muted text-sm italic">{{ _("Awaiting answer from the store") }}</p>
                     </div>
                   {% endif %}
                 </div>
@@ -235,8 +235,8 @@
                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
                 <path d="M12 17h.01" />
               </svg>
-              <h2 class="text-foreground text-h6 mb-2">{{ _("No questions yet") }}</h2>
-              <p class="text-muted text-body2">{{ _("Be the first to ask a question about this product") }}</p>
+              <h2 class="text-foreground text-sm font-medium mb-2">{{ _("No questions yet") }}</h2>
+              <p class="text-muted text-sm">{{ _("Be the first to ask a question about this product") }}</p>
             </div>
           {% endif %}
         </div>

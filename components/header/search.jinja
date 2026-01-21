@@ -122,7 +122,7 @@
               data-search-results
             >
               {# Results header #}
-              <span class="text-muted text-body2 py-2">{{ _("Results") }}</span>
+              <span class="text-muted text-sm py-2">{{ _("Results") }}</span>
               {# Products grid #}
               <div
                 class="flex gap-4 overflow-x-auto"
@@ -132,7 +132,7 @@
               <div class="border-border-light border-t pt-4">
                 <a
                   href="#"
-                  class="text-foreground text-body1 flex items-center gap-1 py-2"
+                  class="text-foreground text-sm flex items-center gap-1 py-2"
                   data-search-all-link
                 >
                   <span data-search-all-text>{{ _("Search for") }} ''</span>
@@ -161,7 +161,7 @@
               class="flex hidden flex-col space-y-4 p-4"
               data-search-loading
             >
-              <span class="text-muted text-body2 py-2">{{ _("Searching...") }}</span>
+              <span class="text-muted text-sm py-2">{{ _("Searching...") }}</span>
               <div class="flex gap-4 overflow-x-auto">
                 {% for i in range(4) %}
                   <div class="w-[320px] shrink-0 md:w-[380px]">
@@ -181,7 +181,7 @@
               class="hidden px-4 py-8 text-center"
               data-search-empty
             >
-              <p class="text-muted text-body1">{{ _("No products found") }}</p>
+              <p class="text-muted text-sm">{{ _("No products found") }}</p>
             </div>
           </div>
         </div>

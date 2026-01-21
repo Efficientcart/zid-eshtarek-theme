@@ -3,7 +3,7 @@
   <button
     command="show-modal"
     commandfor="mobile-drawer"
-    class="text-foreground relative h-10 w-10 p-2 group-data-[transition]:pointer-events-none focus:outline-none md:hidden"
+    class="text-foreground relative h-10 w-10 p-2 group-data-[transition]:pointer-events-none focus:outline-none lg:hidden"
     aria-label="Toggle menu"
   >
     <span
@@ -37,14 +37,14 @@
         <div class="bg-background relative flex h-full flex-col">
           <div class="flex h-full flex-col items-start gap-8 overflow-y-auto pt-4">
             {# Navigation Menu #}
-            <div class="flex min-h-px w-full min-w-px flex-1 flex-col items-start overflow-clip">
+            <div class="flex w-full flex-col">
               {% for menu in store.settings.menus.main_menu.items %}
                 {% if menu.items | length > 0 %}
                   <details class="group w-full">
                     <summary
-                      class="text-foreground text-body1 flex w-full cursor-pointer items-center justify-between gap-1 px-6 py-2 select-none"
+                      class="text-foreground text-sm flex w-full cursor-pointer items-center justify-between gap-1 px-6 py-3 select-none"
                     >
-                      <span class="text-foreground text-body1 min-h-px min-w-px flex-1 text-start">
+                      <span class="text-foreground text-sm min-h-px min-w-px flex-1 text-start">
                         {{ menu.label }}
                       </span>
                       <svg
@@ -67,7 +67,7 @@
                           {# Level 2 with children (Level 3) #}
                           <details class="group/sub w-full">
                             <summary
-                              class="text-foreground text-body1 flex w-full cursor-pointer items-center justify-between gap-1 px-6 py-2 select-none"
+                              class="text-foreground text-sm flex w-full cursor-pointer items-center justify-between gap-1 px-6 py-3 select-none"
                             >
                               <span class="min-h-px min-w-px flex-1 text-start"> {{ submenu.label }} </span>
                               <svg
@@ -88,7 +88,7 @@
                               {# Link to parent category #}
                               <a
                                 href="{{ submenu.url | localized_url if submenu.resource_type != 'url' else submenu.url }}"
-                                class="text-muted text-body2 block px-6 py-2"
+                                class="text-muted text-sm block px-6 py-3"
                               >
                                 {{ _("All") }} {{ submenu.label }}
                               </a>
@@ -96,7 +96,7 @@
                               {% for subsubmenu in submenu.items %}
                                 <a
                                   href="{{ subsubmenu.url | localized_url if subsubmenu.resource_type != 'url' else subsubmenu.url }}"
-                                  class="text-muted text-body2 block px-6 py-2"
+                                  class="text-muted text-sm block px-6 py-3"
                                 >
                                   {{ subsubmenu.label }}
                                 </a>
@@ -107,7 +107,7 @@
                           {# Level 2 without children #}
                           <a
                             href="{{ submenu.url | localized_url if submenu.resource_type != 'url' else submenu.url }}"
-                            class="text-foreground text-body1 block px-6 py-2"
+                            class="text-foreground text-sm block px-6 py-3"
                           >
                             {{ submenu.label }}
                           </a>
@@ -118,7 +118,7 @@
                 {% else %}
                   <a
                     href="{{ menu.url | localized_url if menu.resource_type != 'url' else menu.url }}"
-                    class="text-foreground text-body1 min-h-px w-full min-w-px px-6 py-2 text-start"
+                    class="text-foreground text-sm min-h-px w-full min-w-px px-6 py-3 text-start"
                   >
                     {{ menu.label }}
                   </a>
@@ -132,7 +132,7 @@
                 id="mobile-login-btn"
                 type="button"
                 onclick="handleLoginAction()"
-                class="text-foreground text-body1 min-h-px w-full min-w-px px-6 py-2 text-start"
+                class="text-foreground text-sm min-h-px w-full min-w-px px-6 py-3 text-start"
               >
                 {{ _("Login") }}
               </button>
@@ -143,14 +143,14 @@
               >
                 <a
                   href="{{ url_for('profile') }}"
-                  class="text-foreground text-body1 min-h-px w-full min-w-px px-6 py-2 text-start"
+                  class="text-foreground text-sm min-h-px w-full min-w-px px-6 py-3 text-start"
                 >
                   {{ _("Account") }}
                 </a>
                 <button
                   type="button"
                   onclick="zid.customer.logout()"
-                  class="text-foreground text-body1 min-h-px w-full min-w-px px-6 py-2 text-start"
+                  class="text-foreground text-sm min-h-px w-full min-w-px px-6 py-3 text-start"
                 >
                   {{ _("Log out") }}
                 </button>
@@ -164,7 +164,7 @@
                 <button
                   type="button"
                   onclick="zidOpenRegionSettingDialog()"
-                  class="text-foreground text-body1 flex w-full items-center gap-2 px-6 py-2 text-start"
+                  class="text-foreground text-sm flex w-full items-center gap-2 px-6 py-3 text-start"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

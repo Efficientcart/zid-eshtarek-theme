@@ -4,7 +4,7 @@
 >
   <div class="theme-container space-y-6">
     {% if settings.title and settings.title | trim %}
-      <h2 class="text-foreground text-h3">{{ settings.title }}</h2>
+      <h2 class="text-foreground text-xl md:text-2xl font-semibold tracking-tight">{{ settings.title }}</h2>
     {% endif %}
 
     {# Wrapper for carousel + controls so data-carousel can find all elements #}
@@ -45,10 +45,10 @@
                     </div>
                   {% endif %}
 
-                  <p class="text-foreground text-body1 mt-6 mb-4 flex-1">{{ testimonial.text }}</p>
+                  <p class="text-foreground text-base mt-6 mb-4 flex-1">{{ testimonial.text }}</p>
 
                   {% if testimonial.name and testimonial.name | trim %}
-                    <h3 class="text-foreground text-body1 font-semibold">{{ testimonial.name }}</h3>
+                    <h3 class="text-foreground text-sm font-semibold">{{ testimonial.name }}</h3>
                   {% endif %}
                 </article>
               </div>

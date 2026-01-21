@@ -26,15 +26,48 @@
         class="flex flex-col gap-6 transition-opacity duration-200"
       >
         {% include 'components/products/products-header.jinja' %}
-        <div
-          data-grid-root="true"
-          data-grid="four"
-          class="group/grid grid gap-x-4 gap-y-10 data-[grid=four]:grid-cols-1 data-[grid=list]:grid-cols-1 data-[grid=one]:grid-cols-1 data-[grid=four]:md:grid-cols-2 data-[grid=four]:lg:grid-cols-4"
-        >
-          {% for product in products.results %}
-            {% include 'components/products/product-card.jinja' %}
-          {% endfor %}
-        </div>
+        {% if products.results %}
+          <div
+            data-grid-root="true"
+            data-grid="four"
+            class="group/grid grid gap-x-4 gap-y-10 data-[grid=four]:grid-cols-1 data-[grid=list]:grid-cols-1 data-[grid=one]:grid-cols-1 data-[grid=four]:md:grid-cols-2 data-[grid=four]:lg:grid-cols-4"
+          >
+            {% for product in products.results %}
+              {% include 'components/products/product-card.jinja' %}
+            {% endfor %}
+          </div>
+        {% else %}
+          {# No results state #}
+          <div class="flex flex-col items-center justify-center py-16 text-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="64"
+              height="64"
+              viewBox="0 0 24 24"
+              fill="none"
+              class="text-muted-foreground mb-6"
+            >
+              <path
+                d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z"
+                fill="currentColor"
+              />
+              <path
+                d="M7 9H12V10H7V9Z"
+                fill="currentColor"
+              />
+            </svg>
+            <h3 class="text-foreground text-h6 mb-2">{{ _("No results found") }}</h3>
+            <p class="text-muted-foreground text-body2 mb-6">
+              {{ _("We couldn't find any products matching your search. Try adjusting your filters or search terms.") }}
+            </p>
+            <a
+              href="/products"
+              class="bg-primary text-primary-foreground rounded-lg px-6 py-3 text-sm font-medium"
+            >
+              {{ _("View all products") }}
+            </a>
+          </div>
+        {% endif %}
         {% set totalPages = ((products.count / (session.query_params.get('page_size') or 24)|int) | round(0, 'ceil')) | int %}
         {% set currentPage = products.page %}
         {% include 'components/products/pagination.jinja' %}
