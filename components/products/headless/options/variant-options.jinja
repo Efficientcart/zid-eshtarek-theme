@@ -14,11 +14,11 @@
 
   {% if display_style == 'list' %}
     {% with options=options, product=product %}
-      {% include 'components/products/headless/options/variant-options-list.jinja' %}
+      {% include 'vitrin:v2/products/options/variant_options_list.jinja' %}
     {% endwith %}
   {% else %}
     {% with options=options, product=product %}
-      {% include 'components/products/headless/options/variant-options-dropdown.jinja' %}
+      {% include 'vitrin:v2/products/options/variant_options_dropdown.jinja' %}
     {% endwith %}
   {% endif %}
 {% endif %}

@@ -20,23 +20,23 @@
     <div class="custom-field-wrapper">
       {% if custom_field.type == 'CHECKBOX' %}
         {% with custom_field=custom_field %}
-          {% include 'components/products/headless/fields/custom-field-checkbox.jinja' %}
+          {% include 'vitrin:v2/products/fields/custom_field_checkbox.jinja' %}
         {% endwith %}
       {% elif custom_field.type == 'DROPDOWN' %}
         {% with custom_field=custom_field %}
-          {% include 'components/products/headless/fields/custom-field-dropdown.jinja' %}
+          {% include 'vitrin:v2/products/fields/custom_field_dropdown.jinja' %}
         {% endwith %}
       {% elif custom_field.type == 'FILE' or custom_field.type == 'IMAGE' %}
         {% with custom_field=custom_field %}
-          {% include 'components/products/headless/fields/custom-field-file.jinja' %}
+          {% include 'vitrin:v2/products/fields/custom_field_file.jinja' %}
         {% endwith %}
       {% elif custom_field.configs and custom_field.configs.is_multiline %}
         {% with custom_field=custom_field %}
-          {% include 'components/products/headless/fields/custom-field-textarea.jinja' %}
+          {% include 'vitrin:v2/products/fields/custom_field_textarea.jinja' %}
         {% endwith %}
       {% else %}
         {% with custom_field=custom_field %}
-          {% include 'components/products/headless/fields/custom-field-text.jinja' %}
+          {% include 'vitrin:v2/products/fields/custom_field_text.jinja' %}
         {% endwith %}
       {% endif %}
     </div>
