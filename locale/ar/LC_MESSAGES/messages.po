@@ -93,6 +93,12 @@ msgstr "إغلاق البحث"
 # Region Selector
 # ==============================================================================
 
+msgid "Delivery to:"
+msgstr "التوصيل إلى:"
+
+msgid "Pickup from:"
+msgstr "الاستلام من:"
+
 msgid "Country"
 msgstr "الدولة"
 
