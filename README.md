@@ -966,6 +966,5 @@ The `time-ago.js` utility updates relative time strings every 60 seconds via `se
 
 ## Resources
 
-- [Vitrin Platform Docs](https://docs.zid.sa/llms.txt)
+- [Vitrin Platform Docs](https://docs.zid.sa)
 - [Headless Components](docs/headless/)
-- [Architecture Notes](docs/architecture.md)
