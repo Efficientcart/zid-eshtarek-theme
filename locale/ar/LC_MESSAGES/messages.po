@@ -79,6 +79,18 @@ msgstr "تكرار التوصيل"
 msgid "Next Delivery"
 msgstr "التوصيل القادم"
 
+msgid "This store uses subscriptions"
+msgstr "هذا المتجر يستخدم نظام الاشتراكات"
+
+msgid "Browse our products and subscribe directly from the product page."
+msgstr "تصفح منتجاتنا واشترك مباشرة من صفحة المنتج."
+
+msgid "Browse Products"
+msgstr "تصفح المنتجات"
+
+msgid "Delivery and payment are managed through your subscription. Visit your account to manage delivery preferences."
+msgstr "يتم إدارة التوصيل والدفع من خلال اشتراكك. قم بزيارة حسابك لإدارة تفضيلات التوصيل."
+
 # ==============================================================================
 # 404 Page
 # ==============================================================================
