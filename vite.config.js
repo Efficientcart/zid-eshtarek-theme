@@ -10,10 +10,10 @@ const entries = {
     name: "VitrinTheme",
     fileName: "theme"
   },
-  cart: {
-    entry: resolve(__dirname, "assets/js/cart/controller.js"),
-    name: "CartController",
-    fileName: "cart-controller"
+  subscription: {
+    entry: resolve(__dirname, "assets/js/subscription/init.js"),
+    name: "EshtarekSubscription",
+    fileName: "subscription"
   }
 };
 

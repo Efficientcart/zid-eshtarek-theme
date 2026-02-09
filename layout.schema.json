@@ -5,6 +5,43 @@
   },
   "groups": [
     {
+      "id": "eshtarek",
+      "icon": "fa fa-refresh",
+      "name": {
+        "ar": "إعدادات اشترك",
+        "en": "Eshtarek Settings"
+      },
+      "settings": [
+        {
+          "id": "store_id",
+          "type": "text",
+          "label": {
+            "ar": "معرّف المتجر في اشترك",
+            "en": "Eshtarek Store ID"
+          },
+          "default": ""
+        },
+        {
+          "id": "api_url",
+          "type": "text",
+          "label": {
+            "ar": "رابط API اشترك",
+            "en": "Eshtarek API URL"
+          },
+          "default": "https://api.eshtarek.com"
+        },
+        {
+          "id": "portal_url",
+          "type": "text",
+          "label": {
+            "ar": "رابط بوابة العميل",
+            "en": "Customer Portal URL"
+          },
+          "default": "https://portal.eshtarek.com"
+        }
+      ]
+    },
+    {
       "id": "product_card",
       "icon": "fa fa-th-large",
       "name": {

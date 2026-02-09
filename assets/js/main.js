@@ -1,17 +1,23 @@
 /**
- * Theme Entry Point
+ * Theme Entry Point — Eshtarek Subscription Theme
  *
  * Initializes all theme features based on page context.
  * Uses event-based architecture for dynamic content.
  *
+ * Changes from Growth theme:
+ * - Removed: cart initialization (initCart, initCartButtons)
+ * - Removed: cart-related event listeners (products:updated)
+ * - Removed: wishlist, bundle-offers, loyalty-rewards (one-time commerce)
+ * - Added: Eshtarek subscription module (loaded via separate entry point)
+ *
  * Events:
- * - content:loaded - Dispatch when new content is added (e.g., AJAX, quick view)
- *                    All modules will re-init their elements
+ * - content:loaded      — Dispatch when new content is added (e.g., AJAX, quick view)
+ * - eshtarek:ready      — Dispatched when Eshtarek SDK is initialized
+ * - eshtarek:checkout:created — Dispatched when checkout session is created
  */
 
 import { createCarousel, createConditionalCarousel } from "./lib/carousel.js";
 import { initAllProductGalleries } from "./product/gallery.js";
-import { initCart, initButtons as initCartButtons } from "./cart/add-to-cart.js";
 
 // Product modules (self-initializing, register global callbacks)
 import "./product/variants.js";
@@ -21,15 +27,15 @@ import "./product/sticky-bar.js";
 
 // Feature modules (self-initializing)
 import "./features/layout.js";
-import "./features/wishlist.js";
 import "./features/search.js";
 import "./features/qty-input.js";
 import "./features/phone-input.js";
 import "./features/product-filter.js";
 import "./features/price-slider.js";
-import "./features/bundle-offers.js";
 import "./features/notify-me.js";
-// Note: loyalty-rewards is loaded as standalone script AFTER vitrin_body in layout.jinja
+// Removed: wishlist.js (one-time commerce — no wishlists for subscriptions)
+// Removed: bundle-offers.js (one-time commerce — Zid bundle system)
+// Removed: loyalty-rewards.js (one-time commerce — subscriptions handle retention differently)
 
 // Store for initialized carousel instances (for cleanup)
 const carouselInstances = new WeakMap();
@@ -73,7 +79,7 @@ function initCarousels() {
  */
 function init() {
   const page = document.body.dataset.template;
-  console.log("[Theme] Initializing for page:", page);
+  console.log("[Eshtarek Theme] Initializing for page:", page);
 
   // Initialize carousels
   initCarousels();
@@ -81,8 +87,8 @@ function init() {
   // Initialize product galleries (product page, quick view)
   initAllProductGalleries();
 
-  // Initialize cart (add-to-cart buttons, badge)
-  initCart();
+  // Note: Cart initialization removed — subscriptions use Eshtarek checkout
+  // Eshtarek SDK is loaded via separate subscription.js entry point
 }
 
 // Initialize when DOM is ready
@@ -96,10 +102,4 @@ if (document.readyState === "loading") {
 window.addEventListener("content:loaded", () => {
   initCarousels();
   initAllProductGalleries();
-  initCartButtons();
-});
-
-// Re-init cart buttons when products are filtered/updated
-window.addEventListener("products:updated", () => {
-  initCartButtons();
 });
