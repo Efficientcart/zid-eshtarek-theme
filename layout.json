@@ -9,7 +9,10 @@
     "theme_foreground": "#0B0A09",
     "theme_muted": "#545352",
     "theme_border": "#B5B5B5",
-    "theme_radius": 4
+    "theme_radius": 4,
+    "eshtarek_store_id": "",
+    "eshtarek_api_url": "https://api.eshtarek.com",
+    "eshtarek_portal_url": "https://portal.eshtarek.com"
   },
   "en": {
     "font_family": "Roboto",
@@ -21,6 +24,9 @@
     "theme_foreground": "#0B0A09",
     "theme_muted": "#545352",
     "theme_border": "#B5B5B5",
-    "theme_radius": 4
+    "theme_radius": 4,
+    "eshtarek_store_id": "",
+    "eshtarek_api_url": "https://api.eshtarek.com",
+    "eshtarek_portal_url": "https://portal.eshtarek.com"
   }
 }
