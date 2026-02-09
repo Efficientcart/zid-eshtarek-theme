@@ -1,13 +1,13 @@
-# Arabic translations for Vitrin Theme
-# Copyright (C) 2025 Zid
-# This file is distributed under the same license as the Vitrin Theme project.
+# Arabic translations for Eshtarek Subscription Theme
+# Based on Zid Growth Theme, extended with subscription-specific strings
+# Copyright (C) 2025 Eshtarek
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-12-17 00:00+0300\n"
-"PO-Revision-Date: 2025-12-17 00:00+0300\n"
+"PO-Revision-Date: 2026-02-09 00:00+0300\n"
 "Last-Translator: \n"
 "Language: ar\n"
 "Language-Team: ar <>\n"
@@ -16,6 +16,68 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Manual\n"
+
+# ==============================================================================
+# Eshtarek Subscription Strings
+# ==============================================================================
+
+msgid "Subscribe"
+msgstr "اشترك"
+
+msgid "Subscribe & Save"
+msgstr "اشترك ووفّر"
+
+msgid "/month"
+msgstr "/شهر"
+
+msgid "/week"
+msgstr "/أسبوع"
+
+msgid "/year"
+msgstr "/سنة"
+
+msgid "Every"
+msgstr "كل"
+
+msgid "Select Plan"
+msgstr "اختر الخطة"
+
+msgid "Most Popular"
+msgstr "الأكثر شيوعاً"
+
+#, python-format
+msgid "Save %s%%"
+msgstr "وفّر %s%%"
+
+msgid "Free Shipping"
+msgstr "شحن مجاني"
+
+msgid "Cancel Anytime"
+msgstr "إلغاء في أي وقت"
+
+msgid "My Subscriptions"
+msgstr "اشتراكاتي"
+
+msgid "Manage Subscription"
+msgstr "إدارة الاشتراك"
+
+msgid "Complete Your Subscription"
+msgstr "أكمل اشتراكك"
+
+msgid "Processing..."
+msgstr "جاري المعالجة..."
+
+msgid "Subscription Created!"
+msgstr "تم إنشاء الاشتراك!"
+
+msgid "Something went wrong. Please try again."
+msgstr "حدث خطأ. يرجى المحاولة مرة أخرى."
+
+msgid "Delivery Frequency"
+msgstr "تكرار التوصيل"
+
+msgid "Next Delivery"
+msgstr "التوصيل القادم"
 
 # ==============================================================================
 # 404 Page
@@ -308,19 +370,6 @@ msgstr "تشغيل الفيديو"
 
 msgid "Close video"
 msgstr "إغلاق الفيديو"
-
-# ==============================================================================
-# Wishlist
-# ==============================================================================
-
-msgid "Add to wishlist"
-msgstr "أضف للمفضلة"
-
-msgid "Remove from wishlist"
-msgstr "إزالة من المفضلة"
-
-msgid "Added to wishlist"
-msgstr "تمت الإضافة إلى المفضلة"
 
 # ==============================================================================
 # Notify Me Dialog
@@ -640,7 +689,7 @@ msgid "%(current)s out of %(total)s products"
 msgstr "%(current)s من أصل %(total)s منتج"
 
 # ==============================================================================
-# Cart Page
+# Cart Page (kept for potential subscription summary repurpose)
 # ==============================================================================
 
 msgid "Amount"
@@ -714,25 +763,6 @@ msgid "Includes TAX %(percentage)s"
 msgstr "شامل الضريبة %(percentage)s"
 
 # ==============================================================================
-# Coupon & Discount
-# ==============================================================================
-
-msgid "Coupon code"
-msgstr "كود الخصم"
-
-msgid "Discount Code"
-msgstr "كود الخصم"
-
-msgid "Coupon code or gift card"
-msgstr "كود الخصم أو بطاقة الهدايا"
-
-msgid "Enter code"
-msgstr "أدخل الكود"
-
-msgid "Remove coupon"
-msgstr "إزالة الكوبون"
-
-# ==============================================================================
 # Shipping
 # ==============================================================================
 
@@ -760,90 +790,6 @@ msgid "Free shipping applied for cart total between %(min)s and %(max)s"
 msgstr "الشحن المجاني متاح لإجمالي السلة بين %(min)s و %(max)s"
 
 # ==============================================================================
-# Loyalty Program
-# ==============================================================================
-
-msgid "Loyalty program"
-msgstr "برنامج الولاء"
-
-msgid "Loyalty"
-msgstr "الولاء"
-
-msgid "point can be earned by purchasing this product."
-msgstr "نقطة يمكن كسبها عند شراء هذا المنتج."
-
-msgid "to collect and redeem points"
-msgstr "لجمع واستبدال النقاط"
-
-msgid "You have"
-msgstr "لديك"
-
-msgid "points to redeem"
-msgstr "نقطة للاستبدال"
-
-msgid "points"
-msgstr "نقطة"
-
-msgid "points."
-msgstr "نقطة."
-
-msgid "Select redemption"
-msgstr "اختر طريقة الاستبدال"
-
-#, python-format
-msgid "For %(points)s points get %(discount)s discount"
-msgstr "مقابل %(points)s نقطة احصل على خصم %(discount)s"
-
-msgid "Loyalty points has been applied! You have now"
-msgstr "تم تطبيق نقاط الولاء! لديك الآن"
-
-msgid "Login to earn points on this order"
-msgstr "سجل دخولك لكسب نقاط على هذا الطلب"
-
-msgid "Login now"
-msgstr "سجل الآن"
-
-msgid "Earn points with this purchase"
-msgstr "اكسب نقاط مع هذا الشراء"
-
-# ==============================================================================
-# Gift Order
-# ==============================================================================
-
-msgid "Make it a gift"
-msgstr "اجعلها هدية"
-
-msgid "Send it as a gift order"
-msgstr "أرسلها كطلب هدية"
-
-msgid "Add details"
-msgstr "أضف التفاصيل"
-
-msgid "Edit details"
-msgstr "تعديل التفاصيل"
-
-msgid "Edit gift details"
-msgstr "تعديل تفاصيل الهدية"
-
-msgid "Gift"
-msgstr "هدية"
-
-msgid "Sender"
-msgstr "المرسل"
-
-msgid "Recipient"
-msgstr "المستلم"
-
-msgid "Free"
-msgstr "مجاني"
-
-msgid "Edit"
-msgstr "تعديل"
-
-msgid "Delete"
-msgstr "حذف"
-
-# ==============================================================================
 # Checkout
 # ==============================================================================
 
@@ -868,22 +814,6 @@ msgstr "السابق"
 
 msgid "Next"
 msgstr "التالي"
-
-# ==============================================================================
-# Countdown Timer
-# ==============================================================================
-
-msgid "Day"
-msgstr "يوم"
-
-msgid "Hour"
-msgstr "ساعة"
-
-msgid "Min"
-msgstr "دقيقة"
-
-msgid "Sec"
-msgstr "ثانية"
 
 # ==============================================================================
 # File Upload
@@ -995,7 +925,6 @@ msgstr "المستفيد"
 msgid "Account No."
 msgstr "رقم الحساب"
 
-# Mobile shipping cards (lowercase variants)
 msgid "Covered areas"
 msgstr "المناطق المغطاة"
 
@@ -1009,14 +938,8 @@ msgid "more"
 msgstr "أخرى"
 
 # ==============================================================================
-# Loyalty Rewards
+# FAQs
 # ==============================================================================
-
-msgid "Rewards"
-msgstr "المكافآت"
-
-msgid "For {points} get a discount {percentage}"
-msgstr "مقابل {points} نقطة احصل على خصم {percentage}"
 
 msgid "FAQs"
 msgstr "الأسئلة الشائعة"

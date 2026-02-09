@@ -7,7 +7,8 @@
  * Changes from Growth theme:
  * - Removed: cart initialization (initCart, initCartButtons)
  * - Removed: cart-related event listeners (products:updated)
- * - Added: Eshtarek subscription module import
+ * - Removed: wishlist, bundle-offers, loyalty-rewards (one-time commerce)
+ * - Added: Eshtarek subscription module (loaded via separate entry point)
  *
  * Events:
  * - content:loaded      — Dispatch when new content is added (e.g., AJAX, quick view)
@@ -26,15 +27,15 @@ import "./product/sticky-bar.js";
 
 // Feature modules (self-initializing)
 import "./features/layout.js";
-import "./features/wishlist.js";
 import "./features/search.js";
 import "./features/qty-input.js";
 import "./features/phone-input.js";
 import "./features/product-filter.js";
 import "./features/price-slider.js";
 import "./features/notify-me.js";
-// Removed: bundle-offers.js (one-time commerce, not applicable to subscriptions)
-// Removed: loyalty-rewards loaded separately in layout.jinja (will be removed there too)
+// Removed: wishlist.js (one-time commerce — no wishlists for subscriptions)
+// Removed: bundle-offers.js (one-time commerce — Zid bundle system)
+// Removed: loyalty-rewards.js (one-time commerce — subscriptions handle retention differently)
 
 // Store for initialized carousel instances (for cleanup)
 const carouselInstances = new WeakMap();
