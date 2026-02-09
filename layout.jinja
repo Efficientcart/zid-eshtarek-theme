@@ -162,10 +162,11 @@
         portalUrl: "{{ settings.eshtarek_portal_url | default('https://portal.eshtarek.com') }}"
       };
 
-      // Eshtarek subscription translations (used by plan-selector.js, checkout.js)
+      // Eshtarek subscription translations (used by plan-selector.js, checkout.js, utils.js)
       window.eshtarekTranslations = {
         subscribe: "{{ _('Subscribe') }}",
         subscribeSave: "{{ _('Subscribe & Save') }}",
+        perDay: "{{ _('/day') }}",
         perMonth: "{{ _('/month') }}",
         perWeek: "{{ _('/week') }}",
         perYear: "{{ _('/year') }}",
