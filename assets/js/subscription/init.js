@@ -6,15 +6,18 @@
  *
  * Flow:
  * 1. Read Eshtarek config from layout settings (injected in layout.jinja)
- * 2. Load/initialize Eshtarek SDK
- * 3. Restore session from Zid platform init data
- * 4. Expose global API for plan selector + checkout components
+ * 2. Initialize Eshtarek session via platform init
+ * 3. Auto-detect product pages and init plan selector + checkout
+ * 4. Expose global API for other components
  *
  * Config expected on window.eshtarekConfig:
  *   - storeId: string     (from layout.schema.json eshtarek.store_id)
  *   - apiUrl: string      (from layout.schema.json eshtarek.api_url)
  *   - portalUrl: string   (from layout.schema.json eshtarek.portal_url)
  */
+
+import { initPlanSelector } from "./plan-selector.js";
+import { initCheckout } from "./checkout.js";
 
 const DEFAULT_API_URL = "https://api.eshtarek.com";
 const DEFAULT_PORTAL_URL = "https://portal.eshtarek.com";
@@ -45,7 +48,6 @@ class EshtarekTheme {
     }
 
     try {
-      // Initialize session via platform init endpoint
       const response = await fetch(
         `${this.apiUrl}/platform/zid/init/${this.storeId}/`,
         {
@@ -65,7 +67,6 @@ class EshtarekTheme {
 
       console.log("[Eshtarek] Session restored successfully");
 
-      // Dispatch ready event for other modules to listen to
       window.dispatchEvent(
         new CustomEvent("eshtarek:ready", { detail: { session: this.session } })
       );
@@ -117,7 +118,7 @@ class EshtarekTheme {
    * Create a checkout session for a selected plan.
    * @param {Object} options
    * @param {string} options.planId - Selected plan ID
-   * @param {string} options.frequency - Selected frequency (e.g., 'monthly', 'weekly')
+   * @param {string} options.frequency - Selected frequency
    * @param {string} options.productId - Zid product ID
    * @returns {Promise<Object>} Checkout session data
    */
@@ -152,7 +153,6 @@ class EshtarekTheme {
 
       const data = await response.json();
 
-      // Dispatch checkout created event
       window.dispatchEvent(
         new CustomEvent("eshtarek:checkout:created", { detail: data })
       );
@@ -197,8 +197,20 @@ function initEshtarek() {
   // Expose globally for plan selector + checkout components
   window.Eshtarek = eshtarek;
 
-  // Auto-initialize
+  // Auto-initialize session
   eshtarek.init();
+
+  // Auto-init plan selector if on product page
+  const planSelectorEl = document.querySelector("[data-eshtarek-plans]");
+  if (planSelectorEl) {
+    const productId = planSelectorEl.dataset.productId;
+    if (productId) {
+      initPlanSelector(productId);
+    }
+  }
+
+  // Always init checkout module (listens for subscribe events)
+  initCheckout();
 }
 
 // Initialize when DOM is ready

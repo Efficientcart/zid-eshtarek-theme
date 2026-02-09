@@ -72,6 +72,7 @@
                 {% endif %}
               {% endif %}
             </div>
+
             {# Product Badges #}
             <div
               id="product-badges"
@@ -82,27 +83,6 @@
                 {% with product=product %}
                   {% include 'components/products/merchant-badge.jinja' %}
                 {% endwith %}
-              {% endif %}
-
-              {# Bundle Offer Badge #}
-              {% if product.bundle_offer %}
-                <span class="badge badge-outlined text-destructive border-destructive">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                  >
-                    <path
-                      d="M8.57129 1.25488H13.6562C13.9618 1.25489 14.2228 1.36327 14.4404 1.58105C14.6581 1.79871 14.7666 2.05976 14.7666 2.36523V7.4375C14.7666 7.58599 14.7358 7.72769 14.6738 7.8623C14.6115 7.99756 14.5316 8.11495 14.4346 8.21484L8.2334 14.4287C8.12146 14.5288 7.99845 14.606 7.86426 14.6602C7.73001 14.7143 7.5927 14.7412 7.45312 14.7412C7.31346 14.7412 7.17481 14.7155 7.03711 14.6641C6.89982 14.6127 6.77477 14.5342 6.66309 14.4287L1.5918 9.34082L1.59082 9.33984L1.51367 9.26074C1.4414 9.17848 1.38421 9.08497 1.34277 8.97949C1.28714 8.83758 1.25977 8.69644 1.25977 8.55762C1.25981 8.41792 1.28642 8.27939 1.33984 8.1416C1.39308 8.00461 1.47689 7.88034 1.5918 7.76855V7.76758L7.78027 1.58691H7.78125C7.88159 1.48455 8.00131 1.40329 8.14062 1.34375C8.2797 1.28424 8.42318 1.25489 8.57129 1.25488ZM8.55859 2.35156L2.33984 8.56152L2.32227 8.5791L2.33984 8.59668L7.40723 13.6816L7.42578 13.6992L7.44336 13.6816L13.6738 7.4209L13.6816 7.41406V2.34375H8.56641L8.55859 2.35156ZM11.9102 3.26074C12.1369 3.26074 12.333 3.34394 12.499 3.51074C12.6651 3.67744 12.748 3.87218 12.748 4.09668C12.748 4.32117 12.6653 4.51613 12.499 4.68262C12.3328 4.84889 12.1368 4.93153 11.9102 4.93164C11.6835 4.93164 11.4879 4.84927 11.3232 4.68262C11.1583 4.51565 11.0762 4.31964 11.0762 4.09473C11.0763 3.87001 11.1582 3.67486 11.3232 3.50879C11.4883 3.34293 11.6837 3.26084 11.9102 3.26074Z"
-                      fill="currentColor"
-                      stroke="currentColor"
-                      stroke-width="0.05"
-                    ></path>
-                  </svg>
-                  {{ product.bundle_offer.name }}
-                </span>
               {% endif %}
 
               {# Sold Items Badge #}
@@ -150,24 +130,22 @@
                 >
               </span>
             </div>
-            {# Price Section #}
+
+            {# Price Section — shows base Zid price; subscription pricing shown in plan selector #}
             <div class="flex flex-wrap items-center justify-between gap-y-1">
               <div class="flex flex-wrap items-center gap-2">
-                {# Current Price (sale or regular) #}
                 <p
                   class="text-lg font-semibold"
                   data-product-price
                 >
                   {{ product.formatted_sale_price if product.formatted_sale_price else product.formatted_price }}
                 </p>
-                {# Old Price (if on sale) #}
                 <span
                   class="text-destructive text-sm {{ 'hidden' if not product.formatted_sale_price }} line-through"
                   data-product-price-old
                 >
                   {{ product.formatted_price if product.formatted_sale_price else '' }}
                 </span>
-                {# Discount Badge #}
                 <span
                   class="bg-success/20 text-success text-xs uppercase tracking-wide {{ 'hidden' if not (product.discount_percentage and product.discount_percentage > 0) }} rounded px-2 py-1"
                   data-product-discount
@@ -193,236 +171,82 @@
             <div class="prose prose-sm max-w-none">{{ product.short_description|safe }}</div>
           {% endif %}
 
-          <form
-            id="product-form"
-            class="space-y-4"
-          >
-            <input
-              type="hidden"
-              name="product_id"
-              id="product-id"
-              value="{{ product.selected_product.id }}"
-            />
-
-            {# Custom Input Fields #}
-            {% with product=product %}
-              {% include 'components/products/custom-input-fields.jinja' %}
-            {% endwith %}
-            {# Product Options (if available) #}
-            {% if product.has_options or product.has_fields %}
+          {# Product Options (if available — variant selection still useful for subscriptions) #}
+          {% if product.has_options or product.has_fields %}
+            <div class="space-y-4">
+              <input
+                type="hidden"
+                name="product_id"
+                id="product-id"
+                value="{{ product.selected_product.id }}"
+              />
               {% with options=product.options, product=product, style='list' %}
                 {% include 'components/products/product-options.jinja' %}
               {% endwith %}
-            {% endif %}
-
-            {# Quantity Input #}
-            <div
-              class="{{ 'hidden' if not product.in_stock }} grid w-full items-center gap-2"
-              data-quantity-wrapper
-            >
-              <label
-                for="product-quantity"
-                class="form-label"
-                >{{ _('Quantity') }}</label
-              >
-              {% with id='product-quantity', quantity=1, min=1, max=product.quantity if not product.is_infinite else none, sync_target='sticky-qty' %}
-                {% include 'components/ui/quantity-input.jinja' %}
-              {% endwith %}
             </div>
+          {% endif %}
 
-            {# Dynamic Bundle Product Selection #}
-            {% if product.product_class == 'dynamic_bundle' %}
-              {% include 'vitrin:products/bundle-products.jinja' %}
-            {% endif %}
+          {# ═══════════════════════════════════════════════════════════════ #}
+          {# SUBSCRIPTION PLAN SELECTOR — replaces Add to Cart            #}
+          {# ═══════════════════════════════════════════════════════════════ #}
+          {% with product=product %}
+            {% include 'components/subscription/plan-selector.jinja' %}
+          {% endwith %}
 
-            {# Action Buttons #}
-            <div
-              class="flex flex-col gap-3 pt-2"
-              data-product-actions
-            >
-              {# In Stock State #}
-              <div
-                class="{{ 'hidden' if not product.in_stock }} flex items-center gap-2"
-                data-in-stock
+          {# Social Share Links #}
+          <div class="border-border-light flex items-center gap-4 border-t pt-4">
+            <span class="text-sm text-muted">{{ _("Share product") }}:</span>
+            <div class="flex items-center gap-3">
+              {# WhatsApp #}
+              <a
+                href="https://api.whatsapp.com/send?text={{ _('Check Out this Product') }}: {{ product.name }} {{ product.html_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-muted-foreground transition-colors hover:text-[#25D366]"
+                aria-label="{{ _('Share on WhatsApp') }}"
               >
-                {# Add to Cart Button #}
-                <button
-                  type="button"
-                  data-add-to-cart-form="product-form"
-                  data-success-text="{{ _('Added!') }}"
-                  class="btn btn-filled btn-lg flex-1"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <circle
-                      cx="8"
-                      cy="21"
-                      r="1"
-                    ></circle>
-                    <circle
-                      cx="19"
-                      cy="21"
-                      r="1"
-                    ></circle>
-                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-                  </svg>
-                  {{ _("Add to cart") }}
-                </button>
-                {# Wishlist Button #}
-                {% with product_id=product.id, class="btn-lg border-input border" %}
-                  {% include 'components/products/wishlist-button.jinja' %}
-                {% endwith %}
-              </div>
-
-              {# Out of Stock State #}
-              <div
-                class="{{ 'hidden' if product.in_stock }} flex flex-col gap-3"
-                data-out-of-stock
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+              </a>
+              {# Twitter/X #}
+              <a
+                href="https://twitter.com/intent/tweet?text={{ product.name }}: {{ product.html_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="{{ _('Share on Twitter') }}"
               >
-                {# Disabled Add to Cart Button #}
-                <button
-                  type="button"
-                  disabled
-                  class="btn btn-lg bg-secondary text-muted-foreground w-full cursor-not-allowed border border-transparent"
-                >
-                  {{ _("Add to cart") }}
-                </button>
-
-                {# Notify Me & Wishlist Buttons #}
-                <div class="flex items-center gap-2">
-                  <button
-                    type="button"
-                    class="btn btn-filled btn-lg flex-1"
-                    data-notify-me-btn
-                    command="show-modal"
-                    commandfor="notify-me-dialog"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                    </svg>
-                    {{ _("Notify me when available") }}
-                  </button>
-                  {# Wishlist Button #}
-                  {% with product_id=product.id, class="btn-lg border-input border" %}
-                    {% include 'components/products/wishlist-button.jinja' %}
-                  {% endwith %}
-                </div>
-              </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </a>
+              {# Facebook #}
+              <a
+                href="https://www.facebook.com/sharer/sharer.php?u={{ product.html_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-muted-foreground transition-colors hover:text-[#1877F2]"
+                aria-label="{{ _('Share on Facebook') }}"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+              </a>
+              {# Copy Link #}
+              <button
+                type="button"
+                class="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="{{ _('Copy link') }}"
+                onclick='navigator.clipboard.writeText(&apos;{{ product.html_url }}&apos;); this.innerHTML = &apos;<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>&apos;; setTimeout(() => this.innerHTML = &apos;<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>&apos;, 2000);'
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+              </button>
             </div>
-
-            {% include 'vitrin:products/loyalty_points_widget.jinja' %}
-            {% include 'vitrin:products/payment_widgets.jinja' %}
-            {% include 'vitrin:checkout/apple-pay-quick-checkout.jinja' %}
-
-            {# Social Share Links #}
-            <div class="border-border-light flex items-center gap-4 border-t pt-4">
-              <span class="text-sm text-muted">{{ _("Share product") }}:</span>
-              <div class="flex items-center gap-3">
-                {# WhatsApp #}
-                <a
-                  href="https://api.whatsapp.com/send?text={{ _('Check Out this Product') }}: {{ product.name }} {{ product.html_url }}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-muted-foreground transition-colors hover:text-[#25D366]"
-                  aria-label="{{ _('Share on WhatsApp') }}"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-                    />
-                  </svg>
-                </a>
-                {# Twitter/X #}
-                <a
-                  href="https://twitter.com/intent/tweet?text={{ product.name }}: {{ product.html_url }}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="{{ _('Share on Twitter') }}"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                    />
-                  </svg>
-                </a>
-                {# Facebook #}
-                <a
-                  href="https://www.facebook.com/sharer/sharer.php?u={{ product.html_url }}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-muted-foreground transition-colors hover:text-[#1877F2]"
-                  aria-label="{{ _('Share on Facebook') }}"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-                    />
-                  </svg>
-                </a>
-                {# Copy Link #}
-                <button
-                  type="button"
-                  class="text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="{{ _('Copy link') }}"
-                  onclick='navigator.clipboard.writeText(&apos;{{ product.html_url }}&apos;); this.innerHTML = &apos;<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>&apos;; setTimeout(() => this.innerHTML = &apos;<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>&apos;, 2000);'
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
 
         {# Notify Me Dialog - inside product-main-section for quick view support #}
@@ -430,6 +254,7 @@
           {% include 'components/products/notify-me-dialog.jinja' %}
         {% endwith %}
       </div>
+
       <div
         id="additional-info"
         class="mt-6 flex flex-col gap-4"
@@ -449,22 +274,9 @@
               aria-expanded="false"
             >
               <span class="text-foreground text-sm font-medium">{{ _("Features & details") }}</span>
-              <span
-                class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  class="transition-transform duration-200 group-aria-expanded:rotate-180"
-                >
-                  <path
-                    d="M11.999 8.70312C12.0929 8.70312 12.1689 8.73142 12.249 8.81152L17.1924 13.7559C17.2744 13.8378 17.3008 13.9117 17.3008 13.999C17.3008 14.0863 17.2743 14.1602 17.1924 14.2422C17.1143 14.3202 17.0374 14.3506 16.9365 14.3506C16.8359 14.3505 16.7596 14.32 16.6816 14.2422L16.6807 14.2412L12.3516 9.9375L11.998 9.58594L7.31738 14.2666C7.23964 14.3443 7.17341 14.3662 7.09277 14.3633C6.99851 14.3598 6.91711 14.3282 6.83105 14.2422C6.75294 14.1641 6.72266 14.0872 6.72266 13.9863C6.72267 13.8854 6.75294 13.8086 6.83105 13.7305L11.75 8.81152C11.83 8.73152 11.9054 8.7032 11.999 8.70312Z"
-                    fill="currentColor"
-                    stroke="currentColor"
-                  ></path>
+              <span class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="transition-transform duration-200 group-aria-expanded:rotate-180">
+                  <path d="M11.999 8.70312C12.0929 8.70312 12.1689 8.73142 12.249 8.81152L17.1924 13.7559C17.2744 13.8378 17.3008 13.9117 17.3008 13.999C17.3008 14.0863 17.2743 14.1602 17.1924 14.2422C17.1143 14.3202 17.0374 14.3506 16.9365 14.3506C16.8359 14.3505 16.7596 14.32 16.6816 14.2422L16.6807 14.2412L12.3516 9.9375L11.998 9.58594L7.31738 14.2666C7.23964 14.3443 7.17341 14.3662 7.09277 14.3633C6.99851 14.3598 6.91711 14.3282 6.83105 14.2422C6.75294 14.1641 6.72266 14.0872 6.72266 13.9863C6.72267 13.8854 6.75294 13.8086 6.83105 13.7305L11.75 8.81152C11.83 8.73152 11.9054 8.7032 11.999 8.70312Z" fill="currentColor" stroke="currentColor"></path>
                 </svg>
               </span>
             </button>
@@ -480,10 +292,7 @@
                   data-product-weight-wrapper
                 >
                   <dt class="text-muted-foreground text-sm">{{ _("Weight") }}:</dt>
-                  <dd
-                    class="text-foreground text-sm"
-                    data-product-weight
-                  >
+                  <dd class="text-foreground text-sm" data-product-weight>
                     {% if has_weight %}
                       {{ product.selected_product.weight.value }}
                       {{ product.selected_product.weight.unit }}
@@ -507,72 +316,13 @@
           </div>
         {% endif %}
 
-        {# Bundle Offer Details Section - Disclosure with Carousel #}
-        {% if product.bundle_offer and product.bundle_offer.products and product.bundle_offer.products.results %}
-          <div>
-            <button
-              type="button"
-              command="--toggle"
-              commandfor="bundle-offer-products"
-              class="bg-secondary group flex w-full items-center justify-between gap-3 rounded px-4 py-2"
-              aria-expanded="false"
-            >
-              <div class="flex flex-col items-start gap-1">
-                <div class="flex items-center gap-3">
-                  <span class="text-foreground text-sm font-medium">{{ product.bundle_offer.name }}</span>
-                  <span class="badge badge-outlined text-destructive border-destructive">
-                    {{ product.bundle_offer.products.results|length }} {{ _("Products") }}
-                  </span>
-                </div>
-                {% if product.bundle_offer.description %}
-                  <p class="text-sm text-muted text-start">{{ product.bundle_offer.description }}</p>
-                {% endif %}
-              </div>
-              <span
-                class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  class="transition-transform duration-200 group-aria-expanded:rotate-180"
-                >
-                  <path
-                    d="M11.999 8.70312C12.0929 8.70312 12.1689 8.73142 12.249 8.81152L17.1924 13.7559C17.2744 13.8378 17.3008 13.9117 17.3008 13.999C17.3008 14.0863 17.2743 14.1602 17.1924 14.2422C17.1143 14.3202 17.0374 14.3506 16.9365 14.3506C16.8359 14.3505 16.7596 14.32 16.6816 14.2422L16.6807 14.2412L12.3516 9.9375L11.998 9.58594L7.31738 14.2666C7.23964 14.3443 7.17341 14.3662 7.09277 14.3633C6.99851 14.3598 6.91711 14.3282 6.83105 14.2422C6.75294 14.1641 6.72266 14.0872 6.72266 13.9863C6.72267 13.8854 6.75294 13.8086 6.83105 13.7305L11.75 8.81152C11.83 8.73152 11.9054 8.7032 11.999 8.70312Z"
-                    fill="currentColor"
-                    stroke="currentColor"
-                  ></path>
-                </svg>
-              </span>
-            </button>
-            <el-disclosure
-              id="bundle-offer-products"
-              hidden
-              class="transition duration-200 data-closed:opacity-0"
-            >
-              <div class="mt-4 px-4 pb-4">
-                {%
-                  with
-                  products=product.bundle_offer.products.results,
-                  carousel_id="bundle-offer-carousel"
-                %}
-                  {% include 'components/products/products-carousel.jinja' %}
-                {% endwith %}
-              </div>
-            </el-disclosure>
-          </div>
-        {% endif %}
-
         {# Grouped Products (products bundled together) #}
         {% if product.group_products %}
           {% include 'components/products/grouped-product.jinja' %}
         {% endif %}
 
-        {# Product Options Disclosure #}
+        {# Product Options Disclosure (variant details table) #}
         {% if product.variants and product.variants|length > 0 %}
-          {# Filter in-stock variants #}
           {% set in_stock_variants = [] %}
           {% for variant in product.variants %}
             {% if variant.in_stock %}
@@ -590,22 +340,9 @@
                 aria-expanded="false"
               >
                 <span class="text-foreground text-sm font-medium">{{ _("Product options") }}</span>
-                <span
-                  class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    class="transition-transform duration-200 group-aria-expanded:rotate-180"
-                  >
-                    <path
-                      d="M11.999 8.70312C12.0929 8.70312 12.1689 8.73142 12.249 8.81152L17.1924 13.7559C17.2744 13.8378 17.3008 13.9117 17.3008 13.999C17.3008 14.0863 17.2743 14.1602 17.1924 14.2422C17.1143 14.3202 17.0374 14.3506 16.9365 14.3506C16.8359 14.3505 16.7596 14.32 16.6816 14.2422L16.6807 14.2412L12.3516 9.9375L11.998 9.58594L7.31738 14.2666C7.23964 14.3443 7.17341 14.3662 7.09277 14.3633C6.99851 14.3598 6.91711 14.3282 6.83105 14.2422C6.75294 14.1641 6.72266 14.0872 6.72266 13.9863C6.72267 13.8854 6.75294 13.8086 6.83105 13.7305L11.75 8.81152C11.83 8.73152 11.9054 8.7032 11.999 8.70312Z"
-                      fill="currentColor"
-                      stroke="currentColor"
-                    ></path>
+                <span class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="transition-transform duration-200 group-aria-expanded:rotate-180">
+                    <path d="M11.999 8.70312C12.0929 8.70312 12.1689 8.73142 12.249 8.81152L17.1924 13.7559C17.2744 13.8378 17.3008 13.9117 17.3008 13.999C17.3008 14.0863 17.2743 14.1602 17.1924 14.2422C17.1143 14.3202 17.0374 14.3506 16.9365 14.3506C16.8359 14.3505 16.7596 14.32 16.6816 14.2422L16.6807 14.2412L12.3516 9.9375L11.998 9.58594L7.31738 14.2666C7.23964 14.3443 7.17341 14.3662 7.09277 14.3633C6.99851 14.3598 6.91711 14.3282 6.83105 14.2422C6.75294 14.1641 6.72266 14.0872 6.72266 13.9863C6.72267 13.8854 6.75294 13.8086 6.83105 13.7305L11.75 8.81152C11.83 8.73152 11.9054 8.7032 11.999 8.70312Z" fill="currentColor" stroke="currentColor"></path>
                   </svg>
                 </span>
               </button>
@@ -614,18 +351,14 @@
                 hidden
                 class="transition duration-200 data-closed:opacity-0"
               >
-                {# Calculate split point (left column gets more if odd) #}
                 {% set total_variants = in_stock_variants | length %}
                 {% set left_count = ((total_variants + 1) / 2) | int %}
                 <div class="mt-4 grid grid-cols-1 gap-6 px-4 pb-4 md:grid-cols-2">
-                  {# Left Column #}
                   <div class="flex flex-col gap-4">
                     {% for variant in in_stock_variants[:left_count] %}
                       {% include 'components/products/product-variant.jinja' %}
                     {% endfor %}
                   </div>
-
-                  {# Right Column #}
                   <div class="flex flex-col gap-4">
                     {% for variant in in_stock_variants[left_count:] %}
                       {% include 'components/products/product-variant.jinja' %}
@@ -647,22 +380,9 @@
             aria-expanded="false"
           >
             <span class="text-foreground text-sm font-medium">{{ _("FAQ") }}</span>
-            <span
-              class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                class="transition-transform duration-200 group-aria-expanded:rotate-180"
-              >
-                <path
-                  d="M11.999 8.70312C12.0929 8.70312 12.1689 8.73142 12.249 8.81152L17.1924 13.7559C17.2744 13.8378 17.3008 13.9117 17.3008 13.999C17.3008 14.0863 17.2743 14.1602 17.1924 14.2422C17.1143 14.3202 17.0374 14.3506 16.9365 14.3506C16.8359 14.3505 16.7596 14.32 16.6816 14.2422L16.6807 14.2412L12.3516 9.9375L11.998 9.58594L7.31738 14.2666C7.23964 14.3443 7.17341 14.3662 7.09277 14.3633C6.99851 14.3598 6.91711 14.3282 6.83105 14.2422C6.75294 14.1641 6.72266 14.0872 6.72266 13.9863C6.72267 13.8854 6.75294 13.8086 6.83105 13.7305L11.75 8.81152C11.83 8.73152 11.9054 8.7032 11.999 8.70312Z"
-                  fill="currentColor"
-                  stroke="currentColor"
-                ></path>
+            <span class="text-foreground inline-flex size-10 shrink-0 items-center justify-center rounded bg-white/10 p-2.5 backdrop-blur-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="transition-transform duration-200 group-aria-expanded:rotate-180">
+                <path d="M11.999 8.70312C12.0929 8.70312 12.1689 8.73142 12.249 8.81152L17.1924 13.7559C17.2744 13.8378 17.3008 13.9117 17.3008 13.999C17.3008 14.0863 17.2743 14.1602 17.1924 14.2422C17.1143 14.3202 17.0374 14.3506 16.9365 14.3506C16.8359 14.3505 16.7596 14.32 16.6816 14.2422L16.6807 14.2412L12.3516 9.9375L11.998 9.58594L7.31738 14.2666C7.23964 14.3443 7.17341 14.3662 7.09277 14.3633C6.99851 14.3598 6.91711 14.3282 6.83105 14.2422C6.75294 14.1641 6.72266 14.0872 6.72266 13.9863C6.72267 13.8854 6.75294 13.8086 6.83105 13.7305L11.75 8.81152C11.83 8.73152 11.9054 8.7032 11.999 8.70312Z" fill="currentColor" stroke="currentColor"></path>
               </svg>
             </span>
           </button>
@@ -706,10 +426,13 @@
     </div>
   </section>
 
-  {# Sticky Product Actions - shows when scrolling past the main add-to-cart button #}
+  {# Sticky Subscribe CTA - shows when scrolling past the plan selector #}
   {% with product=product %}
     {% include 'components/products/sticky-product-actions.jinja' %}
   {% endwith %}
+
+  {# Embedded Checkout Dialog #}
+  {% include 'components/subscription/embedded-checkout.jinja' %}
 
   <script src="{{ 'js/question-form.js' | asset_url }}"></script>
 {% endblock %}

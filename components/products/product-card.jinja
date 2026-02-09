@@ -42,11 +42,6 @@
       {% if product.is_taxable == false %}
         <span class="badge badge-filled">{{ _("Tax free") }}</span>
       {% endif %}
-      {# Bundle offer badge - loaded via client-side JS #}
-      <span
-        class="bundle-offer-badge hidden"
-        data-bundle-offer-product-id="{{ product.id }}"
-      ></span>
       {# Keyword badges #}
       {% if product.keywords and product.keywords|length > 0 %}
         {% for keyword in product.keywords[:2] %}
@@ -54,9 +49,6 @@
         {% endfor %}
       {% endif %}
     </div>
-    {% with product_id=product.id, class='absolute bottom-4 ltr:right-4 rtl:left-4' %}
-      {% include 'components/products/wishlist-button.jinja' %}
-    {% endwith %}
   </a>
   <div
     class="flex flex-1 flex-col gap-3 group-data-[grid=list]/grid:col-span-1 group-data-[grid=list]/grid:row-span-1 group-data-[grid=list]/grid:min-w-0 group-data-[grid=list]/grid:self-start"
@@ -79,7 +71,6 @@
     </div>
     {# Price Section #}
     {% if product.formatted_sale_price is not none %}
-      {# Product on sale - show sale price, old price crossed out, and discount #}
       <div class="flex flex-col gap-1">
         <p class="text-foreground text-sm font-semibold">
           {% if product.has_options %}{{ _("From") }}{% endif %}
@@ -97,7 +88,6 @@
         </div>
       </div>
     {% else %}
-      {# Regular price - no sale #}
       <p class="text-foreground text-sm">
         {% if product.has_options %}{{ _("From") }}{% endif %}
         {{ product.formatted_price }}
@@ -112,7 +102,7 @@
       </p>
     {% endif %}
   </div>
-  {# Cart Actions #}
+  {# Subscribe CTA — replaces Add to Cart #}
   <div
     class="mt-auto group-data-[grid=list]/grid:col-span-2 group-data-[grid=list]/grid:row-span-1 group-data-[grid=list]/grid:mt-0 md:group-data-[grid=list]/grid:col-span-1 md:group-data-[grid=list]/grid:col-start-2 md:group-data-[grid=list]/grid:self-start"
   >
@@ -127,29 +117,28 @@
         {{ _("Notify me when available") }}
       </button>
     {% else %}
-      {# Add to Cart / Quick View Button #}
-      {% set has_options = product.has_options or product.has_fields %}
-      <button
-        class="btn btn-outlined btn-lg w-full md:group-data-[grid=list]/grid:w-1/2"
-        {% if has_options %}
-          data-open-quick-view="true" data-product-id="{{ product.id }}"
-        {% else %}
-          data-add-to-cart="{{ product.id }}"
-        {% endif %}
+      {# Subscribe Button — links to product page where plan selector lives #}
+      <a
+        href="{{ url_for('product_details', slug=product.slug) }}#eshtarek-plan-selector"
+        class="btn btn-filled btn-lg w-full md:group-data-[grid=list]/grid:w-1/2"
       >
-        {{ _("Select options") if has_options else _("Add to cart") }}
-      </button>
-
-      {# Quantity Input (hidden, shown after adding to cart) #}
-      <div
-        class="w-full md:group-data-[grid=list]/grid:w-1/2"
-        data-quantity-section
-        hidden
-      >
-        {% with id='card-qty-' ~ product.id, product_id=product.id, quantity=1, show_delete=true, full_width=true %}
-          {% include 'components/ui/quantity-input.jinja' %}
-        {% endwith %}
-      </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+          <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+          <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+        </svg>
+        {{ _("Subscribe") }}
+      </a>
     {% endif %}
   </div>
 </div>
