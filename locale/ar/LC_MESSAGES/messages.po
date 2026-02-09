@@ -91,6 +91,18 @@ msgstr "تصفح المنتجات"
 msgid "Delivery and payment are managed through your subscription. Visit your account to manage delivery preferences."
 msgstr "يتم إدارة التوصيل والدفع من خلال اشتراكك. قم بزيارة حسابك لإدارة تفضيلات التوصيل."
 
+msgid "Retry"
+msgstr "إعادة المحاولة"
+
+msgid "No subscription plans available for this product."
+msgstr "لا توجد خطط اشتراك متاحة لهذا المنتج."
+
+msgid "You can manage your subscription from your account."
+msgstr "يمكنك إدارة اشتراكك من حسابك."
+
+msgid "Continue Shopping"
+msgstr "متابعة التسوق"
+
 # ==============================================================================
 # 404 Page
 # ==============================================================================
